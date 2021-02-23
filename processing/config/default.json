@@ -2,25 +2,25 @@
   "dailyLimit": 100,
   "autoRunInterval": 10,
   "binance": {
-    "api": "https://testnet-dex.binance.org",
+    "api": "https://testnet-dex.binance.org/",
     "network": "testnet",
-    "symbol": "BLOKI",
-    "mnemonic": ""
+    "symbol": "BDX",
+    "mnemonic": "trophy symptom blur scan guard stuff unusual sorry debate hamster model eternal"
   },
   "database": {
     "host": "localhost",
     "port": 5432,
-    "database": "lokibridge",
+    "database": "postgres",
     "user": "postgres",
-    "password": "",
+    "password": "postgres",
     "ssl": false
   },
   "loki": {
     "walletRPC": {
       "host": "localhost",
       "port": 18082,
-      "username": "",
-      "password": ""
+      "username": "test",
+      "password": "test"
     },
     "withdrawalFee": 5
   }

@@ -2,29 +2,29 @@
   "serverPort": 8000,
   "useAPIEncryption": false,
   "binance": {
-    "api": "https://testnet-dex.binance.org",
+    "api": "https://testnet-dex.binance.org/",
     "network": "testnet",
-    "symbol": "BLOKI",
-    "depositAddress": ""
+    "symbol": "BDX",
+    "depositAddress": "tbnb16hnamgv8lq6pq55zghsryg6zffm4vtmjp0s9rh"
   },
   "database": {
     "host": "localhost",
     "port": 5432,
-    "database": "lokibridge",
+    "database": "postgres",
     "user": "postgres",
-    "password": "",
+    "password": "postgres",
     "ssl": false
   },
   "loki": {
     "walletRPC": {
       "host": "localhost",
       "port": 18082,
-      "username": "",
-      "password": ""
+      "username": "test",
+      "password": "test"
     },
     "wallet": {
-      "filename": "lokibridge",
-      "password": "",
+      "filename": "test",
+      "password": "test",
       "accountIndex": 0
     },
     "withdrawalFee": 5

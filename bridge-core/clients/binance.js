@@ -70,6 +70,7 @@ export default class BinanceClient {
       const client = this.getClient();
       // eslint-disable-next-line no-underscore-dangle, max-len
       const data = await client._httpClient.request('get', `/api/v1/transactions?address=${address}&startTime=${startTime}&txAsset=${this.symbol}&side=RECEIVE&txType=TRANSFER`);
+      console.log("data:", data)
       const transactions = data.result.tx || [];
       return this.get1e9Transactions(transactions);
     } catch (err) {
@@ -78,7 +79,7 @@ export default class BinanceClient {
   }
 
   /**
-  * Get all the balances from the given `address`
+  * Get all the balances from the given `address`cleanedMnemonic
   *
   * @param {string} address The bnb address to get balances from.
   * @returns {Promise<[{ symbol, free, locked, frozen }]>} An array of balances.
@@ -104,19 +105,21 @@ export default class BinanceClient {
   */
   async multiSend(mnemonic, outputs, message) {
     const normalised = this.getDecimalOutputs(outputs);
+    console.log("normal:", JSON.stringify(normalised))
     const cleanedMnemonic = mnemonic.replace(/(\r\n|\n|\r)/gm, '');
-
     const client = this.getClient();
     const { privateKey, address } = client.recoverAccountFromMnemonic(cleanedMnemonic);
-
+    console.log("private:", privateKey, address)
     await client.setPrivateKey(privateKey);
     await client.initChain();
 
     // eslint-disable-next-line no-underscore-dangle
     const data = await client._httpClient.request('get', `/api/v1/account/${address}/sequence`);
+    console.log("data 1:", data)
     const sequence = (data && data.result && data.result.sequence) || 0;
 
     try {
+      console.log("tst:", address, JSON.stringify(normalised), message, sequence)
       const sendResult = await client.multiSend(address, normalised, message, sequence);
       if (!sendResult || !sendResult.result || sendResult.result.length === 0) {
         throw new Error(`[BNB] Failed to send transactions: ${String(sendResult)}`);
@@ -178,6 +181,7 @@ export default class BinanceClient {
 
   getClient() {
     const client = new ApiClient(this.api);
+    console.log("network:", this.network, this.api)
     client.chooseNetwork(this.network);
     return client;
   }

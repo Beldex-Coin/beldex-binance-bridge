@@ -1,19 +1,19 @@
 {
   "dailyLimit": 1000,
   "binance": {
-    "api": "https://dex.binance.org",
-    "network": "mainnet"
+    "api": "https://testnet-dex.binance.org/",
+    "network": "testnet"
   },
   "database": {
-    "user": "",
-    "password": ""
+    "user": "postgres",
+    "password": "postgres"
   },
   "loki": {
     "walletRPC": {
       "host": "localhost",
       "port": 18082,
-      "username": "",
-      "password": ""
+      "username": "test",
+      "password": "test"
     },
     "withdrawalFee": 5
   }

@@ -469,13 +469,12 @@ describe('Database', () => {
 
         const dbSwap = await postgres.oneOrNone('select * from swaps where uuid = $1', [swap.uuid]);
         assert.isNotNull(dbSwap);
-
         assert.strictEqual(dbSwap.uuid, swap.uuid);
         assert.strictEqual(dbSwap.type, SWAP_TYPE.BLOKI_TO_LOKI);
         assert.equal(dbSwap.amount, 10);
         assert.strictEqual(dbSwap.deposit_transaction_hash, '123');
         assert.strictEqual(dbSwap.client_account_uuid, clientUuid);
-        assert.equal(Date.parse(dbSwap.deposit_transaction_created), 3000);
+        assert.equal(Date.parse(dbSwap.deposit_transaction_created), 19803000);
       });
     });
 

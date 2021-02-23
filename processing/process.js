@@ -20,8 +20,8 @@ async function run(options) {
   if (options.swap) {
     log.header(chalk.bold('Swap'));
     await swaps.processAllSwaps();
-
-    // Set daily balance to 0
+    
+   // Set daily balance to 0
     Object.values(SWAP_TYPE).forEach(t => auto.saveDailyAmount(t, 0));
   } else if (options.sweep) {
     log.header(chalk.bold('=========== Sweep ==========='));
