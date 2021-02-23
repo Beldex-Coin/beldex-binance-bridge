@@ -1,8 +1,8 @@
 import config from 'config';
 import { clients } from 'bridge-core';
 
-const { filename, password: walletPassword, accountIndex } = config.get('loki.wallet');
-const { host, port, username, password: rpcPassword } = config.get('loki.walletRPC');
+const { filename, password: walletPassword, accountIndex } = config.get('beldex.wallet');
+const { host, port, username, password: rpcPassword } = config.get('beldex.walletRPC');
 
 const rpc = {
   hostname: host,

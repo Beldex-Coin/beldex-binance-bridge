@@ -15,7 +15,7 @@
     "password": "postgres",
     "ssl": false
   },
-  "loki": {
+  "beldex": {
     "walletRPC": {
       "host": "localhost",
       "port": 18082,

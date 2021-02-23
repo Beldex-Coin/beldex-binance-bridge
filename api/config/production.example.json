@@ -9,7 +9,7 @@
     "user": "",
     "password": ""
   },
-  "loki": {
+  "beldex": {
     "walletRPC": {
       "host": "localhost",
       "port": 18082,
