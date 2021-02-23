@@ -111,8 +111,8 @@ app.set('port', config.get('serverPort'));
 loki.openWallet().then(() => {
   const server = Server(app);
   server.listen(app.get('port'), () => {
-    console.log('[Loki Bridge API] Stared server on', server.address().port);
+    console.log('[Beldex Bridge API] Stared server on', server.address().port);
   });
 }).catch(error => {
-  console.log(`Failed to open Loki Wallet - ${error.message}`);
+  console.log(`Failed to open Beldex Wallet - ${error.message}`);
 });

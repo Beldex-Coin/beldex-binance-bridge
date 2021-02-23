@@ -1,7 +1,7 @@
 {
   "useAPIEncryption": false,
   "database": {
-    "database": "lokibridge-test"
+    "database": "beldexbridge-test"
   },
   "binance": {
     "symbol": "TEST"

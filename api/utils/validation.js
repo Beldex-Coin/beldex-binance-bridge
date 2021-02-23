@@ -9,7 +9,7 @@ export async function validateSwap(body) {
   if (!Object.values(SWAP_TYPE).includes(type)) return 'type is invalid';
 
   if (type === SWAP_TYPE.BLOKI_TO_LOKI) {
-    // User should pass a LOKI address
+    // User should pass a BDX address
     const valid = await loki.validateAddress(address);
     if (!valid) return 'address must be a LOKI address';
   } else if (type === SWAP_TYPE.LOKI_TO_BLOKI) {
