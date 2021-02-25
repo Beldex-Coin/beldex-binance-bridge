@@ -7,22 +7,22 @@ import { TYPE } from './constants';
 export default class TransactionHelper {
   /**
    * Create a helper instance.
-   * @param {{ binance: { client, ourAddress }, loki: { client }}} config The helper config.
+   * @param {{ binance: { client, ourAddress }, beldex: { client }}} config The helper config.
    */
   constructor(config) {
-    const { binance, loki } = config;
+    const { binance, beldex } = config;
 
     this.bnb = binance.client;
     this.ourBNBAddress = binance.ourAddress;
 
-    this.loki = loki.client;
+    this.beldex = beldex.client;
   }
 
   /**
    * Get incoming transactions to the given account.
    *
    * @param {any} account The account.
-   * @param {'loki'|'bnb'} accountType The account type.
+   * @param {'beldex'|'bnb'} accountType The account type.
    * @return {Promise<{ hash, amount }>} An array of incoming transactions
    */
   async getIncomingTransactions(account, accountType) {
@@ -72,7 +72,7 @@ export default class TransactionHelper {
    * @returns {Promise<{ hash, amount, confirmed }>} An array of incoming transactions
    */
   async getIncomingLokiTransactions(addressIndex, options = {}) {
-    const transactions = await this.loki.getIncomingTransactions(addressIndex, options);
+    const transactions = await this.beldex.getIncomingTransactions(addressIndex, options);
     console.log("trans-0",transactions)
     // transactions[0].checkpointed = true;
     return transactions.map(tx => ({

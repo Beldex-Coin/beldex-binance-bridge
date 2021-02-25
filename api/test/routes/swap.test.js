@@ -2,7 +2,7 @@ import { assert } from 'chai';
 import sinon from 'sinon';
 import { TYPE, SWAP_TYPE } from 'bridge-core';
 import * as swapRoutes from '../../routes/swap';
-import { bnb, loki, postgres, db, transactionHelper } from '../../core';
+import { bnb, beldex, postgres, db, transactionHelper } from '../../core';
 import { validation, crypto } from '../../utils';
 import { dbHelper, wrapRouterFunction } from '../helpers';
 
@@ -20,7 +20,7 @@ describe('Swap API', () => {
     await postgres.none('TRUNCATE client_accounts, accounts_loki, accounts_bnb, swaps CASCADE;');
 
     // Pretend all our addresses we pass are valid for these tests
-    sandbox.stub(loki, 'validateAddress').resolves(true);
+    sandbox.stub(beldex, 'validateAddress').resolves(true);
     sandbox.stub(bnb, 'validateAddress').returns(true);
   });
 
@@ -32,7 +32,7 @@ describe('Swap API', () => {
     describe('failure', () => {
       it('should return 400 if validation failed', async () => {
         sandbox.restore();
-        sandbox.stub(loki, 'validateAddress').resolves(false);
+        sandbox.stub(beldex, 'validateAddress').resolves(false);
         sandbox.stub(bnb, 'validateAddress').returns(false);
 
         const spy = sandbox.spy(validation, 'validateSwap');
@@ -59,14 +59,14 @@ describe('Swap API', () => {
       });
 
       it('should return 500 if we failed to create a loki account', async () => {
-        const lokiCreateAccount = sandbox.stub(loki, 'createAccount').resolves(null);
+        const lokiCreateAccount = sandbox.stub(beldex, 'createAccount').resolves(null);
 
         const { status, success, result } = await swapToken({ address: '123', type: SWAP_TYPE.LOKI_TO_BLOKI });
         assert.equal(status, 500);
         assert.isFalse(success);
         assert.equal(result, 'Invalid swap');
 
-        assert(lokiCreateAccount.called, 'loki.createAccount was not called');
+        assert(lokiCreateAccount.called, 'beldex.createAccount was not called');
       });
     });
 
@@ -102,7 +102,7 @@ describe('Swap API', () => {
             address: 'generatedLoki',
             address_index: 0,
           };
-          sandbox.stub(loki, 'createAccount').resolves(generateLokiAccount);
+          sandbox.stub(beldex, 'createAccount').resolves(generateLokiAccount);
 
           const { status, success, result } = await swapToken({ type: SWAP_TYPE.LOKI_TO_BLOKI, address: bnbAddress });
           assert.equal(status, 200);

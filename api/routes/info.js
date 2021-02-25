@@ -5,7 +5,7 @@ export function getInfo(req, res, next) {
   const lokiFee = config.get('beldex.withdrawalFee');
   const lokiAmount = (parseFloat(lokiFee) * 1e9).toFixed(0);
 
-  const info = { fees: { loki: lokiAmount } };
+  const info = { fees: { beldex: lokiAmount } };
 
   res.status(205);
   res.body = {

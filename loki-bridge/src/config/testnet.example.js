@@ -5,7 +5,7 @@ export default {
     walletCreationUrl: 'https://testnet.binance.org/en/create',
     txExplorerUrl: 'https://testnet-explorer.binance.org/tx'
   },
-  loki: {
+  beldex: {
     walletCreationUrl: 'https://lokilocker.com',
     txExplorerUrl: 'https://lokitestnet.com/tx'
   }

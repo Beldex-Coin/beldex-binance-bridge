@@ -5,7 +5,7 @@ This is the api server used for the beldex bridge application.
 ## Pre-requisites
   - Node 11.15.0
     - This can be installed using [nvm](https://github.com/nvm-sh/nvm)
-  - [Beldex wallet rpc](https://github.com/loki-project/loki/releases)
+  - [Beldex wallet rpc](https://github.com/Beldex-Coin/beldex/releases)
 
 ## Installation
 

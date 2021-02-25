@@ -1,6 +1,6 @@
 /* eslint-disable no-extend-native */
 import { TYPE, SWAP_TYPE } from 'bridge-core';
-import { loki, transactionHelper, db } from '../core';
+import { beldex, transactionHelper, db } from '../core';
 import { crypto, validation } from '../utils';
 
 // A cache to store the currently processing transactions
@@ -49,7 +49,7 @@ export function swapToken(req, res, next) {
         // Generate a random memo
         newAccount = { memo: crypto.generateRandomString(64) };
       } else if (accountType === TYPE.LOKI) {
-        newAccount = await loki.createAccount();
+        newAccount = await beldex.createAccount();
       }
 
       if (!newAccount) {
@@ -215,7 +215,7 @@ export async function getSwaps(req, res, next) {
 }
 
 /**
- * Get all unconfirmed loki transactions
+ * Get all unconfirmed bdx transactions
  * Request Data:
  *  - uuid: The uuid that was returned in `swapToken` (client account uuid)
  */

@@ -3,7 +3,7 @@ import { assert } from 'chai';
 import sinon from 'sinon';
 import config from 'config';
 import { SWAP_TYPE, TYPE } from 'bridge-core';
-import { bnb, loki, postgres, db } from '../../core';
+import { bnb, beldex, postgres, db } from '../../core';
 import functions from '../../functions/swaps';
 import { dbHelper } from '../helpers';
 import log, { stubConsole } from '../../utils/log';
@@ -140,7 +140,7 @@ describe('Processing Swaps', () => {
 
     beforeEach(() => {
       bnbStub = sandbox.stub(bnb, 'multiSend');
-      lokiStub = sandbox.stub(loki, 'multiSend');
+      lokiStub = sandbox.stub(beldex, 'multiSend');
     });
 
     it('should send to BNB if swap type is LOKI_TO_BLOKI', async () => {
@@ -150,7 +150,7 @@ describe('Processing Swaps', () => {
 
     it('should send to LOKI if swap type is BLOKI_TO_LOKI', async () => {
       await functions.send(SWAP_TYPE.BLOKI_TO_LOKI, transactions);
-      assert(lokiStub.called, 'loki.multiSend was not called');
+      assert(lokiStub.called, 'beldex.multiSend was not called');
     });
 
     it('should throw an error if swap type was invalid', async () => {
@@ -199,7 +199,7 @@ describe('Processing Swaps', () => {
   describe('#processSwaps', () => {
     beforeEach(async () => {
       sandbox.stub(bnb, 'multiSend').resolves(['bnbTxHash1', 'bnbTxHash2']);
-      sandbox.stub(loki, 'multiSend').resolves(['lokiTxHash1', 'lokiTxHash2']);
+      sandbox.stub(beldex, 'multiSend').resolves(['lokiTxHash1', 'lokiTxHash2']);
       sandbox.stub(db, 'updateSwapsTransferTransactionHash').resolves();
     });
 
@@ -413,7 +413,7 @@ describe('Processing Swaps', () => {
       await postgres.none('TRUNCATE client_accounts, accounts_loki, accounts_bnb, swaps CASCADE;');
 
       sandbox.stub(bnb, 'multiSend').resolves(['bnbTxHash1', 'bnbTxHash2']);
-      sandbox.stub(loki, 'multiSend').resolves(['lokiTxHash1', 'lokiTxHash2']);
+      sandbox.stub(beldex, 'multiSend').resolves(['lokiTxHash1', 'lokiTxHash2']);
     });
 
     const processAllSwapsOfType = async swapType => {

@@ -1,7 +1,7 @@
 import config from 'config';
 import { TransactionHelper } from 'bridge-core';
 import bnb from './binance';
-import loki from './loki';
+import beldex from './beldex';
 import { postgres, db } from './database';
 
 const { depositAddress } = config.get('binance');
@@ -11,7 +11,7 @@ const transactionHelper = new TransactionHelper({
     client: bnb,
     ourAddress: depositAddress,
   },
-  loki: { client: loki },
+  beldex: { client: beldex },
 });
 
-export { bnb, loki, postgres, db, transactionHelper };
+export { bnb, beldex, postgres, db, transactionHelper };

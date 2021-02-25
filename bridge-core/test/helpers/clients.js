@@ -1,6 +1,6 @@
 import { PostgresClient, LokiClient, BinanceClient } from '../../clients';
 
-export const loki = new LokiClient({
+export const beldex = new LokiClient({
   hostname: 'localhost',
   port: 18083,
   username: 'test',

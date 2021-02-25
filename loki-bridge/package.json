@@ -1,5 +1,5 @@
 {
-  "name": "loki-bridge",
+  "name": "beldex-bridge",
   "version": "1.0.0",
   "description": "Bridge Frontend for converting Loki to B-Loki",
   "private": true,

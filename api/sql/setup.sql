@@ -2,7 +2,7 @@
 create table if not exists client_accounts (
   uuid char(36) primary key,
 
-  /* The type of address. loki or bnb */
+  /* The type of address. bdx or bnb */
   address_type text,
 
   /*
@@ -11,7 +11,7 @@ create table if not exists client_accounts (
    */
   address text,
 
-  /* The type of generated account. loki or bnb */
+  /* The type of generated account. bdx or bnb */
   account_type text,
 
   /* An id to a generated account. account_loki or account_bnb */
@@ -21,8 +21,8 @@ create table if not exists client_accounts (
 );
 
 /*
-  Loki accounts.
-  We don't generate any loki accounts because we only have 1 wallet-rpc running.
+  Beldex accounts.
+  We don't generate any bdx accounts because we only have 1 wallet-rpc running.
   Instead what we do is generate a new sub-address and store that instead, this acts the same way as making a new wallet.
 */
 create table if not exists accounts_loki (

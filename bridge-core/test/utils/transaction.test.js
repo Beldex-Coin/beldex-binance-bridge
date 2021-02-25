@@ -2,14 +2,14 @@ import { assert } from 'chai';
 import sinon from 'sinon';
 import { TYPE } from '../../utils/constants';
 import { TransactionHelper } from '../../utils';
-import { db, bnb, loki } from '../helpers';
+import { db, bnb, beldex } from '../helpers';
 
 const transaction = new TransactionHelper({
   binance: {
     client: bnb,
     ourAddress: 'ourAddress',
   },
-  loki: { client: loki },
+  beldex: { client: beldex },
 });
 
 const sandbox = sinon.createSandbox();
@@ -74,10 +74,10 @@ describe('Transaction', () => {
           timestamp: 100,
         }];
 
-        const stub = sandbox.stub(loki, 'getIncomingTransactions').resolves(mockAPIResult);
+        const stub = sandbox.stub(beldex, 'getIncomingTransactions').resolves(mockAPIResult);
 
         const transactions = await transaction.getIncomingTransactions({ addressIndex: 0 }, TYPE.LOKI);
-        assert(stub.calledOnce, 'loki.getIncomingTransactions was not called');
+        assert(stub.calledOnce, 'beldex.getIncomingTransactions was not called');
         assert.lengthOf(transactions, 1);
         assert.deepEqual(transactions[0], {
           hash: 'hash',
@@ -95,10 +95,10 @@ describe('Transaction', () => {
         ];
 
         sandbox.stub(db, 'getLokiAccount').resolves({ address_index: 0 });
-        const stub = sandbox.stub(loki, 'getIncomingTransactions').resolves(mockAPIResult);
+        const stub = sandbox.stub(beldex, 'getIncomingTransactions').resolves(mockAPIResult);
 
         const transactions = await transaction.getIncomingTransactions({ addressIndex: 0 }, TYPE.LOKI);
-        assert(stub.calledOnce, 'loki.getIncomingTransactions was not called');
+        assert(stub.calledOnce, 'beldex.getIncomingTransactions was not called');
         assert.lengthOf(transactions, 2);
         assert.includeMembers(transactions.map(t => t.hash), [2, 4]);
       });

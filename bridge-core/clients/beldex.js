@@ -3,11 +3,11 @@ import http from 'http';
 import request from 'request-promise';
 
 /**
- * A client to communicate with Loki Wallet.
+ * A client to communicate with Beldex Wallet.
  */
 export default class LokiClient {
   /**
-   * Create a Loki client
+   * Create a Beldex client
    * @param {{ hostname, port, username, password }} rpcConfig The rpc config.
    * @param {{ filename, password, accountIndex }} [walletConfig] The wallet config.
    */
@@ -105,7 +105,7 @@ export default class LokiClient {
   async createAccount() {
     const data = await this._request('create_address', { account_index: this.accountIndex });
     if (data.error) {
-      console.log('[Loki Wallet] Failed to create account: ', data.error);
+      console.log('[Beldex Wallet] Failed to create account: ', data.error);
       return null;
     }
 
@@ -132,7 +132,7 @@ export default class LokiClient {
     });
     console.log("MATcH:",data)
     if (data.error) {
-      console.log('[Loki Wallet] Failed to get transactions: ', data.error);
+      console.log('[Beldex Wallet] Failed to get transactions: ', data.error);
       return [];
     }
 
@@ -155,7 +155,7 @@ export default class LokiClient {
     });
 
     if (data.error) {
-      console.log('[Loki Wallet] Failed to validate address: ', data.error);
+      console.log('[Beldex Wallet] Failed to validate address: ', data.error);
       return false;
     }
 
@@ -175,7 +175,7 @@ export default class LokiClient {
     });
 
     if (data.error) {
-      console.log('[Loki Wallet] Failed to get balances: ', data.error);
+      console.log('[Beldex Wallet] Failed to get balances: ', data.error);
       return [];
     }
 
@@ -202,7 +202,7 @@ export default class LokiClient {
 
     if (data.error || !data.result) {
       const error = (data.error && data.error.message) || 'No result found';
-      throw new Error(`[Loki Wallet] Failed to send transactions - ${error}`);
+      throw new Error(`[Beldex Wallet] Failed to send transactions - ${error}`);
     }
 
     return data.result.tx_hash_list;

@@ -6,7 +6,7 @@
   "binance": {
     "symbol": "TEST"
   },
-  "loki": {
+  "beldex": {
     "withdrawalFee": 0
   }
 }

@@ -3,7 +3,7 @@ import { assert } from 'chai';
 import sinon from 'sinon';
 import { SWAP_TYPE } from 'bridge-core';
 import { validation } from '../../utils';
-import { bnb, loki } from '../../core';
+import { bnb, beldex } from '../../core';
 
 const sandbox = sinon.createSandbox();
 
@@ -14,7 +14,7 @@ describe('Validation', () => {
 
   describe('#validateSwap', async () => {
     const stubValidateAddressReturn = value => {
-      sandbox.stub(loki, 'validateAddress').resolves(value);
+      sandbox.stub(beldex, 'validateAddress').resolves(value);
       sandbox.stub(bnb, 'validateAddress').returns(value);
     };
 
@@ -33,11 +33,11 @@ describe('Validation', () => {
       assert.strictEqual(error, 'type is invalid');
     });
 
-    it('should return an error if the loki address was invalid', async () => {
+    it('should return an error if the beldex address was invalid', async () => {
       stubValidateAddressReturn(false);
 
       const error = await validation.validateSwap({ address: 'an address', type: SWAP_TYPE.BLOKI_TO_LOKI });
-      assert(loki.validateAddress.calledOnce, 'Loki validate was not called');
+      assert(beldex.validateAddress.calledOnce, 'Loki validate was not called');
       assert.strictEqual(error, 'address must be a LOKI address');
     });
 
@@ -52,7 +52,7 @@ describe('Validation', () => {
       stubValidateAddressReturn(true);
       const lokiError = await validation.validateSwap({ address: '1', type: SWAP_TYPE.BLOKI_TO_LOKI });
       assert.isNull(lokiError);
-      assert(loki.validateAddress.calledOnce, 'Loki validate was not called');
+      assert(beldex.validateAddress.calledOnce, 'Loki validate was not called');
 
       const bnbError = await validation.validateSwap({ address: '1', type: SWAP_TYPE.LOKI_TO_BLOKI });
       assert.isNull(bnbError);

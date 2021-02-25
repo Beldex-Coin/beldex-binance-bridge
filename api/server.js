@@ -6,7 +6,7 @@ import helmet from 'helmet';
 import https from 'https';
 import config from 'config';
 import routes from './routes';
-import { loki } from './core';
+import { beldex } from './core';
 
 const app = express();
 app.all('/*', (req, res, next) => {
@@ -108,7 +108,7 @@ app.use((err, req, res, next) => {
 https.globalAgent.maxSockets = 50;
 app.set('port', config.get('serverPort'));
 
-loki.openWallet().then(() => {
+beldex.openWallet().then(() => {
   const server = Server(app);
   server.listen(app.get('port'), () => {
     console.log('[Beldex Bridge API] Stared server on', server.address().port);

@@ -9,7 +9,7 @@ import { SWAP_TYPE, TYPE } from '@constants';
 import styles from './styles';
 
 const hashUrls = {
-  [TYPE.LOKI]: config.loki.txExplorerUrl,
+  [TYPE.LOKI]: config.beldex.txExplorerUrl,
   [TYPE.BNB]: config.binance.txExplorerUrl,
 };
 

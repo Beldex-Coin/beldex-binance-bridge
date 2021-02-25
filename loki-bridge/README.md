@@ -1,4 +1,4 @@
-# Loki Bridge Front End
+# Beldex Bridge Front End
 
 This is the front end used for the loki bridge application.
 

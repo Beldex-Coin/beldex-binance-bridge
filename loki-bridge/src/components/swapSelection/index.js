@@ -8,7 +8,7 @@ import config from '@config';
 import styles from './styles';
 
 const walletCreationUrl = {
-  [TYPE.LOKI]: config.loki.walletCreationUrl,
+  [TYPE.LOKI]: config.beldex.walletCreationUrl,
   [TYPE.BNB]: config.binance.walletCreationUrl,
 };
 

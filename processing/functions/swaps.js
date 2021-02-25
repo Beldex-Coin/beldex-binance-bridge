@@ -4,7 +4,7 @@ import config from 'config';
 import chalk from 'chalk';
 import Decimal from 'decimal.js';
 import { SWAP_TYPE, TYPE } from 'bridge-core';
-import { db, bnb, loki } from '../core';
+import { db, bnb, beldex } from '../core';
 import log from '../utils/log';
 
 // The fees in decimal format
@@ -15,9 +15,9 @@ const symbols = {
   [TYPE.BNB]: 'B-LOKI',
 };
 
-class PriceFetchFailed extends Error {}
-class NoSwapsToProcess extends Error {}
-class DailyLimitHit extends Error {}
+class PriceFetchFailed extends Error { }
+class NoSwapsToProcess extends Error { }
+class DailyLimitHit extends Error { }
 
 const module = {
   // The fees in 1e9 format
@@ -129,12 +129,12 @@ const module = {
   },
 
   /**
-   * Get the current price of LOKI
+   * Get the current price of BDX
    */
   async getCurrentLokiPriceInUSD() {
     try {
-      const response = await axios.get('https://api.coingecko.com/api/v3/simple/price?ids=loki-network&vs_currencies=usd');
-      return response.data['loki-network'].usd;
+      const response = await axios.get('https://api.coingecko.com/api/v3/simple/price?ids=beldex&vs_currencies=usd');
+      return response.data['beldex'].usd;
     } catch (e) {
       log.debug(e);
       throw new PriceFetchFailed();
@@ -230,7 +230,7 @@ const module = {
    * @returns An array of transaction hashes
    */
   async send(swapType, transactions) {
-  // Multi-send always returns an array of hashes
+    // Multi-send always returns an array of hashes
     if (swapType === SWAP_TYPE.LOKI_TO_BLOKI) {
       const symbol = config.get('binance.symbol');
       const outputs = transactions.map(({ address, amount }) => ({
@@ -244,7 +244,7 @@ const module = {
       // Send BNB to the users
       return bnb.multiSend(config.get('binance.mnemonic'), outputs, 'Loki Bridge');
     } else if (swapType === SWAP_TYPE.BLOKI_TO_LOKI) {
-      // Deduct the loki withdrawal fees.
+      // Deduct the Beldex withdrawal fees.
       const outputs = transactions.map(({ address, amount }) => {
         const fee = module.fees[TYPE.LOKI] || 0;
         return {
@@ -252,9 +252,8 @@ const module = {
           amount: Math.max(0, amount - fee),
         };
       });
-
-      // Send Loki to the users
-      return loki.multiSend(outputs);
+      // Send Beldex to the users
+      return beldex.multiSend(outputs);
     }
 
     throw new Error('Invalid swap type');
