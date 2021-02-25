@@ -14,7 +14,7 @@ export const loki = new LokiClient({
 export const bnb = new BinanceClient({
   api: 'https://testnet-dex.binance.org/',
   network: 'testnet',
-  symbol: 'BDX',
+  symbol: 'BDX-7BA',
 });
 
 export const postgres = PostgresClient({

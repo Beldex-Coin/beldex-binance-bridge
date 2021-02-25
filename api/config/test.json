@@ -7,6 +7,6 @@
     "symbol": "TEST"
   },
   "loki": {
-    "withdrawalFee": 1
+    "withdrawalFee": 0
   }
 }

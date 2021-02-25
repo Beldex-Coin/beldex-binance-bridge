@@ -92,7 +92,7 @@ export function finalizeSwap(req, res, next) {
     let currentHashes = [];
     const { uuid } = data;
     try {
-      const clientAccount = await db.getClientAccountForUuid(uuid);
+      const clientAccount = await db.getClientAccountForUuid(uuid); 
       if (!clientAccount) {
         res.status(400);
         res.body = { status: 400, success: false, result: 'Unable to find swap details' };

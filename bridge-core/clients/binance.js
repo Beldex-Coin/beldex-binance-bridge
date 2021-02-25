@@ -105,11 +105,9 @@ export default class BinanceClient {
   */
   async multiSend(mnemonic, outputs, message) {
     const normalised = this.getDecimalOutputs(outputs);
-    console.log("normal:", JSON.stringify(normalised))
     const cleanedMnemonic = mnemonic.replace(/(\r\n|\n|\r)/gm, '');
     const client = this.getClient();
     const { privateKey, address } = client.recoverAccountFromMnemonic(cleanedMnemonic);
-    console.log("private:", privateKey, address)
     await client.setPrivateKey(privateKey);
     await client.initChain();
 
@@ -119,7 +117,6 @@ export default class BinanceClient {
     const sequence = (data && data.result && data.result.sequence) || 0;
 
     try {
-      console.log("tst:", address, JSON.stringify(normalised), message, sequence)
       const sendResult = await client.multiSend(address, normalised, message, sequence);
       if (!sendResult || !sendResult.result || sendResult.result.length === 0) {
         throw new Error(`[BNB] Failed to send transactions: ${String(sendResult)}`);

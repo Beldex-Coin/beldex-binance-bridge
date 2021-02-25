@@ -4,7 +4,7 @@
   "binance": {
     "api": "https://testnet-dex.binance.org/",
     "network": "testnet",
-    "symbol": "BDX",
+    "symbol": "BDX-7BA",
     "depositAddress": "tbnb16hnamgv8lq6pq55zghsryg6zffm4vtmjp0s9rh"
   },
   "database": {
@@ -27,6 +27,6 @@
       "password": "test",
       "accountIndex": 0
     },
-    "withdrawalFee": 5
+    "withdrawalFee": 0
   }
 }
