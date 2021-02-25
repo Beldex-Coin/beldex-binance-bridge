@@ -85,7 +85,7 @@ const module = {
           }
 
           if (e instanceof swaps.Errors.PriceFetchFailed) {
-            log.error(chalk.yellow('Failed to fetch price of LOKI. Will try again next time.'));
+            log.error(chalk.yellow('Failed to fetch price of BDX. Will try again next time.'));
             continue;
           }
 

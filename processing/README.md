@@ -1,4 +1,4 @@
-# Loki Bridge Processing
+# Beldex Bridge Processing
 
 This is where the processing logic lies for the bridge
 

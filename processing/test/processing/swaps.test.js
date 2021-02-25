@@ -180,7 +180,7 @@ describe('Processing Swaps', () => {
     });
 
     it('should deduct the widthdrawal fee from each transaction for Loki', async () => {
-      const fee = config.get('loki.withdrawalFee');
+      const fee = config.get('beldex.withdrawalFee');
 
       await functions.send(SWAP_TYPE.BLOKI_TO_LOKI, transactions);
 

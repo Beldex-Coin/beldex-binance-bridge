@@ -8,13 +8,13 @@
     "user": "postgres",
     "password": "postgres"
   },
-  "loki": {
+  "beldex": {
     "walletRPC": {
       "host": "localhost",
       "port": 18082,
       "username": "test",
       "password": "test"
     },
-    "withdrawalFee": 5
+    "withdrawalFee": 0
   }
 }

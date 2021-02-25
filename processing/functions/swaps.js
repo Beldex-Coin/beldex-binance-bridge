@@ -8,7 +8,7 @@ import { db, bnb, loki } from '../core';
 import log from '../utils/log';
 
 // The fees in decimal format
-const configFees = { [TYPE.LOKI]: config.get('loki.withdrawalFee') };
+const configFees = { [TYPE.LOKI]: config.get('beldex.withdrawalFee') };
 
 const symbols = {
   [TYPE.LOKI]: 'LOKI',
@@ -151,7 +151,6 @@ const module = {
     const validSwaps = module.getValidSwaps(swaps, swapType);
     const ids = validSwaps.map(s => s.uuid);
     const transactions = module.getTransactions(validSwaps);
-
     if (!transactions || transactions.length === 0) throw new NoSwapsToProcess();
 
     const txHashes = await module.send(swapType, transactions);

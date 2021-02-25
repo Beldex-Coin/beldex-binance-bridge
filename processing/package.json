@@ -1,7 +1,7 @@
 {
-  "name": "loki-bridge-processing",
+  "name": "beldex-bridge-processing",
   "version": "1.0.0",
-  "description": "The processing backend for the loki bridge",
+  "description": "The processing backend for the beldex bridge",
   "main": "process.js",
   "private": true,
   "scripts": {
@@ -13,7 +13,7 @@
     "printInvalid": "cross-env NODE_ENV=production node -r esm process.js --printInvalid",
     "preinstall": "npm link ../bridge-core"
   },
-  "author": "Loki Network",
+  "author": "Beldex Network",
   "license": "ISC",
   "dependencies": {
     "axios": "^0.19.0",

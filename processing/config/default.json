@@ -4,7 +4,7 @@
   "binance": {
     "api": "https://testnet-dex.binance.org/",
     "network": "testnet",
-    "symbol": "BDX",
+    "symbol": "BDX-7BA",
     "mnemonic": "trophy symptom blur scan guard stuff unusual sorry debate hamster model eternal"
   },
   "database": {
@@ -15,13 +15,13 @@
     "password": "postgres",
     "ssl": false
   },
-  "loki": {
+  "beldex": {
     "walletRPC": {
       "host": "localhost",
       "port": 18082,
       "username": "test",
       "password": "test"
     },
-    "withdrawalFee": 5
+    "withdrawalFee": 0
   }
 }

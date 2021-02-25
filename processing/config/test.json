@@ -1,11 +1,11 @@
 {
   "database": {
-    "database": "lokibridge-test"
+    "database": "beldexbridge-test"
   },
   "binance": {
     "symbol": "TEST"
   },
-  "loki": {
-    "withdrawalFee": 1
+  "beldex": {
+    "withdrawalFee": 0
   }
 }
