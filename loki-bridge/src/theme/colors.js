@@ -1,6 +1,7 @@
 export default {
   lokiGreen: '#5BCA5B',
   lokiBlack90: '#0A0A0A',
+  belBackground: "transparent",
   lokiBlack80: '#252525',
   lokiBlack60: '#313131',
   lokiBlack50: '#7E7E7E',

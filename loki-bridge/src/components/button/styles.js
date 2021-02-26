@@ -5,14 +5,17 @@ const styles = theme => ({
   button: {
     minWidth: '100px',
     fontWeight: 700,
-    border: `1px solid ${theme.palette.primary.main}`,
+    border: `1px solid #fff`,
     transition: 'all 0.2s ease-in-out',
     padding: '0.8rem 2.5rem',
     letterSpacing: '0.03em',
     fontSize: '0.8rem',
+    backgroundColor: '#fff',
+    color: '#000',
     '&:hover': {
-      backgroundColor: theme.palette.primary.main,
-      color: 'white'
+      backgroundColor: '#000',
+      color: 'white',
+      border: `1px solid #fff`,
     }
   },
   secondary: {

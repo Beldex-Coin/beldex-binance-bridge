@@ -68,6 +68,7 @@ class SwapSelection extends Component {
             value={swapType}
             handleChange={this.onSwapTypeChanged}
             disabled={loading}
+            className="belSelect"
           />
         </Grid>
         <Grid item xs={ 12 }>
@@ -81,7 +82,7 @@ class SwapSelection extends Component {
             disabled={loading}
           />
           <Typography className={ classes.createAccount }>
-            <Link href={url} target="_blank" rel="noreferrer">
+            <Link style={{color : '#fff'}} href={url} target="_blank" rel="noreferrer">
               Don't have a wallet? create one
             </Link>
           </Typography>
@@ -94,7 +95,7 @@ class SwapSelection extends Component {
             onClick={this.onNext}
           />
         </Grid>
-        <Link href="/tos/BLOKIBridgeTOS.html" target="_blank">Terms of Service</Link>
+        <Link className={classes.belLink} href="/tos/BLOKIBridgeTOS.html" target="_blank">Terms of Service</Link>
       </Grid>
     );
   }

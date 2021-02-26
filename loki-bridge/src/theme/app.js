@@ -17,12 +17,13 @@ const theme =  {
     MuiInputBase: {
       root: {
         fontSize: '13px',
-        background: colors.lokiBlack60
+        background: colors.belBackground
       }
     },
     MuiOutlinedInput: {
       input: {
-        padding: '14px'
+        padding: '14px',
+        background: 'transparent'
       }
     },
     MuiPrivateNotchedOutline: {

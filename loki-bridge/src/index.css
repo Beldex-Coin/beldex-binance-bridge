@@ -27,10 +27,8 @@ code {
   display: flex;
   flex-direction: column;
   min-width: 100px;
-  background: #008522; /* Old browsers */
-  background: -moz-linear-gradient(-45deg,  #78be20 0%, #008522 50%, #005f61 100%); /* FF3.6-15 */
-  background: -webkit-linear-gradient(-45deg,  #78be20 0%,#008522 50%,#005f61 100%); /* Chrome10-25,Safari5.1-6 */
-  background: linear-gradient(135deg,  #78be20 0%,#008522 50%,#005f61 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  background: #000; /* Old browsers */
+  
 }
 
 #content {
@@ -59,18 +57,43 @@ code {
   -webkit-transition: opacity 0.3s ease-out;
 }
 
+.moving
+{
+  position: absolute;
+  bottom: 0;
+  animation: drive 10s linear;
+  animation-iteration-count: 1;
+  position: absolute;
+  height: 100%;
+  background: #000;
+  width: 100%;
+  opacity: 0;
+}
+
+@keyframes drive{
+  0%{
+    transform: translateX(0px);
+    opacity: 1;
+  }
+  100%{
+    transform: translateX(100vw);
+    opacity: 1;
+  }
+  
+}
 .backgroundImageLoaded {
   opacity: 1;
 }
 
 .title {
   margin: 20px 0;
+  position: relative;
 }
 
 .titleImage {
   object-fit: contain;
   width: 100%;
-  max-width: 600px;
+  max-width: 300px;
   opacity: 0;
   transition: opacity 0.3s ease-out;
   -webkit-transition: opacity 0.3s ease-out;

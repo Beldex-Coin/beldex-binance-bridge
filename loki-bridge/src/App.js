@@ -42,7 +42,7 @@ export default class App extends PureComponent {
     return (
       <div id="background">
         <LazyLoad height={'100%'}>
-          <ImageLoader className="backgroundImage" loadedClassName="backgroundImageLoaded" src="/images/background.png" alt="Background" />
+          <ImageLoader className="backgroundImage" loadedClassName="backgroundImageLoaded" src="/images/background1.jpg" alt="Background" />
         </LazyLoad>
       </div>
     );
@@ -51,9 +51,12 @@ export default class App extends PureComponent {
   renderTitleImage = () => {
     return (
       <Box display="flex" justifyContent="center" className="title">
-        <LazyLoad height={'120px'} className="titleContainer">
+        <LazyLoad height={'60px'} className="titleContainer">
           <ImageLoader className="titleImage" loadedClassName="titleImageLoaded" src="/images/logo.png" alt="Logo" />
         </LazyLoad>
+        <div className="moving">
+              
+          </div>
       </Box>
     );
   }
