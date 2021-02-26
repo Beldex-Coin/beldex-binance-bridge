@@ -17,7 +17,7 @@ class Swap extends Component {
   state = {
     loading: false,
     page: 0,
-    swapType: SWAP_TYPE.LOKI_TO_BLOKI,
+    swapType: SWAP_TYPE.BDX_TO_BBDX,
     address: '',
     info: {},
     swapInfo: {},
@@ -109,7 +109,7 @@ class Swap extends Component {
 
   getUnconfirmedTransactions = () => {
     const { swapType, swapInfo } = this.state;
-    if (swapType !== SWAP_TYPE.LOKI_TO_BLOKI) return;
+    if (swapType !== SWAP_TYPE.BDX_TO_BBDX) return;
     dispatcher.dispatch({
       type: Actions.GET_UNCONFIRMED_LOKI_TXS,
       content: {
@@ -163,7 +163,7 @@ class Swap extends Component {
     const { swapType, swaps, info } = this.state;
     if (!swaps) return null;
 
-    const receivingCurrency = swapType === SWAP_TYPE.LOKI_TO_BLOKI ? TYPE.BNB : TYPE.LOKI;
+    const receivingCurrency = swapType === SWAP_TYPE.BDX_TO_BBDX ? TYPE.BNB : TYPE.LOKI;
 
     const pendingSwaps = swaps.filter(s => s.transferTxHashes && s.transferTxHashes.length === 0);
     const total = pendingSwaps.reduce((total, swap) => total + parseFloat(swap.amount), 0);
@@ -184,10 +184,10 @@ class Swap extends Component {
     const { classes } = this.props;
     const { swaps, unconfirmed, swapType } = this.state;
 
-    const unconfirmedTxs = swapType === SWAP_TYPE.LOKI_TO_BLOKI ? unconfirmed : [];
+    const unconfirmedTxs = swapType === SWAP_TYPE.BDX_TO_BBDX ? unconfirmed : [];
     const unconfirmedSwaps = unconfirmedTxs.map(({ hash, amount, created }) => ({
       uuid: hash,
-      type: SWAP_TYPE.LOKI_TO_BLOKI,
+      type: SWAP_TYPE.BDX_TO_BBDX,
       amount,
       txHash: hash,
       transferTxHashes: [],

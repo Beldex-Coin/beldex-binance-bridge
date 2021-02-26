@@ -49,7 +49,7 @@ const module = {
     }
 
     const { swaps, totalAmount } = info;
-    const sentCurrency = swapType === SWAP_TYPE.LOKI_TO_BLOKI ? TYPE.BNB : TYPE.LOKI;
+    const sentCurrency = swapType === SWAP_TYPE.BDX_TO_BBDX ? TYPE.BNB : TYPE.LOKI;
 
     log.info(chalk`{green Completed {white.bold ${swaps.length}} swaps}`);
     log.info(chalk`{green Amount sent:} {bold ${totalAmount / 1e9}} {yellow ${symbols[sentCurrency]}}`);
@@ -156,7 +156,7 @@ const module = {
     const txHashes = await module.send(swapType, transactions);
     await db.updateSwapsTransferTransactionHash(ids, txHashes.join(','));
 
-    const sentCurrency = swapType === SWAP_TYPE.LOKI_TO_BLOKI ? TYPE.BNB : TYPE.LOKI;
+    const sentCurrency = swapType === SWAP_TYPE.BDX_TO_BBDX ? TYPE.BNB : TYPE.LOKI;
 
     // This is in 1e9 format
     const transactionAmount = transactions.reduce((total, current) => total + current.amount, 0);
@@ -231,7 +231,7 @@ const module = {
    */
   async send(swapType, transactions) {
     // Multi-send always returns an array of hashes
-    if (swapType === SWAP_TYPE.LOKI_TO_BLOKI) {
+    if (swapType === SWAP_TYPE.BDX_TO_BBDX) {
       const symbol = config.get('binance.symbol');
       const outputs = transactions.map(({ address, amount }) => ({
         to: address,

@@ -6,16 +6,16 @@ import log from '../utils/log';
 
 const module = {
   async checkAllBalances() {
-    const lokiBalance = await module.getBalances(SWAP_TYPE.LOKI_TO_BLOKI);
-    module.printBalance(SWAP_TYPE.LOKI_TO_BLOKI, lokiBalance);
+    const lokiBalance = await module.getBalances(SWAP_TYPE.BDX_TO_BBDX);
+    module.printBalance(SWAP_TYPE.BDX_TO_BBDX, lokiBalance);
 
     const bnbBalance = await module.getBalances(SWAP_TYPE.BLOKI_TO_LOKI);
     module.printBalance(SWAP_TYPE.BLOKI_TO_LOKI, bnbBalance);
   },
 
   printBalance(swapType, balance, showWarning = true) {
-    const receiveCurrency = swapType === SWAP_TYPE.LOKI_TO_BLOKI ? 'LOKI' : 'B-LOKI';
-    const swapCurrency = swapType === SWAP_TYPE.LOKI_TO_BLOKI ? 'B-LOKI' : 'LOKI';
+    const receiveCurrency = swapType === SWAP_TYPE.BDX_TO_BBDX ? 'LOKI' : 'B-LOKI';
+    const swapCurrency = swapType === SWAP_TYPE.BDX_TO_BBDX ? 'B-LOKI' : 'LOKI';
     log.header(chalk.blue(`Balance of ${swapType}`));
     log.info(chalk`{green Transaction balance:} {bold ${balance.transaction / 1e9}} {yellow ${receiveCurrency}}`);
     log.info(chalk`{green Swap balance:} {bold ${balance.swap / 1e9}} {yellow ${swapCurrency}}`);
@@ -32,7 +32,7 @@ const module = {
     const now = Date.now();
     const twoDaysAgo = now - (2 * 24 * 60 * 60 * 1000);
 
-    const accountType = swapType === SWAP_TYPE.LOKI_TO_BLOKI ? TYPE.LOKI : TYPE.BNB;
+    const accountType = swapType === SWAP_TYPE.BDX_TO_BBDX ? TYPE.LOKI : TYPE.BNB;
     const transactionBalance = await module.getBalanceFromIncomingTransactions(accountType, twoDaysAgo, now);
     const swapBalance = await module.getSwapBalance(swapType, twoDaysAgo, now);
     return {
@@ -78,7 +78,7 @@ const module = {
       const lokiTransactions = await Promise.all(promises).then(array => array.flat());
 
       // generate a list of all processed swaps
-      const swaps = await db.getAllSwaps(SWAP_TYPE.LOKI_TO_BLOKI);
+      const swaps = await db.getAllSwaps(SWAP_TYPE.BDX_TO_BBDX);
       // exclude any tx where we've received loki
       // we want to include all those (and skip the confirmation check)
       const completedSwaps = swaps.filter(swap => {
