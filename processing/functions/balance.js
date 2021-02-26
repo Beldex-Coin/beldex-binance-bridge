@@ -73,7 +73,7 @@ const module = {
     let filtered = [];
 
     if (accountType === TYPE.LOKI) {
-    // Get all incoming transactions from the client accounts
+      // Get all incoming transactions from the client accounts
       const promises = clientAccounts.map(async c => transactionHelper.getIncomingLokiTransactions(c.account.addressIndex));
       const lokiTransactions = await Promise.all(promises).then(array => array.flat());
 
@@ -117,7 +117,7 @@ const module = {
         return !(timestamp > to || timestamp < from);
       });
     } else if (accountType === TYPE.BNB) {
-    // Get all our incoming transactions which contain a memo
+      // Get all our incoming transactions which contain a memo
       const ourAddress = transactionHelper.ourBNBAddress;
       const transactions = await transactionHelper.getIncomingBNBTransactions(ourAddress, from);
       const bnbClientAccounts = await db.getClientAccounts(TYPE.BNB);
@@ -138,7 +138,7 @@ const module = {
   },
 
   async printBNBTransactionsWithIncorrectMemo() {
-  // Get all our incoming transactions which contain a memo
+    // Get all our incoming transactions which contain a memo
     const ourAddress = transactionHelper.ourBNBAddress;
     const transactions = await transactionHelper.getIncomingBNBTransactions(ourAddress);
     const bnbClientAccounts = await db.getClientAccounts(TYPE.BNB);

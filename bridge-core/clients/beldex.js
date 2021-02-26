@@ -18,7 +18,6 @@ export default class LokiClient {
   }
 
   async _request(method, params = {}, callCount = 0) {
-    console.log("wallet:",this.rpc,this.wallet)
     const options = {
       uri: `http://${this.rpc.hostname}:${this.rpc.port}/json_rpc`,
       method: 'POST',
@@ -130,7 +129,6 @@ export default class LokiClient {
       account_index: this.accountIndex,
       subaddr_indices: [addressIndex],
     });
-    console.log("MATcH:",data)
     if (data.error) {
       console.log('[Beldex Wallet] Failed to get transactions: ', data.error);
       return [];

@@ -39,7 +39,6 @@ export default class TransactionHelper {
 
         // We only want transactions that have been confirmed
         const transactions = await this.getIncomingLokiTransactions(addressIndex);
-        console.log("trans:",transactions)
         return transactions
           .filter(tx => tx.confirmed)
           .map(({ hash, amount, timestamp }) => ({ hash, amount, timestamp }));
@@ -73,8 +72,6 @@ export default class TransactionHelper {
    */
   async getIncomingLokiTransactions(addressIndex, options = {}) {
     const transactions = await this.beldex.getIncomingTransactions(addressIndex, options);
-    console.log("trans-0",transactions)
-    // transactions[0].checkpointed = true;
     return transactions.map(tx => ({
       ...tx,
       confirmed: tx.confirmations >= 10,
