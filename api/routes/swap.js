@@ -14,7 +14,7 @@ const txCache = {};
  * Request Data:
  *  - type: The type of swap (SWAP_TYPE).
  *  - address: An address. The type of address is determined from the `type` passed.
- *  E.g If `type = LOKI_TO_BLOKI` then the `address` is expected to be a loki address.
+ *  E.g If `type = BDX_TO_BBDX` then the `address` is expected to be a beldex address.
  */
 export function swapToken(req, res, next) {
   crypto.decryptAPIPayload(req, res, next, async data => {
@@ -28,8 +28,8 @@ export function swapToken(req, res, next) {
     const { type, address } = data;
 
     // We assume the address type is that of the currency we are swapping to.
-    // So if the swap is LOKI_TO_BLOKI then we want the user to give the BNB address
-    // We then generate a LOKI address that they will deposit to.
+    // So if the swap is BDX_TO_BBDX then we want the user to give the BNB address
+    // We then generate a BDX address that they will deposit to.
     // After the deposit we pay them out to the BNB address they passed.
     const addressType = type === SWAP_TYPE.LOKI_TO_BLOKI ? TYPE.BNB : TYPE.LOKI;
 
@@ -212,7 +212,7 @@ export async function getSwaps(req, res, next) {
  * Request Data:
  *  - uuid: The uuid that was returned in `swapToken` (client account uuid)
  */
-export async function getUncomfirmedLokiTransactions(req, res, next) {
+export async function getUncomfirmedBeldexTransactions(req, res, next) {
   const data = req.query;
 
   const result = validation.validateUuidPresent(data);
@@ -226,7 +226,7 @@ export async function getUncomfirmedLokiTransactions(req, res, next) {
 
   try {
     const clientAccount = await db.getClientAccountForUuid(uuid);
-    const transactions = await transactionHelper.getIncomingLokiTransactions(clientAccount.account.addressIndex, { pool: true });
+    const transactions = await transactionHelper.getIncomingBeldexTransactions(clientAccount.account.addressIndex, { pool: true });
     const unconfirmed = transactions
       .filter(tx => !tx.confirmed)
       .map(({ hash, amount, timestamp }) => ({ hash, amount, created: timestamp }));

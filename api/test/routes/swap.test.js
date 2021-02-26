@@ -118,7 +118,7 @@ describe('Swap API', () => {
       context('BLOKI to LOKI', () => {
         it('should return the existing client account', async () => {
           const bnbAccountUuid = 'd27efff4-988b-11e9-a2a3-2a2ae2dbcce4';
-          const lokiClientAccount = 'd27f01b6-988b-11e9-a2a3-2a2ae2dbcce4';
+          const beldexClientAccount = 'd27f01b6-988b-11e9-a2a3-2a2ae2dbcce4';
           const lokiAddress = '123';
           const memo = 'bnbMemo';
 
@@ -126,7 +126,7 @@ describe('Swap API', () => {
             // BNB account
             dbHelper.insertBNBAccount(bnbAccountUuid, memo),
             // Mapping user loki address to generated bnb
-            dbHelper.insertClientAccount(lokiClientAccount, lokiAddress, TYPE.LOKI, bnbAccountUuid, TYPE.BNB),
+            dbHelper.insertClientAccount(beldexClientAccount, lokiAddress, TYPE.LOKI, bnbAccountUuid, TYPE.BNB),
           ]));
 
           // BLOKI_TO_LOKI means we give the api our LOKI address
