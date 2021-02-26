@@ -31,7 +31,7 @@ export function swapToken(req, res, next) {
     // So if the swap is BDX_TO_BBDX then we want the user to give the BNB address
     // We then generate a BDX address that they will deposit to.
     // After the deposit we pay them out to the BNB address they passed.
-    const addressType = type === SWAP_TYPE.LOKI_TO_BLOKI ? TYPE.BNB : TYPE.LOKI;
+    const addressType = type === SWAP_TYPE.BDX_TO_BBDX ? TYPE.BNB : TYPE.LOKI;
 
     try {
       const account = await db.getClientAccount(address, addressType);
@@ -42,7 +42,7 @@ export function swapToken(req, res, next) {
       }
 
       // Account type is the that of the currency we are swapping from
-      const accountType = type === SWAP_TYPE.LOKI_TO_BLOKI ? TYPE.LOKI : TYPE.BNB;
+      const accountType = type === SWAP_TYPE.BDX_TO_BBDX ? TYPE.LOKI : TYPE.BNB;
 
       let newAccount = null;
       if (accountType === TYPE.BNB) {

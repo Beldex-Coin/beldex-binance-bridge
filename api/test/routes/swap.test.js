@@ -39,12 +39,12 @@ describe('Swap API', () => {
 
         const failingData = [
           null,
-          { type: SWAP_TYPE.LOKI_TO_BLOKI },
+          { type: SWAP_TYPE.BDX_TO_BBDX },
           { address: '123', type: 'invalid type' },
 
           // validateAddress for both loki and bnb have been stubbed to return false
           // Which should cause these to fail
-          { address: '123', type: SWAP_TYPE.LOKI_TO_BLOKI },
+          { address: '123', type: SWAP_TYPE.BDX_TO_BBDX },
           { address: '123', type: SWAP_TYPE.BLOKI_TO_LOKI },
         ];
 
@@ -61,7 +61,7 @@ describe('Swap API', () => {
       it('should return 500 if we failed to create a loki account', async () => {
         const lokiCreateAccount = sandbox.stub(beldex, 'createAccount').resolves(null);
 
-        const { status, success, result } = await swapToken({ address: '123', type: SWAP_TYPE.LOKI_TO_BLOKI });
+        const { status, success, result } = await swapToken({ address: '123', type: SWAP_TYPE.BDX_TO_BBDX });
         assert.equal(status, 500);
         assert.isFalse(success);
         assert.equal(result, 'Invalid swap');
@@ -84,8 +84,8 @@ describe('Swap API', () => {
             dbHelper.insertClientAccount(bnbClientAccount, bnbAddress, TYPE.BNB, lokiAccountUuid, TYPE.LOKI),
           ]));
 
-          // LOKI_TO_BLOKI means we give the api our BNB address
-          const { status, success, result } = await swapToken({ type: SWAP_TYPE.LOKI_TO_BLOKI, address: bnbAddress });
+          // BDX_TO_BBDX means we give the api our BNB address
+          const { status, success, result } = await swapToken({ type: SWAP_TYPE.BDX_TO_BBDX, address: bnbAddress });
           assert.equal(status, 200);
           assert.isTrue(success);
           assert.deepEqual(result, {
@@ -104,7 +104,7 @@ describe('Swap API', () => {
           };
           sandbox.stub(beldex, 'createAccount').resolves(generateLokiAccount);
 
-          const { status, success, result } = await swapToken({ type: SWAP_TYPE.LOKI_TO_BLOKI, address: bnbAddress });
+          const { status, success, result } = await swapToken({ type: SWAP_TYPE.BDX_TO_BBDX, address: bnbAddress });
           assert.equal(status, 200);
           assert.isTrue(success);
           assert.deepEqual(result, {

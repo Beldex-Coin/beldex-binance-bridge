@@ -14,10 +14,10 @@ const module = {
   },
 
   /**
-  * Sweep any pending loki_to_bloki swaps
+  * Sweep any pending bdx_to_bbdx swaps
   */
   async sweepPendingLokiToBloki() {
-    log.header(chalk.blue(`Sweeping ${SWAP_TYPE.LOKI_TO_BLOKI}`));
+    log.header(chalk.blue(`Sweeping ${SWAP_TYPE.BDX_TO_BBDX}`));
 
     // Get all the client accounts
     const clientAccounts = await db.getClientAccounts(TYPE.LOKI);
@@ -31,7 +31,7 @@ const module = {
     const lokiTransactions = await Promise.all(promises).then(array => array.flat());
 
     // Get all the deposit hases from the db
-    const hashes = await db.getAllSwapDepositHashes(SWAP_TYPE.LOKI_TO_BLOKI);
+    const hashes = await db.getAllSwapDepositHashes(SWAP_TYPE.BDX_TO_BBDX);
 
     // Get all the new transactions
     const newTransactions = lokiTransactions.filter(t => !hashes.includes(t.hash));

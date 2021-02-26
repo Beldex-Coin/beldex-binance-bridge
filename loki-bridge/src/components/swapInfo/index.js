@@ -112,7 +112,7 @@ class SwapInfo extends PureComponent {
     const { swapType, classes, swapInfo } = this.props;
 
     const { depositAddress } = swapInfo;
-    const depositCurrency = swapType === SWAP_TYPE.LOKI_TO_BLOKI ? 'LOKI' : 'B-LOKI';
+    const depositCurrency = swapType === SWAP_TYPE.BDX_TO_BBDX ? 'LOKI' : 'B-LOKI';
 
     return (
       <React.Fragment>
@@ -151,7 +151,7 @@ class SwapInfo extends PureComponent {
     return (
       <Box className={classes.instructionContainer}>
         {this.renderDepositInstructions()}
-        { swapType === SWAP_TYPE.LOKI_TO_BLOKI && (
+        { swapType === SWAP_TYPE.BDX_TO_BBDX && (
           <Typography className={ classes.instructions }>
             <b>Note:</b> You will have to wait for the transaction to be checkpointed before you're added to our processing queue, this usually takes 8 blocks.
           </Typography>
@@ -172,7 +172,7 @@ class SwapInfo extends PureComponent {
     const { classes, swapType, swapInfo } = this.props;
     if (!swapInfo || !swapInfo.swaps || swapInfo.swaps.length === 0) return null;
 
-    const receivingCurrency = swapType === SWAP_TYPE.LOKI_TO_BLOKI ? 'B-LOKI' : 'LOKI';
+    const receivingCurrency = swapType === SWAP_TYPE.BDX_TO_BBDX ? 'B-LOKI' : 'LOKI';
 
     const pendingSwaps = swapInfo.swaps.filter(s => s.transferTxHashes && s.transferTxHashes.length === 0);
     const total = pendingSwaps.reduce((total, swap) => total + parseFloat(swap.amount), 0);

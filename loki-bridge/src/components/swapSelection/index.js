@@ -17,7 +17,7 @@ class SwapSelection extends Component {
     address: '',
     addressError: false,
     options: [{
-      value: SWAP_TYPE.LOKI_TO_BLOKI,
+      value: SWAP_TYPE.BDX_TO_BBDX,
       description: 'LOKI to B-LOKI',
     }, {
       value: SWAP_TYPE.BLOKI_TO_LOKI,
@@ -45,7 +45,7 @@ class SwapSelection extends Component {
 
   getAddressType = () => {
     const { swapType } = this.props;
-    return swapType === SWAP_TYPE.LOKI_TO_BLOKI ? TYPE.BNB : TYPE.LOKI;
+    return swapType === SWAP_TYPE.BDX_TO_BBDX ? TYPE.BNB : TYPE.LOKI;
   }
 
   render() {
