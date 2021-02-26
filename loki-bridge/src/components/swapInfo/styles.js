@@ -36,9 +36,9 @@ const styles = theme => ({
   },
   memo: {
     border: '1px solid',
-    borderColor: colors.lokiBlack90,
+    borderColor: colors.beldexBlack90,
     borderRadius: '3px',
-    backgroundColor: colors.lokiBlack90,
+    backgroundColor: colors.beldexBlack90,
     color: 'white',
     padding: '1rem',
     overflowWrap: 'break-word',
@@ -68,7 +68,7 @@ const styles = theme => ({
   },
   greenBorder: {
     borderWidth: 1,
-    borderColor: colors.lokiGreen,
+    borderColor: colors.beldxGreen,
     borderStyle: 'solid',
     padding: theme.spacing(1),
     borderRadius: '4px'

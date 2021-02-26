@@ -40,18 +40,18 @@ const theme =  {
   palette: {
     type: 'dark',
     primary: {
-      main: colors.lokiGreen
+      main: colors.beldxGreen
     },
     secondary: {
       main: colors.lightBlack
     },
     background:{
-      paper: colors.lokiBlack80,
+      paper: colors.beldexBlack80,
       default: '#008522'
     },
     text: {
       primary: colors.gray,
-      secondary: colors.lokiGreen
+      secondary: colors.beldxGreen
     }
   }
 };
