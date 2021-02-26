@@ -27,7 +27,7 @@ describe('Database', () => {
         assert.isNull(account);
       });
 
-      context('Loki Account', () => {
+      context('Beldex Account', () => {
         it('should return null if the account associated with the client account does not exist', async () => {
           const uuid = '17b42f9e-97b1-11e9-bc42-526af7764f64';
           await dbHelper.insertClientAccount(uuid, 'address', TYPE.BNB, 'aeb29bf6-97b1-11e9-bc42-526af7764f64', TYPE.LOKI);
@@ -140,8 +140,8 @@ describe('Database', () => {
         const { count } = await postgres.one('select count(*) from client_accounts');
         assert.equal(count, 5);
 
-        const lokiAccounts = await db.getClientAccounts(TYPE.LOKI);
-        assert.lengthOf(lokiAccounts, 3);
+        const beldexAccounts = await db.getClientAccounts(TYPE.LOKI);
+        assert.lengthOf(beldexAccounts, 3);
 
         const bnbAccounts = await db.getClientAccounts(TYPE.BNB);
         assert.lengthOf(bnbAccounts, 2);
@@ -393,9 +393,9 @@ describe('Database', () => {
       it('should return all the swaps for the given client account', async () => {
         const clientUuid = 'clientUuid';
         await postgres.tx(t => t.batch([
-          dbHelper.insertSwap('1', SWAP_TYPE.LOKI_TO_BLOKI, 1, clientUuid),
+          dbHelper.insertSwap('1', SWAP_TYPE.BDX_TO_BBDX, 1, clientUuid),
           dbHelper.insertSwap('2', SWAP_TYPE.BLOKI_TO_LOKI, 2, clientUuid),
-          dbHelper.insertSwap('3', SWAP_TYPE.LOKI_TO_BLOKI, 4, 'another uuid'),
+          dbHelper.insertSwap('3', SWAP_TYPE.BDX_TO_BBDX, 4, 'another uuid'),
         ]));
 
         const swaps = await db.getSwapsForClientAccount(clientUuid);
@@ -408,19 +408,19 @@ describe('Database', () => {
         const { count } = await postgres.one('select count(*) from swaps');
         assert.equal(count, 0);
 
-        const swaps = await db.getPendingSwaps(SWAP_TYPE.LOKI_TO_BLOKI);
+        const swaps = await db.getPendingSwaps(SWAP_TYPE.BDX_TO_BBDX);
         assert.isEmpty(swaps);
       });
 
       it('should return all the swaps that are pending', async () => {
         const clientUuid = '17b42f9e-97b1-11e9-bc42-526af7764f64';
         await postgres.tx(t => t.batch([
-          dbHelper.insertSwap('1', SWAP_TYPE.LOKI_TO_BLOKI, 1, clientUuid, 'pending swap'),
-          dbHelper.insertSwap('2', SWAP_TYPE.LOKI_TO_BLOKI, 1, clientUuid, 'completed swap', 'transaction', Date.now()),
+          dbHelper.insertSwap('1', SWAP_TYPE.BDX_TO_BBDX, 1, clientUuid, 'pending swap'),
+          dbHelper.insertSwap('2', SWAP_TYPE.BDX_TO_BBDX, 1, clientUuid, 'completed swap', 'transaction', Date.now()),
           dbHelper.insertSwap('3', SWAP_TYPE.BLOKI_TO_LOKI, 1, clientUuid, 'pending swap'),
         ]));
 
-        const swaps = await db.getPendingSwaps(SWAP_TYPE.LOKI_TO_BLOKI);
+        const swaps = await db.getPendingSwaps(SWAP_TYPE.BDX_TO_BBDX);
         assert.lengthOf(swaps, 1);
       });
 
@@ -432,8 +432,8 @@ describe('Database', () => {
 
         await postgres.tx(t => t.batch([
           dbHelper.insertClientAccount(clientUuid, address, TYPE.LOKI, accountUuid, TYPE.BNB),
-          dbHelper.insertSwap('1', SWAP_TYPE.LOKI_TO_BLOKI, 2, clientUuid, 'pending swap'),
-          dbHelper.insertSwap('2', SWAP_TYPE.LOKI_TO_BLOKI, 9, clientUuid, 'completed swap', 'transaction', Date.now()),
+          dbHelper.insertSwap('1', SWAP_TYPE.BDX_TO_BBDX, 2, clientUuid, 'pending swap'),
+          dbHelper.insertSwap('2', SWAP_TYPE.BDX_TO_BBDX, 9, clientUuid, 'completed swap', 'transaction', Date.now()),
           dbHelper.insertSwap('3', SWAP_TYPE.BLOKI_TO_LOKI, 10, clientUuid, depositHash),
         ]));
 
@@ -527,7 +527,7 @@ describe('Database', () => {
       it('should update transaction hash and set swap to processed', async () => {
         const uuid = '17b42f9e-97b1-11e9-bc42-526af7764f64';
         const transferTxHash = 'transfer';
-        await dbHelper.insertSwap(uuid, SWAP_TYPE.LOKI_TO_BLOKI, 10, 'uuid', 'deposit');
+        await dbHelper.insertSwap(uuid, SWAP_TYPE.BDX_TO_BBDX, 10, 'uuid', 'deposit');
 
         const { count: processedCount } = await postgres.one('select count(*) from swaps where processed is not null');
         assert.equal(processedCount, 0);

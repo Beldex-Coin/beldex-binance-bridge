@@ -17,4 +17,4 @@ const wallet = {
   accountIndex,
 };
 
-export default new clients.LokiClient(rpc, wallet);
+export default new clients.beldexClient(rpc, wallet);

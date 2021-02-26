@@ -5,7 +5,7 @@ import request from 'request-promise';
 /**
  * A client to communicate with Beldex Wallet.
  */
-export default class LokiClient {
+export default class beldexClient {
   /**
    * Create a Beldex client
    * @param {{ hostname, port, username, password }} rpcConfig The rpc config.

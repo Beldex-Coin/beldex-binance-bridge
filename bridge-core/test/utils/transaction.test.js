@@ -65,7 +65,7 @@ describe('Transaction', () => {
       });
     });
 
-    context('Loki', () => {
+    context('BDX', () => {
       it('should correctly return the incoming transactions', async () => {
         const mockAPIResult = [{
           txid: 'hash',
@@ -77,6 +77,7 @@ describe('Transaction', () => {
         const stub = sandbox.stub(beldex, 'getIncomingTransactions').resolves(mockAPIResult);
 
         const transactions = await transaction.getIncomingTransactions({ addressIndex: 0 }, TYPE.LOKI);
+        console.log("transa:",transactions)
         assert(stub.calledOnce, 'beldex.getIncomingTransactions was not called');
         assert.lengthOf(transactions, 1);
         assert.deepEqual(transactions[0], {
@@ -94,7 +95,7 @@ describe('Transaction', () => {
           { txid: 4, amount: 100, checkpointed: 1 },
         ];
 
-        sandbox.stub(db, 'getLokiAccount').resolves({ address_index: 0 });
+        sandbox.stub(db, 'getBeldexAccount').resolves({ address_index: 0 });
         const stub = sandbox.stub(beldex, 'getIncomingTransactions').resolves(mockAPIResult);
 
         const transactions = await transaction.getIncomingTransactions({ addressIndex: 0 }, TYPE.LOKI);
