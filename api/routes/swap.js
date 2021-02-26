@@ -107,7 +107,6 @@ export function finalizeSwap(req, res, next) {
         transactionHelper.getIncomingTransactions(account, accountType),
         db.getSwapsForClientAccount(uuid),
       ]);
-      console.log("transac:", transactions, swaps)
       if (!transactions || transactions.length === 0) {
         res.status(205);
         res.body = { status: 200, success: false, result: 'Unable to find a deposit' };
@@ -115,16 +114,12 @@ export function finalizeSwap(req, res, next) {
       }
 
       const newTransactions = transactions.filter(tx => {
-        console.log("swap:", swaps)
         // Filter out any transactions we aren't processing and haven't added to our swaps db
         const isProcessingTransaction = txCache[uuid].includes(tx.hash);
         const processedTransaction = swaps.find(s => s.deposit_transaction_hash === tx.hash) !== undefined;
-        console.log("Res:", !isProcessingTransaction, !processedTransaction)
-        console.log("ac:", isProcessingTransaction, processedTransaction)
         return !isProcessingTransaction && !processedTransaction;
         // return true;
       });
-      console.log("new-trans:", newTransactions)
       if (newTransactions.length === 0) {
         res.status(205);
         res.body = { status: 200, success: false, result: 'Unable to find any new deposits' };
@@ -163,7 +158,6 @@ export async function getSwaps(req, res, next) {
   const data = req.query;
 
   const result = validation.validateUuidPresent(data);
-  console.log("RESULT:", result)
   if (result != null) {
     res.status(400);
     res.body = { status: 400, success: false, result };
@@ -174,7 +168,6 @@ export async function getSwaps(req, res, next) {
 
   try {
     const clientAccount = await db.getClientAccountForUuid(uuid);
-    console.log("Client:", clientAccount, uuid)
     if (!clientAccount) {
       res.status(400);
       res.body = { status: 400, success: false, result: 'Unable to find swap details' };
@@ -233,9 +226,7 @@ export async function getUncomfirmedLokiTransactions(req, res, next) {
 
   try {
     const clientAccount = await db.getClientAccountForUuid(uuid);
-    console.log("address:", clientAccount.account.addressIndex)
     const transactions = await transactionHelper.getIncomingLokiTransactions(clientAccount.account.addressIndex, { pool: true });
-    console.log("TRANS-2:", transactions)
     const unconfirmed = transactions
       .filter(tx => !tx.confirmed)
       .map(({ hash, amount, timestamp }) => ({ hash, amount, created: timestamp }));
@@ -243,7 +234,6 @@ export async function getUncomfirmedLokiTransactions(req, res, next) {
     res.status(205);
     res.body = { status: 200, success: true, result: unconfirmed };
   } catch (error) {
-    console.log(error);
     const message = (error && error.message);
     res.status(500);
     res.body = { status: 500, success: false, result: message || error };

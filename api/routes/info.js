@@ -2,10 +2,10 @@
 import config from 'config';
 
 export function getInfo(req, res, next) {
-  const lokiFee = config.get('beldex.withdrawalFee');
-  const lokiAmount = (parseFloat(lokiFee) * 1e9).toFixed(0);
+  const beldexFee = config.get('beldex.withdrawalFee');
+  const beldexAmount = (parseFloat(beldexFee) * 1e9).toFixed(0);
 
-  const info = { fees: { beldex: lokiAmount } };
+  const info = { fees: { bdx: beldexAmount } };
 
   res.status(205);
   res.body = {

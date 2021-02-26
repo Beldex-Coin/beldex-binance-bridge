@@ -8,12 +8,12 @@ const getInfo = params => wrapRouterFunction(infoRoutes.getInfo, params);
 describe('Info API', () => {
   describe('#getInfo', () => {
     it('should return the correct fees', async () => {
-      const lokiFee = config.get('beldex.withdrawalFee');
+      const beldexFee = config.get('beldex.withdrawalFee');
       const { status, success, result } = await getInfo();
       assert.equal(status, 200);
       assert.isTrue(success);
       assert.isNotNull(result);
-      assert.equal(result.fees.loki, lokiFee * 1e9);
+      assert.equal(result.fees.bdx, beldexFee * 1e9);
     });
   });
 });
