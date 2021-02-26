@@ -27,7 +27,7 @@ describe('Database', () => {
         assert.isNull(account);
       });
 
-      context('Loki Account', () => {
+      context('Beldex Account', () => {
         it('should return null if the account associated with the client account does not exist', async () => {
           const uuid = '17b42f9e-97b1-11e9-bc42-526af7764f64';
           await dbHelper.insertClientAccount(uuid, 'address', TYPE.BNB, 'aeb29bf6-97b1-11e9-bc42-526af7764f64', TYPE.LOKI);
@@ -140,8 +140,8 @@ describe('Database', () => {
         const { count } = await postgres.one('select count(*) from client_accounts');
         assert.equal(count, 5);
 
-        const lokiAccounts = await db.getClientAccounts(TYPE.LOKI);
-        assert.lengthOf(lokiAccounts, 3);
+        const beldexAccounts = await db.getClientAccounts(TYPE.LOKI);
+        assert.lengthOf(beldexAccounts, 3);
 
         const bnbAccounts = await db.getClientAccounts(TYPE.BNB);
         assert.lengthOf(bnbAccounts, 2);

@@ -74,7 +74,7 @@ const module = {
 
     if (accountType === TYPE.LOKI) {
       // Get all incoming transactions from the client accounts
-      const promises = clientAccounts.map(async c => transactionHelper.getIncomingLokiTransactions(c.account.addressIndex));
+      const promises = clientAccounts.map(async c => transactionHelper.getIncomingBeldexTransactions(c.account.addressIndex));
       const lokiTransactions = await Promise.all(promises).then(array => array.flat());
 
       // generate a list of all processed swaps
