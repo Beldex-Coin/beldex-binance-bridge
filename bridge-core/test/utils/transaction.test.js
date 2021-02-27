@@ -77,7 +77,6 @@ describe('Transaction', () => {
         const stub = sandbox.stub(beldex, 'getIncomingTransactions').resolves(mockAPIResult);
 
         const transactions = await transaction.getIncomingTransactions({ addressIndex: 0 }, TYPE.BDX);
-        console.log("transa:",transactions)
         assert(stub.calledOnce, 'beldex.getIncomingTransactions was not called');
         assert.lengthOf(transactions, 1);
         assert.deepEqual(transactions[0], {

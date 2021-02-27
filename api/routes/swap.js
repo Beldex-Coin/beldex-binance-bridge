@@ -175,7 +175,6 @@ export async function getSwaps(req, res, next) {
     }
 
     const swaps = await db.getSwapsForClientAccount(uuid);
-    console.log("swap:", swaps)
     if (!swaps) {
       res.status(400);
       res.body = { status: 400, success: false, result: 'Failed to fetch swaps' };
