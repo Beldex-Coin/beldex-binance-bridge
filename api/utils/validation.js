@@ -11,7 +11,7 @@ export async function validateSwap(body) {
   if (type === SWAP_TYPE.BLOKI_TO_LOKI) {
     // User should pass a BDX address
     const valid = await beldex.validateAddress(address);
-    if (!valid) return 'address must be a LOKI address';
+    if (!valid) return 'address must be a BDX address';
   } else if (type === SWAP_TYPE.BDX_TO_BBDX) {
     // User should pass a BNB address
     if (!bnb.validateAddress(address)) return 'address must be a BNB address';

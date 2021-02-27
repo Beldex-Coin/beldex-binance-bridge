@@ -34,7 +34,7 @@ export default class TransactionHelper {
           .filter(tx => tx.memo.trim() === memo.trim())
           .map(({ hash, amount, timestamp }) => ({ hash, amount, timestamp }));
       }
-      case TYPE.LOKI: {
+      case TYPE.BDX: {
         const { addressIndex } = account;
 
         // We only want transactions that have been confirmed

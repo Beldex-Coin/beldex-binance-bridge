@@ -8,10 +8,10 @@ import { db, bnb, beldex } from '../core';
 import log from '../utils/log';
 
 // The fees in decimal format
-const configFees = { [TYPE.LOKI]: config.get('beldex.withdrawalFee') };
+const configFees = { [TYPE.BDX]: config.get('beldex.withdrawalFee') };
 
 const symbols = {
-  [TYPE.LOKI]: 'LOKI',
+  [TYPE.BDX]: 'LOKI',
   [TYPE.BNB]: 'B-LOKI',
 };
 
@@ -21,7 +21,7 @@ class DailyLimitHit extends Error { }
 
 const module = {
   // The fees in 1e9 format
-  fees: { [TYPE.LOKI]: (parseFloat(configFees[TYPE.LOKI]) * 1e9).toFixed(0) },
+  fees: { [TYPE.BDX]: (parseFloat(configFees[TYPE.BDX]) * 1e9).toFixed(0) },
 
   Errors: { PriceFetchFailed, NoSwapsToProcess, DailyLimitHit },
   /**
@@ -49,7 +49,7 @@ const module = {
     }
 
     const { swaps, totalAmount } = info;
-    const sentCurrency = swapType === SWAP_TYPE.BDX_TO_BBDX ? TYPE.BNB : TYPE.LOKI;
+    const sentCurrency = swapType === SWAP_TYPE.BDX_TO_BBDX ? TYPE.BNB : TYPE.BDX;
 
     log.info(chalk`{green Completed {white.bold ${swaps.length}} swaps}`);
     log.info(chalk`{green Amount sent:} {bold ${totalAmount / 1e9}} {yellow ${symbols[sentCurrency]}}`);
@@ -156,7 +156,7 @@ const module = {
     const txHashes = await module.send(swapType, transactions);
     await db.updateSwapsTransferTransactionHash(ids, txHashes.join(','));
 
-    const sentCurrency = swapType === SWAP_TYPE.BDX_TO_BBDX ? TYPE.BNB : TYPE.LOKI;
+    const sentCurrency = swapType === SWAP_TYPE.BDX_TO_BBDX ? TYPE.BNB : TYPE.BDX;
 
     // This is in 1e9 format
     const transactionAmount = transactions.reduce((total, current) => total + current.amount, 0);
@@ -190,7 +190,7 @@ const module = {
 
     // A transaction is invalid if the amount - fee is negative
     const invalidTransactions = transactions.filter(({ amount }) => {
-      const fee = module.fees[TYPE.LOKI] || 0;
+      const fee = module.fees[TYPE.BDX] || 0;
       return (amount - fee) <= 0;
     });
 
@@ -246,7 +246,7 @@ const module = {
     } else if (swapType === SWAP_TYPE.BLOKI_TO_LOKI) {
       // Deduct the Beldex withdrawal fees.
       const outputs = transactions.map(({ address, amount }) => {
-        const fee = module.fees[TYPE.LOKI] || 0;
+        const fee = module.fees[TYPE.BDX] || 0;
         return {
           address,
           amount: Math.max(0, amount - fee),

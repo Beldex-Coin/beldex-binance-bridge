@@ -32,7 +32,7 @@ const module = {
     const now = Date.now();
     const twoDaysAgo = now - (2 * 24 * 60 * 60 * 1000);
 
-    const accountType = swapType === SWAP_TYPE.BDX_TO_BBDX ? TYPE.LOKI : TYPE.BNB;
+    const accountType = swapType === SWAP_TYPE.BDX_TO_BBDX ? TYPE.BDX : TYPE.BNB;
     const transactionBalance = await module.getBalanceFromIncomingTransactions(accountType, twoDaysAgo, now);
     const swapBalance = await module.getSwapBalance(swapType, twoDaysAgo, now);
     return {
@@ -72,7 +72,7 @@ const module = {
 
     let filtered = [];
 
-    if (accountType === TYPE.LOKI) {
+    if (accountType === TYPE.BDX) {
       // Get all incoming transactions from the client accounts
       const promises = clientAccounts.map(async c => transactionHelper.getIncomingBeldexTransactions(c.account.addressIndex));
       const lokiTransactions = await Promise.all(promises).then(array => array.flat());

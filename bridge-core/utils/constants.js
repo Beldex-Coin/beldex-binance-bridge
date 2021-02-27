@@ -1,5 +1,5 @@
 export const TYPE = {
-  LOKI: 'bdx',
+  BDX: 'bdx',
   BNB: 'bnb', // This is the wallet type for BLOKI
 };
 

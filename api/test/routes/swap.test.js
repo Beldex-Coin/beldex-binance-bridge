@@ -42,7 +42,7 @@ describe('Swap API', () => {
           { type: SWAP_TYPE.BDX_TO_BBDX },
           { address: '123', type: 'invalid type' },
 
-          // validateAddress for both loki and bnb have been stubbed to return false
+          // validateAddress for both bdx and bnb have been stubbed to return false
           // Which should cause these to fail
           { address: '123', type: SWAP_TYPE.BDX_TO_BBDX },
           { address: '123', type: SWAP_TYPE.BLOKI_TO_LOKI },
@@ -58,7 +58,7 @@ describe('Swap API', () => {
         assert.equal(spy.callCount, failingData.length);
       });
 
-      it('should return 500 if we failed to create a loki account', async () => {
+      it('should return 500 if we failed to create a bdx account', async () => {
         const lokiCreateAccount = sandbox.stub(beldex, 'createAccount').resolves(null);
 
         const { status, success, result } = await swapToken({ address: '123', type: SWAP_TYPE.BDX_TO_BBDX });
@@ -78,10 +78,10 @@ describe('Swap API', () => {
           const bnbAddress = '456';
 
           await postgres.tx(t => t.batch([
-            // Generated loki account
+            // Generated bdx account
             dbHelper.insertLokiAccount(lokiAccountUuid, 'lokiAddress', 0),
             // Mapping user bnb address to generated loki
-            dbHelper.insertClientAccount(bnbClientAccount, bnbAddress, TYPE.BNB, lokiAccountUuid, TYPE.LOKI),
+            dbHelper.insertClientAccount(bnbClientAccount, bnbAddress, TYPE.BNB, lokiAccountUuid, TYPE.BDX),
           ]));
 
           // BDX_TO_BBDX means we give the api our BNB address
@@ -90,7 +90,7 @@ describe('Swap API', () => {
           assert.isTrue(success);
           assert.deepEqual(result, {
             uuid: bnbClientAccount,
-            type: TYPE.LOKI,
+            type: TYPE.BDX,
             depositAddress: 'lokiAddress',
           });
         });
@@ -109,7 +109,7 @@ describe('Swap API', () => {
           assert.isTrue(success);
           assert.deepEqual(result, {
             uuid: result.uuid,
-            type: TYPE.LOKI,
+            type: TYPE.BDX,LBDXKI
             depositAddress: generateLokiAccount.address,
           });
         });
@@ -126,7 +126,7 @@ describe('Swap API', () => {
             // BNB account
             dbHelper.insertBNBAccount(bnbAccountUuid, memo),
             // Mapping user loki address to generated bnb
-            dbHelper.insertClientAccount(beldexClientAccount, lokiAddress, TYPE.LOKI, bnbAccountUuid, TYPE.BNB),
+            dbHelper.insertClientAccount(beldexClientAccount, lokiAddress, TYPE.BDX, bnbAccountUuid, TYPE.BNB),
           ]));
 
           // BLOKI_TO_LOKI means we give the api our LOKI address
@@ -167,7 +167,7 @@ describe('Swap API', () => {
     const clientAccount = {
       uuid: 'd27efff4-988b-11e9-a2a3-2a2ae2dbcce4',
       address: 'LOKI',
-      addressType: TYPE.LOKI,
+      addressType: TYPE.BDX,
       accountType: TYPE.BNB,
       account: { memo: 'memo' },
     };
@@ -321,7 +321,7 @@ describe('Swap API', () => {
       const clientAccount = {
         uuid: 'd27efff4-988b-11e9-a2a3-2a2ae2dbcce4',
         address: 'LOKI',
-        addressType: TYPE.LOKI,
+        addressType: TYPE.BDX,
         accountAddress: 'BNB',
         accountType: TYPE.BNB,
       };

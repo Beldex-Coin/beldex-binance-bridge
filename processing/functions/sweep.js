@@ -20,12 +20,12 @@ const module = {
     log.header(chalk.blue(`Sweeping ${SWAP_TYPE.BDX_TO_BBDX}`));
 
     // Get all the client accounts
-    const clientAccounts = await db.getClientAccounts(TYPE.LOKI);
+    const clientAccounts = await db.getClientAccounts(TYPE.BDX);
 
     // Get all incoming transactions from the client accounts
     const promises = clientAccounts.map(async c => {
       const { address } = c.account;
-      const transactions = await transactionHelper.getIncomingTransactions(c.account, TYPE.LOKI);
+      const transactions = await transactionHelper.getIncomingTransactions(c.account, TYPE.BDX);
       return transactions.map(t => ({ ...t, address }));
     });
     const lokiTransactions = await Promise.all(promises).then(array => array.flat());

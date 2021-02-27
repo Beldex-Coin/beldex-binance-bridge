@@ -36,7 +36,7 @@ export default class Database {
       accountType,
     };
 
-    if (accountType === TYPE.LOKI) {
+    if (accountType === TYPE.BDX) {
       const accountQuery = 'select address, address_index from accounts_loki where uuid = $1;';
       const account = await this.postgres.oneOrNone(accountQuery, [accountUuid]);
       if (!account) return null;
@@ -120,10 +120,10 @@ export default class Database {
   */
   async insertClientAccount(address, addressType, account) {
     // We assume that if addressType is loki then accountType is bnb and viceversa
-    const accountType = addressType === TYPE.LOKI ? TYPE.BNB : TYPE.LOKI;
+    const accountType = addressType === TYPE.BDX ? TYPE.BNB : TYPE.BDX;
 
     let dbAccount = null;
-    if (accountType === TYPE.LOKI) {
+    if (accountType === TYPE.BDX) {
       dbAccount = await this.insertLokiAccount(account);
     } else if (accountType === TYPE.BNB) {
       dbAccount = await this.insertBNBAccount(account);
@@ -266,9 +266,9 @@ export default class Database {
     // If you want to extend to more than 2 currencies then you need to do this differently.
 
     // eslint-disable-next-line max-len
-    // If the client address is LOKI then it must mean that we generated a BNB address for them to deposit into and thus they want to swap BNB for LOKI.
+    // If the client address is BDX then it must mean that we generated a BNB address for them to deposit into and thus they want to swap BNB for LOKI.
     // Same logic applies the other way
-    const type = addressType === TYPE.LOKI ? SWAP_TYPE.BLOKI_TO_LOKI : SWAP_TYPE.BDX_TO_BBDX;
+    const type = addressType === TYPE.BDX ? SWAP_TYPE.BLOKI_TO_LOKI : SWAP_TYPE.BDX_TO_BBDX;
 
     // eslint-disable-next-line max-len
     const query = 'insert into swaps(uuid, type, amount, client_account_uuid, deposit_transaction_hash, deposit_transaction_created, created) values (md5(random()::text || clock_timestamp()::text)::uuid, $1, $2, $3, $4, to_timestamp($5), now()) returning uuid, type, amount, deposit_transaction_hash;';

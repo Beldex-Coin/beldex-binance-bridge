@@ -53,7 +53,7 @@ describe('Processing Swaps', () => {
       const fee = 100;
       beforeEach(() => {
         sandbox.stub(functions, 'fees').value({
-          [TYPE.LOKI]: fee,
+          [TYPE.BDX]: fee,
           [TYPE.BNB]: 0,
         });
       });
@@ -215,7 +215,7 @@ describe('Processing Swaps', () => {
     it('should return the correct data if it succeeds', async () => {
       const fee = 20;
       sandbox.stub(functions, 'fees').value({
-        [TYPE.LOKI]: fee,
+        [TYPE.BDX]: fee,
         [TYPE.BNB]: 0,
       });
 
@@ -248,7 +248,7 @@ describe('Processing Swaps', () => {
       it('should not return swaps which are invalid', async () => {
         const fee = 20;
         sandbox.stub(functions, 'fees').value({
-          [TYPE.LOKI]: fee,
+          [TYPE.BDX]: fee,
           [TYPE.BNB]: 0,
         });
 
@@ -386,7 +386,7 @@ describe('Processing Swaps', () => {
       const swaps = ['a', 'b', 'c'].map((a, i) => ({ uuid: i, amount: amounts[i], address: a }));
       sandbox.stub(db, 'getPendingSwaps').resolves(swaps);
       sandbox.stub(functions, 'fees').value({
-        [TYPE.LOKI]: 0,
+        [TYPE.BDX]: 0,
         [TYPE.BNB]: 0,
       });
 
@@ -417,8 +417,8 @@ describe('Processing Swaps', () => {
     });
 
     const processAllSwapsOfType = async swapType => {
-      const addressType = swapType === SWAP_TYPE.BDX_TO_BBDX ? TYPE.BNB : TYPE.LOKI;
-      const accountType = addressType === TYPE.BNB ? TYPE.LOKI : TYPE.BNB;
+      const addressType = swapType === SWAP_TYPE.BDX_TO_BBDX ? TYPE.BNB : TYPE.BDX;
+      const accountType = addressType === TYPE.BNB ? TYPE.BDX : TYPE.BNB;
       const clientAccountUuid = 'cbfa4d0f-cecb-4c46-88b8-719bbca6395a';
       const swapUuid = 'a2a67748-ae5d-415c-81d6-803d28dc29fb';
 
