@@ -413,7 +413,7 @@ describe('Processing Swaps', () => {
       await postgres.none('TRUNCATE client_accounts, accounts_loki, accounts_bnb, swaps CASCADE;');
 
       sandbox.stub(bnb, 'multiSend').resolves(['bnbTxHash1', 'bnbTxHash2']);
-      sandbox.stub(beldex, 'multiSend').resolves(['lokiTxHash1', 'lokiTxHash2']);
+      sandbox.stub(beldex, 'multiSend').resolves(['beldexTxHash1', 'beldexTxHash2']);
     });
 
     const processAllSwapsOfType = async swapType => {
@@ -444,7 +444,7 @@ describe('Processing Swaps', () => {
       it('should update the transfer transactions hash on success', async () => {
         const swap = await processAllSwapsOfType(SWAP_TYPE.BBDX_TO_BDX);
         assert.isNotNull(swap);
-        assert.strictEqual(swap.transfer_transaction_hash, 'lokiTxHash1,lokiTxHash2');
+        assert.strictEqual(swap.transfer_transaction_hash, 'beldexTxHash1,beldexTxHash2');
       });
     });
   });

@@ -266,7 +266,7 @@ export default class Database {
     // If you want to extend to more than 2 currencies then you need to do this differently.
 
     // eslint-disable-next-line max-len
-    // If the client address is BDX then it must mean that we generated a BNB address for them to deposit into and thus they want to swap BNB for LOKI.
+    // If the client address is BDX then it must mean that we generated a BNB address for them to deposit into and thus they want to swap BNB for BDX.
     // Same logic applies the other way
     const type = addressType === TYPE.BDX ? SWAP_TYPE.BBDX_TO_BDX : SWAP_TYPE.BDX_TO_BBDX;
 

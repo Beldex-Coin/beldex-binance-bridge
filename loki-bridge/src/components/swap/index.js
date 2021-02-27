@@ -9,8 +9,8 @@ import { SwapSelection, SwapInfo, SwapList } from '@components';
 import styles from './styles';
 
 const currencySymbols = {
-  [TYPE.BDX]: 'LOKI',
-  [TYPE.BNB]: 'B-LOKI'
+  [TYPE.BDX]: 'BDX',
+  [TYPE.BNB]: 'B-BDX'
 };
 
 class Swap extends Component {

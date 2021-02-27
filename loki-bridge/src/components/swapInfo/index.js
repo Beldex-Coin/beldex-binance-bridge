@@ -102,7 +102,7 @@ class SwapInfo extends PureComponent {
           Ensure that this is the only thing that you put in the field.
         </Typography>
         <Typography className={clsx(classes.warningText, classes.red)}>
-          If done incorrectly then you will not receive <b>LOKI</b> into your designated address.
+          If done incorrectly then you will not receive <b>BDX</b> into your designated address.
         </Typography>
       </Box>
     );
@@ -112,7 +112,7 @@ class SwapInfo extends PureComponent {
     const { swapType, classes, swapInfo } = this.props;
 
     const { depositAddress } = swapInfo;
-    const depositCurrency = swapType === SWAP_TYPE.BDX_TO_BBDX ? 'LOKI' : 'B-LOKI';
+    const depositCurrency = swapType === SWAP_TYPE.BDX_TO_BBDX ? 'BDX' : 'B-BDX';
 
     return (
       <React.Fragment>
@@ -158,7 +158,7 @@ class SwapInfo extends PureComponent {
         )}
         { swapType === SWAP_TYPE.BBDX_TO_BDX && (
           <Typography className={ classes.instructionBold }>
-              There will be a processing fee of {beldexFee} LOKI which will be charged when processing all your pending swaps.
+              There will be a processing fee of {beldexFee} BDX which will be charged when processing all your pending swaps.
           </Typography>
         )}
         <Typography className={ classes.instructions }>
@@ -172,7 +172,7 @@ class SwapInfo extends PureComponent {
     const { classes, swapType, swapInfo } = this.props;
     if (!swapInfo || !swapInfo.swaps || swapInfo.swaps.length === 0) return null;
 
-    const receivingCurrency = swapType === SWAP_TYPE.BDX_TO_BBDX ? 'B-LOKI' : 'LOKI';
+    const receivingCurrency = swapType === SWAP_TYPE.BDX_TO_BBDX ? 'B-BDX' : 'BDX';
 
     const pendingSwaps = swapInfo.swaps.filter(s => s.transferTxHashes && s.transferTxHashes.length === 0);
     const total = pendingSwaps.reduce((total, swap) => total + parseFloat(swap.amount), 0);

@@ -113,7 +113,7 @@ describe('Database', () => {
       });
 
       it('should return nothing if the account attached to the client account does not exist', async () => {
-        // Insert a client account with a `LOKI` account type.
+        // Insert a client account with a `BDX` account type.
         await dbHelper.insertClientAccount('07a90576-9dfa-11e9-a2a3-2a2ae2dbcce4', '1', TYPE.BNB, 'abcd', TYPE.BDX);
         const results = await db.getClientAccounts(TYPE.BDX);
         assert.isEmpty(results);

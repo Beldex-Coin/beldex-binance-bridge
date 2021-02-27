@@ -11,8 +11,8 @@ import log from '../utils/log';
 const configFees = { [TYPE.BDX]: config.get('beldex.withdrawalFee') };
 
 const symbols = {
-  [TYPE.BDX]: 'LOKI',
-  [TYPE.BNB]: 'B-LOKI',
+  [TYPE.BDX]: 'BDX',
+  [TYPE.BNB]: 'B-BDX',
 };
 
 class PriceFetchFailed extends Error { }
@@ -81,7 +81,7 @@ const module = {
    * @param {string} swapType The type of swap.
    */
   async processAutoSwaps(dailyAmount, dailyLimit, swapType) {
-    // Get the usd price of LOKI and make sure it is valid
+    // Get the usd price of BDX and make sure it is valid
     const usdPrice = await module.getCurrentBeldexPriceInUSD();
     if (!usdPrice || usdPrice < 0) throw new PriceFetchFailed();
 
@@ -185,7 +185,7 @@ const module = {
   getValidSwaps(swaps, swapType) {
     if (swapType !== SWAP_TYPE.BBDX_TO_BDX) return swaps;
 
-    // If it's BBDX_TO_BDX we need to sum up the swaps values and check that they're greater than the loki fee
+    // If it's BBDX_TO_BDX we need to sum up the swaps values and check that they're greater than the bdx fee
     const transactions = module.getTransactions(swaps);
 
     // A transaction is invalid if the amount - fee is negative
@@ -242,7 +242,7 @@ const module = {
       }));
 
       // Send BNB to the users
-      return bnb.multiSend(config.get('binance.mnemonic'), outputs, 'Loki Bridge');
+      return bnb.multiSend(config.get('binance.mnemonic'), outputs, 'Beldex Bridge');
     } else if (swapType === SWAP_TYPE.BBDX_TO_BDX) {
       // Deduct the Beldex withdrawal fees.
       const outputs = transactions.map(({ address, amount }) => {
