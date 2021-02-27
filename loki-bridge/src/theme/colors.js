@@ -3,6 +3,7 @@ export default {
   beldexBlack90: '#0A0A0A',
   belBackground: "transparent",
   beldexBlack80: 'transparent',
+  belBlack: '#000',
   beldexBlack60: '#313131',
   beldexBlack50: '#7E7E7E',
   white: '#fff',
