@@ -175,7 +175,7 @@ const module = {
   /**
    * Get all the swaps which are not invalid.
    *
-   * For BLOKI_TO_LOKI, a swap is invalid if:
+   * For BBDX_TO_BDX, a swap is invalid if:
    *  The total amount from an address is less than the fee
    *
    * @param {[{ uuid, amount, address }]} swaps The swaps
@@ -183,9 +183,9 @@ const module = {
    * @returns The valid swaps.
    */
   getValidSwaps(swaps, swapType) {
-    if (swapType !== SWAP_TYPE.BLOKI_TO_LOKI) return swaps;
+    if (swapType !== SWAP_TYPE.BBDX_TO_BDX) return swaps;
 
-    // If it's BLOKI_TO_LOKI we need to sum up the swaps values and check that they're greater than the loki fee
+    // If it's BBDX_TO_BDX we need to sum up the swaps values and check that they're greater than the loki fee
     const transactions = module.getTransactions(swaps);
 
     // A transaction is invalid if the amount - fee is negative
@@ -243,7 +243,7 @@ const module = {
 
       // Send BNB to the users
       return bnb.multiSend(config.get('binance.mnemonic'), outputs, 'Loki Bridge');
-    } else if (swapType === SWAP_TYPE.BLOKI_TO_LOKI) {
+    } else if (swapType === SWAP_TYPE.BBDX_TO_BDX) {
       // Deduct the Beldex withdrawal fees.
       const outputs = transactions.map(({ address, amount }) => {
         const fee = module.fees[TYPE.BDX] || 0;

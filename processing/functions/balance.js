@@ -9,8 +9,8 @@ const module = {
     const lokiBalance = await module.getBalances(SWAP_TYPE.BDX_TO_BBDX);
     module.printBalance(SWAP_TYPE.BDX_TO_BBDX, lokiBalance);
 
-    const bnbBalance = await module.getBalances(SWAP_TYPE.BLOKI_TO_LOKI);
-    module.printBalance(SWAP_TYPE.BLOKI_TO_LOKI, bnbBalance);
+    const bnbBalance = await module.getBalances(SWAP_TYPE.BBDX_TO_BDX);
+    module.printBalance(SWAP_TYPE.BBDX_TO_BDX, bnbBalance);
   },
 
   printBalance(swapType, balance, showWarning = true) {

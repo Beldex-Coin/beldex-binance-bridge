@@ -20,7 +20,7 @@ class SwapSelection extends Component {
       value: SWAP_TYPE.BDX_TO_BBDX,
       description: 'LOKI to B-LOKI',
     }, {
-      value: SWAP_TYPE.BLOKI_TO_LOKI,
+      value: SWAP_TYPE.BBDX_TO_BDX,
       description: 'B-LOKI to LOKI',
     }],
   };

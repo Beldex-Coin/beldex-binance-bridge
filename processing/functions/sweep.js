@@ -54,10 +54,10 @@ const module = {
   },
 
   /**
-  * Sweep any pending bloki_to_loki swaps
+  * Sweep any pending bbdx_to_bdx swaps
   */
   async sweepPendingBlokiToLoki() {
-    log.header(chalk.blue(`Sweeping ${SWAP_TYPE.BLOKI_TO_LOKI}`));
+    log.header(chalk.blue(`Sweeping ${SWAP_TYPE.BBDX_TO_BDX}`));
     const ourAddress = transactionHelper.ourBNBAddress;
 
     // Get all our incoming transactions which contain a memo
@@ -65,7 +65,7 @@ const module = {
     const memoTransactions = transactions.filter(t => t.memo && t.memo.length > 0);
 
     // Get all the deposit hases from the db
-    const hashes = await db.getAllSwapDepositHashes(SWAP_TYPE.BLOKI_TO_LOKI);
+    const hashes = await db.getAllSwapDepositHashes(SWAP_TYPE.BBDX_TO_BDX);
 
     // Get all the new transactions
     const newTransactions = memoTransactions.filter(t => !hashes.includes(t.hash));

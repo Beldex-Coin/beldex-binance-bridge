@@ -156,7 +156,7 @@ class SwapInfo extends PureComponent {
             <b>Note:</b> You will have to wait for the transaction to be checkpointed before you're added to our processing queue, this usually takes 8 blocks.
           </Typography>
         )}
-        { swapType === SWAP_TYPE.BLOKI_TO_LOKI && (
+        { swapType === SWAP_TYPE.BBDX_TO_BDX && (
           <Typography className={ classes.instructionBold }>
               There will be a processing fee of {lokiFee} LOKI which will be charged when processing all your pending swaps.
           </Typography>

@@ -5,5 +5,5 @@ export const TYPE = {
 
 export const SWAP_TYPE = {
   BDX_TO_BBDX: 'loki_to_bloki',
-  BLOKI_TO_LOKI: 'bloki_to_loki',
+  BBDX_TO_BDX: 'bloki_to_loki',
 };

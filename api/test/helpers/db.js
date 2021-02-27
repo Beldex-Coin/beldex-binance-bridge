@@ -1,7 +1,7 @@
 /* eslint-disable max-len, arrow-body-style */
 import { postgres } from '../../core';
 
-export const insertLokiAccount = async (uuid, address, addressIndex) => {
+export const insertBeldexAccount = async (uuid, address, addressIndex) => {
   return postgres.none('insert into accounts_loki(uuid, address, address_index, created) values($1, $2, $3, now())', [uuid, address, addressIndex]);
 };
 
