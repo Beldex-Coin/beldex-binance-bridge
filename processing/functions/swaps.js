@@ -82,7 +82,7 @@ const module = {
    */
   async processAutoSwaps(dailyAmount, dailyLimit, swapType) {
     // Get the usd price of LOKI and make sure it is valid
-    const usdPrice = await module.getCurrentLokiPriceInUSD();
+    const usdPrice = await module.getCurrentBeldexPriceInUSD();
     if (!usdPrice || usdPrice < 0) throw new PriceFetchFailed();
 
     // Get our pending swaps and their transactions
@@ -131,7 +131,7 @@ const module = {
   /**
    * Get the current price of BDX
    */
-  async getCurrentLokiPriceInUSD() {
+  async getCurrentBeldexPriceInUSD() {
     try {
       const response = await axios.get('https://api.coingecko.com/api/v3/simple/price?ids=beldex&vs_currencies=usd');
       return response.data['beldex'].usd;

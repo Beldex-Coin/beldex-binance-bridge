@@ -36,7 +36,7 @@ describe('Processing Swaps', () => {
   });
 
   describe('#getValidSwaps', () => {
-    context('LOKI TO BLOKI', () => {
+    context('BDX TO BBDX', () => {
       it('should return the same array', () => {
         const swaps = [
           { amount: 100, address: '1' },
@@ -49,7 +49,7 @@ describe('Processing Swaps', () => {
       });
     });
 
-    context('BLOKI TO LOKI', () => {
+    context('BBDX TO BDX', () => {
       const fee = 100;
       beforeEach(() => {
         sandbox.stub(functions, 'fees').value({
@@ -136,11 +136,11 @@ describe('Processing Swaps', () => {
     const transactions = [{ address: '1', amount: 7 * 1e9 }];
 
     let bnbStub;
-    let lokiStub;
+    let beldexStub;
 
     beforeEach(() => {
       bnbStub = sandbox.stub(bnb, 'multiSend');
-      lokiStub = sandbox.stub(beldex, 'multiSend');
+      beldexStub = sandbox.stub(beldex, 'multiSend');
     });
 
     it('should send to BNB if swap type is BDX_TO_BBDX', async () => {
@@ -148,9 +148,9 @@ describe('Processing Swaps', () => {
       assert(bnbStub.called, 'bnb.multiSend was not called');
     });
 
-    it('should send to LOKI if swap type is BBDX_TO_BDX', async () => {
+    it('should send to BDX if swap type is BBDX_TO_BDX', async () => {
       await functions.send(SWAP_TYPE.BBDX_TO_BDX, transactions);
-      assert(lokiStub.called, 'beldex.multiSend was not called');
+      assert(beldexStub.called, 'beldex.multiSend was not called');
     });
 
     it('should throw an error if swap type was invalid', async () => {
@@ -179,12 +179,12 @@ describe('Processing Swaps', () => {
       }]);
     });
 
-    it('should deduct the widthdrawal fee from each transaction for Loki', async () => {
+    it('should deduct the widthdrawal fee from each transaction for Beldex', async () => {
       const fee = config.get('beldex.withdrawalFee');
 
       await functions.send(SWAP_TYPE.BBDX_TO_BDX, transactions);
 
-      const { args } = lokiStub.getCalls()[0];
+      const { args } = beldexStub.getCalls()[0];
       assert.lengthOf(args, 1);
 
       const outputs = args[0];
@@ -199,7 +199,7 @@ describe('Processing Swaps', () => {
   describe('#processSwaps', () => {
     beforeEach(async () => {
       sandbox.stub(bnb, 'multiSend').resolves(['bnbTxHash1', 'bnbTxHash2']);
-      sandbox.stub(beldex, 'multiSend').resolves(['lokiTxHash1', 'lokiTxHash2']);
+      sandbox.stub(beldex, 'multiSend').resolves(['beldexTxHash1', 'beldexTxHash2']);
       sandbox.stub(db, 'updateSwapsTransferTransactionHash').resolves();
     });
 
@@ -234,7 +234,7 @@ describe('Processing Swaps', () => {
       // Fee should only be charged once per address
       const expectedFees = fee * Object.keys(values).length;
 
-      // Make sure we get the LOKI fees
+      // Make sure we get the BDX fees
       const data = await functions.processSwaps(swaps, SWAP_TYPE.BBDX_TO_BDX);
       assert.isNotNull(data);
       assert.deepEqual(data, {
@@ -244,7 +244,7 @@ describe('Processing Swaps', () => {
       });
     });
 
-    context('BLOKI TO LOKI', () => {
+    context('BBDX TO BDX', () => {
       it('should not return swaps which are invalid', async () => {
         const fee = 20;
         sandbox.stub(functions, 'fees').value({
@@ -263,7 +263,7 @@ describe('Processing Swaps', () => {
           return amounts.map(amount => ({ uuid: i, amount, address }));
         });
 
-        // Make sure we get the LOKI fees
+        // Make sure we get the BDX fees
         const data = await functions.processSwaps(swaps, SWAP_TYPE.BBDX_TO_BDX);
         assert.isNotNull(data);
         assert.deepEqual(data.swaps, swaps.filter(v => v.address !== 'c'));
@@ -274,13 +274,13 @@ describe('Processing Swaps', () => {
   describe('#processAutoSwaps', () => {
     const usdPrice = 0.5;
     beforeEach(async () => {
-      sandbox.stub(functions, 'getCurrentLokiPriceInUSD').resolves(usdPrice);
+      sandbox.stub(functions, 'getCurrentBeldexPriceInUSD').resolves(usdPrice);
       sandbox.stub(functions, 'processSwaps').callsFake(processSwapFake);
     });
 
     it('should throw an error if usd price is null', async () => {
       sandbox.restore();
-      sandbox.stub(functions, 'getCurrentLokiPriceInUSD').resolves(null);
+      sandbox.stub(functions, 'getCurrentBeldexPriceInUSD').resolves(null);
 
       try {
         await functions.processAutoSwaps(10, 100, SWAP_TYPE.BDX_TO_BBDX);
@@ -292,7 +292,7 @@ describe('Processing Swaps', () => {
 
     it('should throw an error if usd price was less than 0', async () => {
       sandbox.restore();
-      sandbox.stub(functions, 'getCurrentLokiPriceInUSD').resolves(-1);
+      sandbox.stub(functions, 'getCurrentBeldexPriceInUSD').resolves(-1);
 
       try {
         await functions.processAutoSwaps(10, 100, SWAP_TYPE.BBDX_TO_BDX);

@@ -75,7 +75,7 @@ const module = {
     if (accountType === TYPE.BDX) {
       // Get all incoming transactions from the client accounts
       const promises = clientAccounts.map(async c => transactionHelper.getIncomingBeldexTransactions(c.account.addressIndex));
-      const lokiTransactions = await Promise.all(promises).then(array => array.flat());
+      const beldexTransactions = await Promise.all(promises).then(array => array.flat());
 
       // generate a list of all processed swaps
       const swaps = await db.getAllSwaps(SWAP_TYPE.BDX_TO_BBDX);
@@ -88,7 +88,7 @@ const module = {
       });
 
       // Filter out all transactions that don't fit our date ranges
-      filtered = lokiTransactions.filter(tx => {
+      filtered = beldexTransactions.filter(tx => {
         // timestamps are in seconds so we need to convert to milliseconds
         const timestamp = tx.timestamp * 1000;
 

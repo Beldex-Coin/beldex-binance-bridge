@@ -18,10 +18,10 @@ class SwapSelection extends Component {
     addressError: false,
     options: [{
       value: SWAP_TYPE.BDX_TO_BBDX,
-      description: 'LOKI to B-LOKI',
+      description: 'BDX to B-BDX',
     }, {
       value: SWAP_TYPE.BBDX_TO_BDX,
-      description: 'B-LOKI to LOKI',
+      description: 'B-BDX to BDX',
     }],
   };
 

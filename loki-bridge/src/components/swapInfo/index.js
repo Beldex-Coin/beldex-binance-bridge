@@ -146,7 +146,7 @@ class SwapInfo extends PureComponent {
   renderInstructions = () => {
     const { swapType, classes, info } = this.props;
 
-    const lokiFee = (info && info.fees && info.fees.loki / 1e9) || 0;
+    const beldexFee = (info && info.fees && info.fees.bdx / 1e9) || 0;
 
     return (
       <Box className={classes.instructionContainer}>
@@ -158,7 +158,7 @@ class SwapInfo extends PureComponent {
         )}
         { swapType === SWAP_TYPE.BBDX_TO_BDX && (
           <Typography className={ classes.instructionBold }>
-              There will be a processing fee of {lokiFee} LOKI which will be charged when processing all your pending swaps.
+              There will be a processing fee of {beldexFee} LOKI which will be charged when processing all your pending swaps.
           </Typography>
         )}
         <Typography className={ classes.instructions }>
