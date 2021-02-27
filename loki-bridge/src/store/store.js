@@ -31,7 +31,7 @@ class Store extends EventEmitter {
           this.getInfo();
           break;
         case Actions.GET_UNCONFIRMED_LOKI_TXS:
-          this.getUnconfirmedLokiTransactions(payload);
+          this.getUnconfirmedBeldexTransactions(payload);
           break;
         case Actions.GET_SWAPS:
           this.getSwaps(payload);
@@ -61,7 +61,7 @@ class Store extends EventEmitter {
     }
   }
 
-  async getUnconfirmedLokiTransactions(payload) {
+  async getUnconfirmedBeldexTransactions(payload) {
     try {
       const data = await this.fetch(endpoints.getUncomfirmedBeldexTransactions, 'GET', payload.content);
       this.emit(Events.FETCHED_UNCONFIRMED_LOKI_TXS, data.result);

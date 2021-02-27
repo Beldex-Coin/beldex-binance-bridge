@@ -34,7 +34,7 @@ export default class TransactionHelper {
           .filter(tx => tx.memo.trim() === memo.trim())
           .map(({ hash, amount, timestamp }) => ({ hash, amount, timestamp }));
       }
-      case TYPE.LOKI: {
+      case TYPE.BDX: {
         const { addressIndex } = account;
 
         // We only want transactions that have been confirmed
@@ -65,8 +65,8 @@ export default class TransactionHelper {
   }
 
   /**
-   * Get incoming transactions from the given LOKI address.
-   * @param {number} addressIndex The LOKI address index.
+   * Get incoming transactions from the given BDX address.
+   * @param {number} addressIndex The BDX address index.
    * @param {{ pool: boolean }} options Any additional options
    * @returns {Promise<{ hash, amount, confirmed }>} An array of incoming transactions
    */

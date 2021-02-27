@@ -31,7 +31,7 @@ export function swapToken(req, res, next) {
     // So if the swap is BDX_TO_BBDX then we want the user to give the BNB address
     // We then generate a BDX address that they will deposit to.
     // After the deposit we pay them out to the BNB address they passed.
-    const addressType = type === SWAP_TYPE.BDX_TO_BBDX ? TYPE.BNB : TYPE.LOKI;
+    const addressType = type === SWAP_TYPE.BDX_TO_BBDX ? TYPE.BNB : TYPE.BDX;
 
     try {
       const account = await db.getClientAccount(address, addressType);
@@ -42,13 +42,13 @@ export function swapToken(req, res, next) {
       }
 
       // Account type is the that of the currency we are swapping from
-      const accountType = type === SWAP_TYPE.BDX_TO_BBDX ? TYPE.LOKI : TYPE.BNB;
+      const accountType = type === SWAP_TYPE.BDX_TO_BBDX ? TYPE.BDX : TYPE.BNB;
 
       let newAccount = null;
       if (accountType === TYPE.BNB) {
         // Generate a random memo
         newAccount = { memo: crypto.generateRandomString(64) };
-      } else if (accountType === TYPE.LOKI) {
+      } else if (accountType === TYPE.BDX) {
         newAccount = await beldex.createAccount();
       }
 
@@ -175,7 +175,6 @@ export async function getSwaps(req, res, next) {
     }
 
     const swaps = await db.getSwapsForClientAccount(uuid);
-    console.log("swap:", swaps)
     if (!swaps) {
       res.status(400);
       res.body = { status: 400, success: false, result: 'Failed to fetch swaps' };
@@ -245,7 +244,7 @@ export async function getUncomfirmedBeldexTransactions(req, res, next) {
 // - Util
 
 function formatClientAccount({ uuid, accountType: type, account }) {
-  const depositAddress = type === TYPE.LOKI ? account.address : transactionHelper.ourBNBAddress;
+  const depositAddress = type === TYPE.BDX ? account.address : transactionHelper.ourBNBAddress;
   const result = {
     uuid,
     type,

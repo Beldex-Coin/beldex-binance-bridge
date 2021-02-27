@@ -6,16 +6,16 @@ import log from '../utils/log';
 
 const module = {
   async checkAllBalances() {
-    const lokiBalance = await module.getBalances(SWAP_TYPE.BDX_TO_BBDX);
-    module.printBalance(SWAP_TYPE.BDX_TO_BBDX, lokiBalance);
+    const beldexBalance = await module.getBalances(SWAP_TYPE.BDX_TO_BBDX);
+    module.printBalance(SWAP_TYPE.BDX_TO_BBDX, beldexBalance);
 
-    const bnbBalance = await module.getBalances(SWAP_TYPE.BLOKI_TO_LOKI);
-    module.printBalance(SWAP_TYPE.BLOKI_TO_LOKI, bnbBalance);
+    const bnbBalance = await module.getBalances(SWAP_TYPE.BBDX_TO_BDX);
+    module.printBalance(SWAP_TYPE.BBDX_TO_BDX, bnbBalance);
   },
 
   printBalance(swapType, balance, showWarning = true) {
-    const receiveCurrency = swapType === SWAP_TYPE.BDX_TO_BBDX ? 'LOKI' : 'B-LOKI';
-    const swapCurrency = swapType === SWAP_TYPE.BDX_TO_BBDX ? 'B-LOKI' : 'LOKI';
+    const receiveCurrency = swapType === SWAP_TYPE.BDX_TO_BBDX ? 'BDX' : 'B-BDX';
+    const swapCurrency = swapType === SWAP_TYPE.BDX_TO_BBDX ? 'B-BDX' : 'BDX';
     log.header(chalk.blue(`Balance of ${swapType}`));
     log.info(chalk`{green Transaction balance:} {bold ${balance.transaction / 1e9}} {yellow ${receiveCurrency}}`);
     log.info(chalk`{green Swap balance:} {bold ${balance.swap / 1e9}} {yellow ${swapCurrency}}`);
@@ -32,7 +32,7 @@ const module = {
     const now = Date.now();
     const twoDaysAgo = now - (2 * 24 * 60 * 60 * 1000);
 
-    const accountType = swapType === SWAP_TYPE.BDX_TO_BBDX ? TYPE.LOKI : TYPE.BNB;
+    const accountType = swapType === SWAP_TYPE.BDX_TO_BBDX ? TYPE.BDX : TYPE.BNB;
     const transactionBalance = await module.getBalanceFromIncomingTransactions(accountType, twoDaysAgo, now);
     const swapBalance = await module.getSwapBalance(swapType, twoDaysAgo, now);
     return {
@@ -72,14 +72,14 @@ const module = {
 
     let filtered = [];
 
-    if (accountType === TYPE.LOKI) {
+    if (accountType === TYPE.BDX) {
       // Get all incoming transactions from the client accounts
       const promises = clientAccounts.map(async c => transactionHelper.getIncomingBeldexTransactions(c.account.addressIndex));
-      const lokiTransactions = await Promise.all(promises).then(array => array.flat());
+      const beldexTransactions = await Promise.all(promises).then(array => array.flat());
 
       // generate a list of all processed swaps
       const swaps = await db.getAllSwaps(SWAP_TYPE.BDX_TO_BBDX);
-      // exclude any tx where we've received loki
+      // exclude any tx where we've received bdx
       // we want to include all those (and skip the confirmation check)
       const completedSwaps = swaps.filter(swap => {
         const completed = swap.deposit_transaction_hash !== null;
@@ -88,7 +88,7 @@ const module = {
       });
 
       // Filter out all transactions that don't fit our date ranges
-      filtered = lokiTransactions.filter(tx => {
+      filtered = beldexTransactions.filter(tx => {
         // timestamps are in seconds so we need to convert to milliseconds
         const timestamp = tx.timestamp * 1000;
 
@@ -157,7 +157,7 @@ const module = {
 
     values.forEach(({ hash, amount, memo, timestamp }) => {
       log.header(chalk.blue(hash));
-      log.info(chalk`{green amount:} ${amount} BLOKI`);
+      log.info(chalk`{green amount:} ${amount} BBDX`);
       log.info(chalk`{green memo:} ${memo}`);
       log.info(chalk`{green timestamp:} ${timestamp}`);
     });

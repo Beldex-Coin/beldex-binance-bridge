@@ -1,6 +1,6 @@
 # Beldex Bridge Front End
 
-This is the front end used for the loki bridge application.
+This is the front end used for the beldex bridge application.
 
 ## Pre-requisites
   - Node 11.15.0

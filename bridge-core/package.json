@@ -1,7 +1,7 @@
 {
   "name": "bridge-core",
   "version": "1.0.0",
-  "description": "The loki bridge core code which is shared between the api and processing",
+  "description": "The beldex bridge core code which is shared between the api and processing",
   "main": "index.js",
   "private": true,
   "scripts": {
