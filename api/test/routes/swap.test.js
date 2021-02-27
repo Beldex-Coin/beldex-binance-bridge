@@ -17,7 +17,7 @@ const getSwaps = params => wrapRouterFunction(swapRoutes.getSwaps, params);
 describe('Swap API', () => {
   beforeEach(async () => {
     // Clear out any data in the db
-    await postgres.none('TRUNCATE client_accounts, accounts_loki, accounts_bnb, swaps CASCADE;');
+    await postgres.none('TRUNCATE client_accounts, accounts_bdx, accounts_bnb, swaps CASCADE;');
 
     // Pretend all our addresses we pass are valid for these tests
     sandbox.stub(beldex, 'validateAddress').resolves(true);

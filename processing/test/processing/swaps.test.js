@@ -410,7 +410,7 @@ describe('Processing Swaps', () => {
   describe('#processAllSwapsOfType', () => {
     beforeEach(async () => {
       // Clear out any data in the db
-      await postgres.none('TRUNCATE client_accounts, accounts_loki, accounts_bnb, swaps CASCADE;');
+      await postgres.none('TRUNCATE client_accounts, accounts_bdx, accounts_bnb, swaps CASCADE;');
 
       sandbox.stub(bnb, 'multiSend').resolves(['bnbTxHash1', 'bnbTxHash2']);
       sandbox.stub(beldex, 'multiSend').resolves(['beldexTxHash1', 'beldexTxHash2']);

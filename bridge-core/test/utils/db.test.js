@@ -9,7 +9,7 @@ const sandbox = sinon.createSandbox();
 describe('Database', () => {
   beforeEach(async () => {
     // Clear out any data in the db
-    await postgres.none('TRUNCATE client_accounts, accounts_loki, accounts_bnb, swaps CASCADE;');
+    await postgres.none('TRUNCATE client_accounts, accounts_bdx, accounts_bnb, swaps CASCADE;');
   });
 
   afterEach(() => {
@@ -290,7 +290,7 @@ describe('Database', () => {
         const beldexAddress = 'BDX-address';
         await db.insertClientAccount('123', TYPE.BNB, { address: beldexAddress, address_index: 0 });
 
-        const accounts = await postgres.manyOrNone('select * from accounts_loki');
+        const accounts = await postgres.manyOrNone('select * from accounts_bdx');
         assert.isNotNull(accounts);
         assert.lengthOf(accounts, 1);
 
@@ -326,14 +326,14 @@ describe('Database', () => {
         assert.strictEqual(account.address, address);
         assert.strictEqual(account.address_index, addressIndex);
 
-        const { count } = await postgres.one('select count(*) from accounts_loki');
+        const { count } = await postgres.one('select count(*) from accounts_bdx');
         assert.equal(count, 1);
       });
     });
 
     describe('#getBeldexAccount', () => {
       it('should return null if it could not find and account', async () => {
-        const { count } = await postgres.one('select count(*) from accounts_loki');
+        const { count } = await postgres.one('select count(*) from accounts_bdx');
         assert.equal(count, 0);
 
         const account = await db.getBeldexAccount('fake address');

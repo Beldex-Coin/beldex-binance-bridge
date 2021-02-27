@@ -37,7 +37,7 @@ export default class Database {
     };
 
     if (accountType === TYPE.BDX) {
-      const accountQuery = 'select address, address_index from accounts_loki where uuid = $1;';
+      const accountQuery = 'select address, address_index from accounts_bdx where uuid = $1;';
       const account = await this.postgres.oneOrNone(accountQuery, [accountUuid]);
       if (!account) return null;
 
@@ -149,7 +149,7 @@ export default class Database {
     if (!account) return null;
 
     // eslint-disable-next-line max-len
-    const query = 'insert into accounts_loki(uuid, address, address_index, created) values (md5(random()::text || clock_timestamp()::text)::uuid, $1, $2, now()) returning uuid, address, address_index;';
+    const query = 'insert into accounts_bdx(uuid, address, address_index, created) values (md5(random()::text || clock_timestamp()::text)::uuid, $1, $2, now()) returning uuid, address, address_index;';
     return this.postgres.oneOrNone(query, [account.address, account.address_index]);
   }
 
@@ -174,7 +174,7 @@ export default class Database {
   * @returns {Promise<{ uuid, address, address_index }>} The bdx account or `null` if there wasn't one.
   */
   async getBeldexAccount(address) {
-    const query = 'select * from accounts_loki where address = $1;';
+    const query = 'select * from accounts_bdx where address = $1;';
     return this.postgres.oneOrNone(query, [address]);
   }
 
@@ -185,7 +185,7 @@ export default class Database {
   * @returns {Promise<[number]>} An array of address indicies.
   */
   async getBeldexAddressIndicies(addresses) {
-    const query = 'select address_index from accounts_loki where address in ($1:csv);';
+    const query = 'select address_index from accounts_bdx where address in ($1:csv);';
     return this.postgres.manyOrNone(query, [addresses]);
   }
 
