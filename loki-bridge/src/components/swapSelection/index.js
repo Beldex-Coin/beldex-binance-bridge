@@ -95,7 +95,7 @@ class SwapSelection extends Component {
             onClick={this.onNext}
           />
         </Grid>
-        <Link className={classes.belLink} href="/tos/BLOKIBridgeTOS.html" target="_blank">Terms of Service</Link>
+        <Link className={classes.belLink} href="/tos/BBDXBridgeTOS.html" target="_blank">Terms of Service</Link>
       </Grid>
     );
   }
