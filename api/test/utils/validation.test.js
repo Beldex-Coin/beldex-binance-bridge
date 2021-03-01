@@ -36,9 +36,9 @@ describe('Validation', () => {
     it('should return an error if the beldex address was invalid', async () => {
       stubValidateAddressReturn(false);
 
-      const error = await validation.validateSwap({ address: 'an address', type: SWAP_TYPE.BLOKI_TO_LOKI });
-      assert(beldex.validateAddress.calledOnce, 'Loki validate was not called');
-      assert.strictEqual(error, 'address must be a LOKI address');
+      const error = await validation.validateSwap({ address: 'an address', type: SWAP_TYPE.BBDX_TO_BDX });
+      assert(beldex.validateAddress.calledOnce, 'Beldex validate was not called');
+      assert.strictEqual(error, 'address must be a Beldex address');
     });
 
     it('should return an error if the bnb address was invalid', async () => {
@@ -50,9 +50,9 @@ describe('Validation', () => {
 
     it('should return null if no errors occurred', async () => {
       stubValidateAddressReturn(true);
-      const lokiError = await validation.validateSwap({ address: '1', type: SWAP_TYPE.BLOKI_TO_LOKI });
-      assert.isNull(lokiError);
-      assert(beldex.validateAddress.calledOnce, 'Loki validate was not called');
+      const beldexError = await validation.validateSwap({ address: '1', type: SWAP_TYPE.BBDX_TO_BDX });
+      assert.isNull(beldexError);
+      assert(beldex.validateAddress.calledOnce, 'Beldex validate was not called');
 
       const bnbError = await validation.validateSwap({ address: '1', type: SWAP_TYPE.BDX_TO_BBDX });
       assert.isNull(bnbError);

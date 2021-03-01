@@ -21,7 +21,7 @@ const stub = (options = {}) => {
     ...options,
   };
 
-  sandbox.stub(swaps, 'getCurrentLokiPriceInUSD').resolves(values.usdPrice);
+  sandbox.stub(swaps, 'getCurrentBeldexPriceInUSD').resolves(values.usdPrice);
   sandbox.stub(auto, 'sleep').resolves();
   sandbox.stub(sweep, 'sweepAllPendingSwaps').resolves();
   sandbox.stub(balance, 'getBalances').resolves(values.balance);

@@ -29,7 +29,7 @@ const styles = theme => ({
     color: theme.palette.text.primary,
   },
   blackText: {
-    color: colors.beldexBlack80,
+    color: colors.belBlack,
   }
 });
 

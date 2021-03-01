@@ -9,7 +9,7 @@ import { SWAP_TYPE, TYPE } from '@constants';
 import styles from './styles';
 
 const hashUrls = {
-  [TYPE.LOKI]: config.beldex.txExplorerUrl,
+  [TYPE.BDX]: config.beldex.txExplorerUrl,
   [TYPE.BNB]: config.binance.txExplorerUrl,
 };
 
@@ -18,8 +18,8 @@ class SwapList extends Component {
     const { classes } = this.props;
 
     const hasTransferHashes = transferTxHashes.length > 0;
-    const depositHashType = type === SWAP_TYPE.BDX_TO_BBDX ? TYPE.LOKI : TYPE.BNB;
-    const transferHashType = type === SWAP_TYPE.BDX_TO_BBDX ? TYPE.BNB : TYPE.LOKI;
+    const depositHashType = type === SWAP_TYPE.BDX_TO_BBDX ? TYPE.BDX : TYPE.BNB;
+    const transferHashType = type === SWAP_TYPE.BDX_TO_BBDX ? TYPE.BNB : TYPE.BDX;
     const hashType = hasTransferHashes ? transferHashType : depositHashType;
     const baseUrl = hashUrls[hashType];
 
@@ -75,7 +75,7 @@ class SwapList extends Component {
     const { classes } = this.props;
 
     const isPending = transferTxHashes && transferTxHashes.length === 0;
-    const depositCurrency = type === SWAP_TYPE.BDX_TO_BBDX ? 'LOKI' : 'B-LOKI';
+    const depositCurrency = type === SWAP_TYPE.BDX_TO_BBDX ? 'BDX' : 'B-BDX';
     const displayAmount = amount / 1e9;
 
     let status = 'Completed';

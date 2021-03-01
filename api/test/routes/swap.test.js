@@ -17,7 +17,7 @@ const getSwaps = params => wrapRouterFunction(swapRoutes.getSwaps, params);
 describe('Swap API', () => {
   beforeEach(async () => {
     // Clear out any data in the db
-    await postgres.none('TRUNCATE client_accounts, accounts_loki, accounts_bnb, swaps CASCADE;');
+    await postgres.none('TRUNCATE client_accounts, accounts_bdx, accounts_bnb, swaps CASCADE;');
 
     // Pretend all our addresses we pass are valid for these tests
     sandbox.stub(beldex, 'validateAddress').resolves(true);
@@ -42,10 +42,10 @@ describe('Swap API', () => {
           { type: SWAP_TYPE.BDX_TO_BBDX },
           { address: '123', type: 'invalid type' },
 
-          // validateAddress for both loki and bnb have been stubbed to return false
+          // validateAddress for both bdx and bnb have been stubbed to return false
           // Which should cause these to fail
           { address: '123', type: SWAP_TYPE.BDX_TO_BBDX },
-          { address: '123', type: SWAP_TYPE.BLOKI_TO_LOKI },
+          { address: '123', type: SWAP_TYPE.BBDX_TO_BDX },
         ];
 
         const results = await Promise.all(failingData.map(swapToken));
@@ -58,30 +58,30 @@ describe('Swap API', () => {
         assert.equal(spy.callCount, failingData.length);
       });
 
-      it('should return 500 if we failed to create a loki account', async () => {
-        const lokiCreateAccount = sandbox.stub(beldex, 'createAccount').resolves(null);
+      it('should return 500 if we failed to create a bdx account', async () => {
+        const bdxCreateAccount = sandbox.stub(beldex, 'createAccount').resolves(null);
 
         const { status, success, result } = await swapToken({ address: '123', type: SWAP_TYPE.BDX_TO_BBDX });
         assert.equal(status, 500);
         assert.isFalse(success);
         assert.equal(result, 'Invalid swap');
 
-        assert(lokiCreateAccount.called, 'beldex.createAccount was not called');
+        assert(bdxCreateAccount.called, 'beldex.createAccount was not called');
       });
     });
 
     describe('success', () => {
-      context('LOKI To B-LOKI', () => {
+      context('BDX To B-BDX', () => {
         it('should return the existing client account', async () => {
-          const lokiAccountUuid = 'd27efda6-988b-11e9-a2a3-2a2ae2dbcce4';
+          const beldexAccountUuid = 'd27efda6-988b-11e9-a2a3-2a2ae2dbcce4';
           const bnbClientAccount = 'd27f031e-988b-11e9-a2a3-2a2ae2dbcce4';
           const bnbAddress = '456';
 
           await postgres.tx(t => t.batch([
-            // Generated loki account
-            dbHelper.insertLokiAccount(lokiAccountUuid, 'lokiAddress', 0),
-            // Mapping user bnb address to generated loki
-            dbHelper.insertClientAccount(bnbClientAccount, bnbAddress, TYPE.BNB, lokiAccountUuid, TYPE.LOKI),
+            // Generated bdx account
+            dbHelper.insertBeldexAccount(beldexAccountUuid, 'insertBeldexAccount', 0),
+            // Mapping user bnb address to generated bdx
+            dbHelper.insertClientAccount(bnbClientAccount, bnbAddress, TYPE.BNB, beldexAccountUuid, TYPE.BDX),
           ]));
 
           // BDX_TO_BBDX means we give the api our BNB address
@@ -90,47 +90,47 @@ describe('Swap API', () => {
           assert.isTrue(success);
           assert.deepEqual(result, {
             uuid: bnbClientAccount,
-            type: TYPE.LOKI,
-            depositAddress: 'lokiAddress',
+            type: TYPE.BDX,
+            depositAddress: 'beldexAddress',
           });
         });
 
         it('should create a new account and return it if one does not exist', async () => {
           const bnbAddress = '456';
 
-          const generateLokiAccount = {
-            address: 'generatedLoki',
+          const generateBeldexAccount = {
+            address: 'generatedBeldex',
             address_index: 0,
           };
-          sandbox.stub(beldex, 'createAccount').resolves(generateLokiAccount);
+          sandbox.stub(beldex, 'createAccount').resolves(generateBeldexAccount);
 
           const { status, success, result } = await swapToken({ type: SWAP_TYPE.BDX_TO_BBDX, address: bnbAddress });
           assert.equal(status, 200);
           assert.isTrue(success);
           assert.deepEqual(result, {
             uuid: result.uuid,
-            type: TYPE.LOKI,
-            depositAddress: generateLokiAccount.address,
+            type: TYPE.BDX,
+            depositAddress: generateBeldexAccount.address
           });
         });
       });
 
-      context('BLOKI to LOKI', () => {
+      context('BBDX to BDX', () => {
         it('should return the existing client account', async () => {
           const bnbAccountUuid = 'd27efff4-988b-11e9-a2a3-2a2ae2dbcce4';
           const beldexClientAccount = 'd27f01b6-988b-11e9-a2a3-2a2ae2dbcce4';
-          const lokiAddress = '123';
+          const beldexAddress = '123';
           const memo = 'bnbMemo';
 
           await postgres.tx(t => t.batch([
             // BNB account
             dbHelper.insertBNBAccount(bnbAccountUuid, memo),
-            // Mapping user loki address to generated bnb
-            dbHelper.insertClientAccount(beldexClientAccount, lokiAddress, TYPE.LOKI, bnbAccountUuid, TYPE.BNB),
+            // Mapping user bdx address to generated bnb
+            dbHelper.insertClientAccount(beldexClientAccount, beldexAddress, TYPE.BDX, bnbAccountUuid, TYPE.BNB),
           ]));
 
-          // BLOKI_TO_LOKI means we give the api our LOKI address
-          const { status, success, result } = await swapToken({ type: SWAP_TYPE.BLOKI_TO_LOKI, address: lokiAddress });
+          // BBDX_TO_BDX means we give the api our BDX address
+          const { status, success, result } = await swapToken({ type: SWAP_TYPE.BBDX_TO_BDX, address: beldexAddress });
           assert.equal(status, 200);
           assert.isTrue(success);
           assert.deepEqual(result, {
@@ -142,12 +142,12 @@ describe('Swap API', () => {
         });
 
         it('should create a new account and return it if one does not exist', async () => {
-          const lokiAddress = '123';
+          const beldexAddress = '123';
 
           const memo = 'meme-mo';
           sandbox.stub(crypto, 'generateRandomString').returns(memo);
 
-          const { status, success, result } = await swapToken({ type: SWAP_TYPE.BLOKI_TO_LOKI, address: lokiAddress });
+          const { status, success, result } = await swapToken({ type: SWAP_TYPE.BBDX_TO_BDX, address: beldexAddress });
           assert.equal(status, 200);
           assert.isTrue(success);
           assert.deepEqual(result, {
@@ -166,8 +166,8 @@ describe('Swap API', () => {
     // We stub the relevant functions which take this in anyway
     const clientAccount = {
       uuid: 'd27efff4-988b-11e9-a2a3-2a2ae2dbcce4',
-      address: 'LOKI',
-      addressType: TYPE.LOKI,
+      address: 'BDX',
+      addressType: TYPE.BDX,
       accountType: TYPE.BNB,
       account: { memo: 'memo' },
     };
@@ -268,7 +268,7 @@ describe('Swap API', () => {
 
         const swap = result[0];
         assert.deepEqual(Object.keys(swap), ['uuid', 'type', 'amount', 'txHash']);
-        assert.strictEqual(swap.type, SWAP_TYPE.BLOKI_TO_LOKI);
+        assert.strictEqual(swap.type, SWAP_TYPE.BBDX_TO_BDX);
         assert.equal(swap.amount, 100);
         assert.strictEqual(swap.txHash, txHash);
       });
@@ -320,8 +320,8 @@ describe('Swap API', () => {
     describe('success', () => {
       const clientAccount = {
         uuid: 'd27efff4-988b-11e9-a2a3-2a2ae2dbcce4',
-        address: 'LOKI',
-        addressType: TYPE.LOKI,
+        address: 'BDX',
+        addressType: TYPE.BDX,
         accountAddress: 'BNB',
         accountType: TYPE.BNB,
       };
@@ -333,7 +333,7 @@ describe('Swap API', () => {
       it('should return all the swaps for the given client account', async () => {
         const swaps = [1, 2, 3].map(id => ({
           uuid: id,
-          type: SWAP_TYPE.BLOKI_TO_LOKI,
+          type: SWAP_TYPE.BBDX_TO_BDX,
           amount: id * 100,
           txHash: id,
         }));
@@ -348,7 +348,7 @@ describe('Swap API', () => {
       it('should return the correct data if swap has not been processed', async () => {
         const swap = {
           uuid: 'swapuuid',
-          type: SWAP_TYPE.BLOKI_TO_LOKI,
+          type: SWAP_TYPE.BBDX_TO_BDX,
           amount: 100,
           deposit_transaction_hash: 'deposit',
           created: 'now',
@@ -372,7 +372,7 @@ describe('Swap API', () => {
       it('should return the array of transaction hashes if swap has been processed', async () => {
         const swap = {
           uuid: 'swapuuid',
-          type: SWAP_TYPE.BLOKI_TO_LOKI,
+          type: SWAP_TYPE.BBDX_TO_BDX,
           amount: 100,
           deposit_transaction_hash: 'deposit',
           transfer_transaction_hash: 'hash1,hash2',
