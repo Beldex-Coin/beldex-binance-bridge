@@ -6,6 +6,7 @@ import { Input, Button, Select } from '@components';
 import { SWAP_TYPE, TYPE } from '@constants';
 import config from '@config';
 import styles from './styles';
+import LoginPopup from './loginpop';
 
 const walletCreationUrl = {
   [TYPE.BDX]: config.beldex.walletCreationUrl,
@@ -23,6 +24,7 @@ class SwapSelection extends Component {
       value: SWAP_TYPE.BBDX_TO_BDX,
       description: 'B-BDX to BDX',
     }],
+    loginOpen: false,
   };
 
   onNext = () => {
@@ -41,13 +43,20 @@ class SwapSelection extends Component {
 
   onSwapTypeChanged = (event) => {
     this.props.onSwapTypeChanged(event.target.value);
+    console.log(event.target.value)
+    if (event.target.value== "bbdx_to_bdx")
+    {
+      this.setState({loginOpen: true})
+    }
   }
 
   getAddressType = () => {
     const { swapType } = this.props;
     return swapType === SWAP_TYPE.BDX_TO_BBDX ? TYPE.BNB : TYPE.BDX;
   }
-
+  loginClose = () => {
+    this.setState({loginOpen: false})
+  }
   render() {
     const { swapType, loading, classes } = this.props;
     const { options, address, addressError } = this.state;
@@ -96,6 +105,11 @@ class SwapSelection extends Component {
           />
         </Grid>
         <Link className={classes.belLink} href="/tos/BBDXBridgeTOS.html" target="_blank">Terms of Service</Link>
+        {
+          this.state.loginOpen &&
+          <LoginPopup open={this.state.loginOpen} loginClose={this.loginClose} />
+        }
+        
       </Grid>
     );
   }

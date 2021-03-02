@@ -2,7 +2,9 @@ import { common } from '@theme';
 
 const styles = theme => ({
   root: {
-    backgroundColor: 'transparent',
+    backgroundColor: '#060f00 !important',
+    boxShadow: "0px 0px 30px rgb(36 36 36)",
+    border: '1px solid #282828',
     [theme.breakpoints.up('md')]: {
       maxWidth: '600px',
     },
