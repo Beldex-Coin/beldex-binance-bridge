@@ -60,6 +60,9 @@ const theme =  {
       root: {
         color: '#000'
       },
+      icon: {
+        color: "000"
+      }
     },
     MuiIconButton: {
       root:

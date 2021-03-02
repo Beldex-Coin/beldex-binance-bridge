@@ -7,7 +7,7 @@ const styles = theme => ({
   },
   
   dropdownStyle: {      
-    backgroundColor: "#000 !important",
+    backgroundColor: "#fff !important",
     height:50,
     '&:hover':{
       backgroundColor : '#fff !important',
