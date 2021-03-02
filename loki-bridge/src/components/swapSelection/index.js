@@ -75,7 +75,7 @@ class SwapSelection extends Component {
             value={swapType}
             handleChange={this.onSwapTypeChanged}
             disabled={loading}
-            className="belSelect"
+            className={classes.belSelect}
           />
         </Grid>
         <Typography style={{fontSize:12}}>
@@ -93,7 +93,7 @@ class SwapSelection extends Component {
             disabled={loading}
           />
           <Typography className={ classes.createAccount }>
-            <Link style={{color : '#fff'}} href={url} target="_blank" rel="noreferrer">
+            <Link style={{color : '#000'}} href={url} target="_blank" rel="noreferrer">
               Don't have a wallet? create one
             </Link>
           </Typography>

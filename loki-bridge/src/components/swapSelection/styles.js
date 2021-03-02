@@ -2,9 +2,10 @@ import { common } from '@theme';
 
 const styles = theme => ({
   root: {
-    backgroundColor: '#060f00 !important',
-    boxShadow: "0px 0px 30px rgb(36 36 36)",
-    border: '1px solid #282828',
+    backgroundColor: '#fff !important',
+    // boxShadow: "0px 0px 30px rgb(36 36 36)",
+    border: '1px solid #d4d4d4',
+    color: '#000',
     [theme.breakpoints.up('md')]: {
       maxWidth: '600px',
     },
@@ -28,13 +29,16 @@ const styles = theme => ({
     textAlign: 'center',
     width: '100%',
     marginTop: '20px',
-    color: "#fff"
+    color: "#000"
   },
   closeBtn: {
     position: 'absolute',
     top: '5px',
     right: 0,
     background: 'transparent !important'
+  },
+  belSelect: {
+    color: "#000"
   }
 });
 

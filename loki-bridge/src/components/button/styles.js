@@ -10,12 +10,12 @@ const styles = theme => ({
     padding: '0.8rem 2.5rem',
     letterSpacing: '0.03em',
     fontSize: '0.8rem',
-    backgroundColor: '#fff',
-    color: '#000',
+    backgroundColor: '#000',
+    color: '#fff',
     '&:hover': {
-      backgroundColor: '#000',
-      color: 'white',
-      border: `1px solid #fff`,
+      backgroundColor: '#fff',
+      color: '#000',
+      border: `1px solid #000`,
     }
   },
   secondary: {

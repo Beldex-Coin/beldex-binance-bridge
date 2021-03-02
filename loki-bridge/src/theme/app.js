@@ -1,3 +1,4 @@
+import color from '@material-ui/core/colors/amber';
 import colors from './colors';
 
 const theme =  {
@@ -17,7 +18,9 @@ const theme =  {
     MuiInputBase: {
       root: {
         fontSize: '13px',
-        background: colors.belBackground
+        background: colors.belColorWhite,
+        border: '1px solid #d4d4d4',
+        color: '#000',
       }
     },
     MuiOutlinedInput: {
@@ -36,7 +39,23 @@ const theme =  {
         fontSize: '0.7rem'
       }
     },
+    MuiDialogTitle: {
+      root: {
+        color: "#000"
+      }
+    },
+    MuiTypography: {
+      colorTextSecondary: {
+        color: "#000"
+      }
+    },
+    MuiSelect:{
+      root: {
+        color: '#000'
+      },
+    },
   },
+  
   palette: {
     type: 'dark',
     primary: {

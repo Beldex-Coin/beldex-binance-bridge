@@ -18,9 +18,6 @@ function LoginPopup(props) {
   const [open, setOpen] = React.useState(false);
   const { classes } = props;
 
-  function handleClickOpen() {
-    setOpen(true);
-  }
 
   function handleClose() {
     setOpen(false);
@@ -49,7 +46,7 @@ function LoginPopup(props) {
         </DialogContent>
         <DialogActions>
           <Button onClick={props.loginClose} color="primary" className={classes.closeBtn}>
-            <img src={closeIcon} style={{filter: 'invert(1)'}} />
+            <img src={closeIcon}  />
           </Button>
         </DialogActions>
       </Dialog>
