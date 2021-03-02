@@ -8,11 +8,11 @@ import { db, bnb, beldex } from '../core';
 import log from '../utils/log';
 
 // The fees in decimal format
-const configFees = { [TYPE.LOKI]: config.get('beldex.withdrawalFee') };
+const configFees = { [TYPE.BDX]: config.get('beldex.withdrawalFee') };
 
 const symbols = {
-  [TYPE.LOKI]: 'LOKI',
-  [TYPE.BNB]: 'B-LOKI',
+  [TYPE.BDX]: 'BDX',
+  [TYPE.BNB]: 'B-BDX',
 };
 
 class PriceFetchFailed extends Error { }
@@ -21,7 +21,7 @@ class DailyLimitHit extends Error { }
 
 const module = {
   // The fees in 1e9 format
-  fees: { [TYPE.LOKI]: (parseFloat(configFees[TYPE.LOKI]) * 1e9).toFixed(0) },
+  fees: { [TYPE.BDX]: (parseFloat(configFees[TYPE.BDX]) * 1e9).toFixed(0) },
 
   Errors: { PriceFetchFailed, NoSwapsToProcess, DailyLimitHit },
   /**
@@ -49,7 +49,7 @@ const module = {
     }
 
     const { swaps, totalAmount } = info;
-    const sentCurrency = swapType === SWAP_TYPE.BDX_TO_BBDX ? TYPE.BNB : TYPE.LOKI;
+    const sentCurrency = swapType === SWAP_TYPE.BDX_TO_BBDX ? TYPE.BNB : TYPE.BDX;
 
     log.info(chalk`{green Completed {white.bold ${swaps.length}} swaps}`);
     log.info(chalk`{green Amount sent:} {bold ${totalAmount / 1e9}} {yellow ${symbols[sentCurrency]}}`);
@@ -81,8 +81,8 @@ const module = {
    * @param {string} swapType The type of swap.
    */
   async processAutoSwaps(dailyAmount, dailyLimit, swapType) {
-    // Get the usd price of LOKI and make sure it is valid
-    const usdPrice = await module.getCurrentLokiPriceInUSD();
+    // Get the usd price of BDX and make sure it is valid
+    const usdPrice = await module.getCurrentBeldexPriceInUSD();
     if (!usdPrice || usdPrice < 0) throw new PriceFetchFailed();
 
     // Get our pending swaps and their transactions
@@ -131,7 +131,7 @@ const module = {
   /**
    * Get the current price of BDX
    */
-  async getCurrentLokiPriceInUSD() {
+  async getCurrentBeldexPriceInUSD() {
     try {
       const response = await axios.get('https://api.coingecko.com/api/v3/simple/price?ids=beldex&vs_currencies=usd');
       return response.data['beldex'].usd;
@@ -156,7 +156,7 @@ const module = {
     const txHashes = await module.send(swapType, transactions);
     await db.updateSwapsTransferTransactionHash(ids, txHashes.join(','));
 
-    const sentCurrency = swapType === SWAP_TYPE.BDX_TO_BBDX ? TYPE.BNB : TYPE.LOKI;
+    const sentCurrency = swapType === SWAP_TYPE.BDX_TO_BBDX ? TYPE.BNB : TYPE.BDX;
 
     // This is in 1e9 format
     const transactionAmount = transactions.reduce((total, current) => total + current.amount, 0);
@@ -175,7 +175,7 @@ const module = {
   /**
    * Get all the swaps which are not invalid.
    *
-   * For BLOKI_TO_LOKI, a swap is invalid if:
+   * For BBDX_TO_BDX, a swap is invalid if:
    *  The total amount from an address is less than the fee
    *
    * @param {[{ uuid, amount, address }]} swaps The swaps
@@ -183,14 +183,14 @@ const module = {
    * @returns The valid swaps.
    */
   getValidSwaps(swaps, swapType) {
-    if (swapType !== SWAP_TYPE.BLOKI_TO_LOKI) return swaps;
+    if (swapType !== SWAP_TYPE.BBDX_TO_BDX) return swaps;
 
-    // If it's BLOKI_TO_LOKI we need to sum up the swaps values and check that they're greater than the loki fee
+    // If it's BBDX_TO_BDX we need to sum up the swaps values and check that they're greater than the bdx fee
     const transactions = module.getTransactions(swaps);
 
     // A transaction is invalid if the amount - fee is negative
     const invalidTransactions = transactions.filter(({ amount }) => {
-      const fee = module.fees[TYPE.LOKI] || 0;
+      const fee = module.fees[TYPE.BDX] || 0;
       return (amount - fee) <= 0;
     });
 
@@ -242,11 +242,11 @@ const module = {
       }));
 
       // Send BNB to the users
-      return bnb.multiSend(config.get('binance.mnemonic'), outputs, 'Loki Bridge');
-    } else if (swapType === SWAP_TYPE.BLOKI_TO_LOKI) {
+      return bnb.multiSend(config.get('binance.mnemonic'), outputs, 'Beldex Bridge');
+    } else if (swapType === SWAP_TYPE.BBDX_TO_BDX) {
       // Deduct the Beldex withdrawal fees.
       const outputs = transactions.map(({ address, amount }) => {
-        const fee = module.fees[TYPE.LOKI] || 0;
+        const fee = module.fees[TYPE.BDX] || 0;
         return {
           address,
           amount: Math.max(0, amount - fee),

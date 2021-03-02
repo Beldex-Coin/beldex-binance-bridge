@@ -14,7 +14,7 @@ create table if not exists client_accounts (
   /* The type of generated account. bdx or bnb */
   account_type text,
 
-  /* An id to a generated account. account_loki or account_bnb */
+  /* An id to a generated account. account_bdx or account_bnb */
   account_uuid char(36),
 
   created timestamp
@@ -25,7 +25,7 @@ create table if not exists client_accounts (
   We don't generate any bdx accounts because we only have 1 wallet-rpc running.
   Instead what we do is generate a new sub-address and store that instead, this acts the same way as making a new wallet.
 */
-create table if not exists accounts_loki (
+create table if not exists accounts_bdx (
   uuid char(36) primary key,
   address text, -- This is just a unique sub-address for a wallet
   address_index int, -- The sub-address index
@@ -47,7 +47,7 @@ create table if not exists accounts_bnb (
 create table if not exists swaps (
   uuid char(36) primary key,
 
-  /* The type of swap: bdx_to_bbdx or bloki_to_loki */
+  /* The type of swap: bdx_to_bbdx or bbdx_to_bdx */
   type text,
 
   /*

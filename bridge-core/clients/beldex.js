@@ -99,7 +99,7 @@ export default class beldexClient {
   /**
    * Create a new sub-address from the current open wallet.
    *
-   * @returns {Promise<{ address: string, address_index: number }>} A new loki account or `null` if we failed to make one.
+   * @returns {Promise<{ address: string, address_index: number }>} A new bdx account or `null` if we failed to make one.
    */
   async createAccount() {
     const data = await this._request('create_address', { account_index: this.accountIndex });
@@ -117,7 +117,7 @@ export default class beldexClient {
    * Get all incoming transactions sent to the given `addressIndex`.
    *
    * @param {number} addressIndex The index of the sub-address.
-   * @returns {Promise<[object]>} An array of LOKI transactions.
+   * @returns {Promise<[object]>} An array of BDX transactions.
    */
   async getIncomingTransactions(addressIndex, options = {}) {
     const data = await this._request('get_transfers', {
@@ -143,7 +143,7 @@ export default class beldexClient {
 
   /**
    * Validate an address.
-   * @param {string} address The LOKI address to validate.
+   * @param {string} address The BDX address to validate.
    * @returns {Promise<boolean>} Wether the given `address` is valid or not.
    */
   async validateAddress(address) {

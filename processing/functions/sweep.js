@@ -9,32 +9,32 @@ const module = {
    * Sweep any pending swaps
    */
   async sweepAllPendingSwaps() {
-    await module.sweepPendingLokiToBloki();
-    await module.sweepPendingBlokiToLoki();
+    await module.sweepPendingBdxToBbdx();
+    await module.sweepPendingBbdxToBdx();
   },
 
   /**
   * Sweep any pending bdx_to_bbdx swaps
   */
-  async sweepPendingLokiToBloki() {
+  async sweepPendingBdxToBbdx() {
     log.header(chalk.blue(`Sweeping ${SWAP_TYPE.BDX_TO_BBDX}`));
 
     // Get all the client accounts
-    const clientAccounts = await db.getClientAccounts(TYPE.LOKI);
+    const clientAccounts = await db.getClientAccounts(TYPE.BDX);
 
     // Get all incoming transactions from the client accounts
     const promises = clientAccounts.map(async c => {
       const { address } = c.account;
-      const transactions = await transactionHelper.getIncomingTransactions(c.account, TYPE.LOKI);
+      const transactions = await transactionHelper.getIncomingTransactions(c.account, TYPE.BDX);
       return transactions.map(t => ({ ...t, address }));
     });
-    const lokiTransactions = await Promise.all(promises).then(array => array.flat());
+    const beldexTransactions = await Promise.all(promises).then(array => array.flat());
 
     // Get all the deposit hases from the db
     const hashes = await db.getAllSwapDepositHashes(SWAP_TYPE.BDX_TO_BBDX);
 
     // Get all the new transactions
-    const newTransactions = lokiTransactions.filter(t => !hashes.includes(t.hash));
+    const newTransactions = beldexTransactions.filter(t => !hashes.includes(t.hash));
     if (newTransactions.length === 0) {
       log.info(chalk.yellow('No new transactions'));
       return;
@@ -54,10 +54,10 @@ const module = {
   },
 
   /**
-  * Sweep any pending bloki_to_loki swaps
+  * Sweep any pending bbdx_to_bdx swaps
   */
-  async sweepPendingBlokiToLoki() {
-    log.header(chalk.blue(`Sweeping ${SWAP_TYPE.BLOKI_TO_LOKI}`));
+  async sweepPendingBbdxToBdx() {
+    log.header(chalk.blue(`Sweeping ${SWAP_TYPE.BBDX_TO_BDX}`));
     const ourAddress = transactionHelper.ourBNBAddress;
 
     // Get all our incoming transactions which contain a memo
@@ -65,7 +65,7 @@ const module = {
     const memoTransactions = transactions.filter(t => t.memo && t.memo.length > 0);
 
     // Get all the deposit hases from the db
-    const hashes = await db.getAllSwapDepositHashes(SWAP_TYPE.BLOKI_TO_LOKI);
+    const hashes = await db.getAllSwapDepositHashes(SWAP_TYPE.BBDX_TO_BDX);
 
     // Get all the new transactions
     const newTransactions = memoTransactions.filter(t => !hashes.includes(t.hash));

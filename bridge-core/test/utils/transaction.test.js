@@ -76,8 +76,7 @@ describe('Transaction', () => {
 
         const stub = sandbox.stub(beldex, 'getIncomingTransactions').resolves(mockAPIResult);
 
-        const transactions = await transaction.getIncomingTransactions({ addressIndex: 0 }, TYPE.LOKI);
-        console.log("transa:",transactions)
+        const transactions = await transaction.getIncomingTransactions({ addressIndex: 0 }, TYPE.BDX);
         assert(stub.calledOnce, 'beldex.getIncomingTransactions was not called');
         assert.lengthOf(transactions, 1);
         assert.deepEqual(transactions[0], {
@@ -98,7 +97,7 @@ describe('Transaction', () => {
         sandbox.stub(db, 'getBeldexAccount').resolves({ address_index: 0 });
         const stub = sandbox.stub(beldex, 'getIncomingTransactions').resolves(mockAPIResult);
 
-        const transactions = await transaction.getIncomingTransactions({ addressIndex: 0 }, TYPE.LOKI);
+        const transactions = await transaction.getIncomingTransactions({ addressIndex: 0 }, TYPE.BDX);
         assert(stub.calledOnce, 'beldex.getIncomingTransactions was not called');
         assert.lengthOf(transactions, 2);
         assert.includeMembers(transactions.map(t => t.hash), [2, 4]);

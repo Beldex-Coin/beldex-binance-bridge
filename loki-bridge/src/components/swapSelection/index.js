@@ -8,7 +8,7 @@ import config from '@config';
 import styles from './styles';
 
 const walletCreationUrl = {
-  [TYPE.LOKI]: config.beldex.walletCreationUrl,
+  [TYPE.BDX]: config.beldex.walletCreationUrl,
   [TYPE.BNB]: config.binance.walletCreationUrl,
 };
 
@@ -18,10 +18,10 @@ class SwapSelection extends Component {
     addressError: false,
     options: [{
       value: SWAP_TYPE.BDX_TO_BBDX,
-      description: 'LOKI to B-LOKI',
+      description: 'BDX to B-BDX',
     }, {
-      value: SWAP_TYPE.BLOKI_TO_LOKI,
-      description: 'B-LOKI to LOKI',
+      value: SWAP_TYPE.BBDX_TO_BDX,
+      description: 'B-BDX to BDX',
     }],
   };
 
@@ -45,7 +45,7 @@ class SwapSelection extends Component {
 
   getAddressType = () => {
     const { swapType } = this.props;
-    return swapType === SWAP_TYPE.BDX_TO_BBDX ? TYPE.BNB : TYPE.LOKI;
+    return swapType === SWAP_TYPE.BDX_TO_BBDX ? TYPE.BNB : TYPE.BDX;
   }
 
   render() {
@@ -53,8 +53,8 @@ class SwapSelection extends Component {
     const { options, address, addressError } = this.state;
 
     const addressType = this.getAddressType();
-    const inputLabel = addressType === TYPE.LOKI ? 'Loki Address' : 'BNB Address';
-    const inputPlaceholder = addressType === TYPE.LOKI ? 'L...' : 'bnb...';
+    const inputLabel = addressType === TYPE.BDX ? 'BDX Address' : 'BNB Address';
+    const inputPlaceholder = addressType === TYPE.BDX ? 'L...' : 'bnb...';
 
     const url = walletCreationUrl[addressType];
 

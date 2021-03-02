@@ -9,8 +9,8 @@ import { SwapSelection, SwapInfo, SwapList } from '@components';
 import styles from './styles';
 
 const currencySymbols = {
-  [TYPE.LOKI]: 'LOKI',
-  [TYPE.BNB]: 'B-LOKI'
+  [TYPE.BDX]: 'BDX',
+  [TYPE.BNB]: 'B-BDX'
 };
 
 class Swap extends Component {
@@ -163,7 +163,7 @@ class Swap extends Component {
     const { swapType, swaps, info } = this.state;
     if (!swaps) return null;
 
-    const receivingCurrency = swapType === SWAP_TYPE.BDX_TO_BBDX ? TYPE.BNB : TYPE.LOKI;
+    const receivingCurrency = swapType === SWAP_TYPE.BDX_TO_BBDX ? TYPE.BNB : TYPE.BDX;
 
     const pendingSwaps = swaps.filter(s => s.transferTxHashes && s.transferTxHashes.length === 0);
     const total = pendingSwaps.reduce((total, swap) => total + parseFloat(swap.amount), 0);

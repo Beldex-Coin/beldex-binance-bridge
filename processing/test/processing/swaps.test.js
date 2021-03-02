@@ -36,7 +36,7 @@ describe('Processing Swaps', () => {
   });
 
   describe('#getValidSwaps', () => {
-    context('LOKI TO BLOKI', () => {
+    context('BDX TO BBDX', () => {
       it('should return the same array', () => {
         const swaps = [
           { amount: 100, address: '1' },
@@ -49,11 +49,11 @@ describe('Processing Swaps', () => {
       });
     });
 
-    context('BLOKI TO LOKI', () => {
+    context('BBDX TO BDX', () => {
       const fee = 100;
       beforeEach(() => {
         sandbox.stub(functions, 'fees').value({
-          [TYPE.LOKI]: fee,
+          [TYPE.BDX]: fee,
           [TYPE.BNB]: 0,
         });
       });
@@ -65,7 +65,7 @@ describe('Processing Swaps', () => {
           { amount: 300 + fee, address: '2' },
         ];
 
-        const filtered = functions.getValidSwaps(swaps, SWAP_TYPE.BLOKI_TO_LOKI);
+        const filtered = functions.getValidSwaps(swaps, SWAP_TYPE.BBDX_TO_BDX);
         assert.deepEqual(filtered, swaps);
       });
 
@@ -78,7 +78,7 @@ describe('Processing Swaps', () => {
           { amount: 0, address: '4' },
         ];
 
-        const filtered = functions.getValidSwaps(swaps, SWAP_TYPE.BLOKI_TO_LOKI);
+        const filtered = functions.getValidSwaps(swaps, SWAP_TYPE.BBDX_TO_BDX);
         assert.deepEqual(filtered, [valid]);
       });
 
@@ -88,7 +88,7 @@ describe('Processing Swaps', () => {
           { amount: fee, address: '1' },
         ];
 
-        const filtered = functions.getValidSwaps(swaps, SWAP_TYPE.BLOKI_TO_LOKI);
+        const filtered = functions.getValidSwaps(swaps, SWAP_TYPE.BBDX_TO_BDX);
         assert.deepEqual(filtered, swaps);
       });
     });
@@ -136,11 +136,11 @@ describe('Processing Swaps', () => {
     const transactions = [{ address: '1', amount: 7 * 1e9 }];
 
     let bnbStub;
-    let lokiStub;
+    let beldexStub;
 
     beforeEach(() => {
       bnbStub = sandbox.stub(bnb, 'multiSend');
-      lokiStub = sandbox.stub(beldex, 'multiSend');
+      beldexStub = sandbox.stub(beldex, 'multiSend');
     });
 
     it('should send to BNB if swap type is BDX_TO_BBDX', async () => {
@@ -148,9 +148,9 @@ describe('Processing Swaps', () => {
       assert(bnbStub.called, 'bnb.multiSend was not called');
     });
 
-    it('should send to LOKI if swap type is BLOKI_TO_LOKI', async () => {
-      await functions.send(SWAP_TYPE.BLOKI_TO_LOKI, transactions);
-      assert(lokiStub.called, 'beldex.multiSend was not called');
+    it('should send to BDX if swap type is BBDX_TO_BDX', async () => {
+      await functions.send(SWAP_TYPE.BBDX_TO_BDX, transactions);
+      assert(beldexStub.called, 'beldex.multiSend was not called');
     });
 
     it('should throw an error if swap type was invalid', async () => {
@@ -179,12 +179,12 @@ describe('Processing Swaps', () => {
       }]);
     });
 
-    it('should deduct the widthdrawal fee from each transaction for Loki', async () => {
+    it('should deduct the widthdrawal fee from each transaction for Beldex', async () => {
       const fee = config.get('beldex.withdrawalFee');
 
-      await functions.send(SWAP_TYPE.BLOKI_TO_LOKI, transactions);
+      await functions.send(SWAP_TYPE.BBDX_TO_BDX, transactions);
 
-      const { args } = lokiStub.getCalls()[0];
+      const { args } = beldexStub.getCalls()[0];
       assert.lengthOf(args, 1);
 
       const outputs = args[0];
@@ -199,7 +199,7 @@ describe('Processing Swaps', () => {
   describe('#processSwaps', () => {
     beforeEach(async () => {
       sandbox.stub(bnb, 'multiSend').resolves(['bnbTxHash1', 'bnbTxHash2']);
-      sandbox.stub(beldex, 'multiSend').resolves(['lokiTxHash1', 'lokiTxHash2']);
+      sandbox.stub(beldex, 'multiSend').resolves(['beldexTxHash1', 'beldexTxHash2']);
       sandbox.stub(db, 'updateSwapsTransferTransactionHash').resolves();
     });
 
@@ -215,7 +215,7 @@ describe('Processing Swaps', () => {
     it('should return the correct data if it succeeds', async () => {
       const fee = 20;
       sandbox.stub(functions, 'fees').value({
-        [TYPE.LOKI]: fee,
+        [TYPE.BDX]: fee,
         [TYPE.BNB]: 0,
       });
 
@@ -234,8 +234,8 @@ describe('Processing Swaps', () => {
       // Fee should only be charged once per address
       const expectedFees = fee * Object.keys(values).length;
 
-      // Make sure we get the LOKI fees
-      const data = await functions.processSwaps(swaps, SWAP_TYPE.BLOKI_TO_LOKI);
+      // Make sure we get the BDX fees
+      const data = await functions.processSwaps(swaps, SWAP_TYPE.BBDX_TO_BDX);
       assert.isNotNull(data);
       assert.deepEqual(data, {
         swaps,
@@ -244,11 +244,11 @@ describe('Processing Swaps', () => {
       });
     });
 
-    context('BLOKI TO LOKI', () => {
+    context('BBDX TO BDX', () => {
       it('should not return swaps which are invalid', async () => {
         const fee = 20;
         sandbox.stub(functions, 'fees').value({
-          [TYPE.LOKI]: fee,
+          [TYPE.BDX]: fee,
           [TYPE.BNB]: 0,
         });
 
@@ -263,8 +263,8 @@ describe('Processing Swaps', () => {
           return amounts.map(amount => ({ uuid: i, amount, address }));
         });
 
-        // Make sure we get the LOKI fees
-        const data = await functions.processSwaps(swaps, SWAP_TYPE.BLOKI_TO_LOKI);
+        // Make sure we get the BDX fees
+        const data = await functions.processSwaps(swaps, SWAP_TYPE.BBDX_TO_BDX);
         assert.isNotNull(data);
         assert.deepEqual(data.swaps, swaps.filter(v => v.address !== 'c'));
       });
@@ -274,13 +274,13 @@ describe('Processing Swaps', () => {
   describe('#processAutoSwaps', () => {
     const usdPrice = 0.5;
     beforeEach(async () => {
-      sandbox.stub(functions, 'getCurrentLokiPriceInUSD').resolves(usdPrice);
+      sandbox.stub(functions, 'getCurrentBeldexPriceInUSD').resolves(usdPrice);
       sandbox.stub(functions, 'processSwaps').callsFake(processSwapFake);
     });
 
     it('should throw an error if usd price is null', async () => {
       sandbox.restore();
-      sandbox.stub(functions, 'getCurrentLokiPriceInUSD').resolves(null);
+      sandbox.stub(functions, 'getCurrentBeldexPriceInUSD').resolves(null);
 
       try {
         await functions.processAutoSwaps(10, 100, SWAP_TYPE.BDX_TO_BBDX);
@@ -292,10 +292,10 @@ describe('Processing Swaps', () => {
 
     it('should throw an error if usd price was less than 0', async () => {
       sandbox.restore();
-      sandbox.stub(functions, 'getCurrentLokiPriceInUSD').resolves(-1);
+      sandbox.stub(functions, 'getCurrentBeldexPriceInUSD').resolves(-1);
 
       try {
-        await functions.processAutoSwaps(10, 100, SWAP_TYPE.BLOKI_TO_LOKI);
+        await functions.processAutoSwaps(10, 100, SWAP_TYPE.BBDX_TO_BDX);
         assert.fail();
       } catch (e) {
         assert.instanceOf(e, functions.Errors.PriceFetchFailed);
@@ -306,7 +306,7 @@ describe('Processing Swaps', () => {
       sandbox.stub(db, 'getPendingSwaps').resolves([]);
 
       try {
-        await functions.processAutoSwaps(10, 100, SWAP_TYPE.BLOKI_TO_LOKI);
+        await functions.processAutoSwaps(10, 100, SWAP_TYPE.BBDX_TO_BDX);
         assert.fail();
       } catch (e) {
         assert.instanceOf(e, functions.Errors.NoSwapsToProcess);
@@ -319,7 +319,7 @@ describe('Processing Swaps', () => {
       const pairs = [[100, 100], [101, 100]];
       for (const [amount, limit] of pairs) {
         try {
-          await functions.processAutoSwaps(amount, limit, SWAP_TYPE.BLOKI_TO_LOKI);
+          await functions.processAutoSwaps(amount, limit, SWAP_TYPE.BBDX_TO_BDX);
           assert.fail();
         } catch (e) {
           assert.instanceOf(e, functions.Errors.DailyLimitHit);
@@ -331,7 +331,7 @@ describe('Processing Swaps', () => {
       sandbox.stub(db, 'getPendingSwaps').resolves([{ uuid: 1, amount: 100, address: 'a' }]);
 
       try {
-        await functions.processAutoSwaps(10, 100, SWAP_TYPE.BLOKI_TO_LOKI);
+        await functions.processAutoSwaps(10, 100, SWAP_TYPE.BBDX_TO_BDX);
       } catch (e) {
         console.log(e);
         assert.fail();
@@ -386,7 +386,7 @@ describe('Processing Swaps', () => {
       const swaps = ['a', 'b', 'c'].map((a, i) => ({ uuid: i, amount: amounts[i], address: a }));
       sandbox.stub(db, 'getPendingSwaps').resolves(swaps);
       sandbox.stub(functions, 'fees').value({
-        [TYPE.LOKI]: 0,
+        [TYPE.BDX]: 0,
         [TYPE.BNB]: 0,
       });
 
@@ -410,15 +410,15 @@ describe('Processing Swaps', () => {
   describe('#processAllSwapsOfType', () => {
     beforeEach(async () => {
       // Clear out any data in the db
-      await postgres.none('TRUNCATE client_accounts, accounts_loki, accounts_bnb, swaps CASCADE;');
+      await postgres.none('TRUNCATE client_accounts, accounts_bdx, accounts_bnb, swaps CASCADE;');
 
       sandbox.stub(bnb, 'multiSend').resolves(['bnbTxHash1', 'bnbTxHash2']);
-      sandbox.stub(beldex, 'multiSend').resolves(['lokiTxHash1', 'lokiTxHash2']);
+      sandbox.stub(beldex, 'multiSend').resolves(['beldexTxHash1', 'beldexTxHash2']);
     });
 
     const processAllSwapsOfType = async swapType => {
-      const addressType = swapType === SWAP_TYPE.BDX_TO_BBDX ? TYPE.BNB : TYPE.LOKI;
-      const accountType = addressType === TYPE.BNB ? TYPE.LOKI : TYPE.BNB;
+      const addressType = swapType === SWAP_TYPE.BDX_TO_BBDX ? TYPE.BNB : TYPE.BDX;
+      const accountType = addressType === TYPE.BNB ? TYPE.BDX : TYPE.BNB;
       const clientAccountUuid = 'cbfa4d0f-cecb-4c46-88b8-719bbca6395a';
       const swapUuid = 'a2a67748-ae5d-415c-81d6-803d28dc29fb';
 
@@ -440,11 +440,11 @@ describe('Processing Swaps', () => {
       });
     });
 
-    context('BLOKI_TO_LOKI', () => {
+    context('BBDX_TO_BDX', () => {
       it('should update the transfer transactions hash on success', async () => {
-        const swap = await processAllSwapsOfType(SWAP_TYPE.BLOKI_TO_LOKI);
+        const swap = await processAllSwapsOfType(SWAP_TYPE.BBDX_TO_BDX);
         assert.isNotNull(swap);
-        assert.strictEqual(swap.transfer_transaction_hash, 'lokiTxHash1,lokiTxHash2');
+        assert.strictEqual(swap.transfer_transaction_hash, 'beldexTxHash1,beldexTxHash2');
       });
     });
   });
