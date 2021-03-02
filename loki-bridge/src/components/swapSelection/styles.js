@@ -29,6 +29,12 @@ const styles = theme => ({
     width: '100%',
     marginTop: '20px',
     color: "#fff"
+  },
+  closeBtn: {
+    position: 'absolute',
+    top: '5px',
+    right: 0,
+    background: 'transparent !important'
   }
 });
 

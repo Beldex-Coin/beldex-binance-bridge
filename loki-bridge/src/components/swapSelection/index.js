@@ -44,7 +44,7 @@ class SwapSelection extends Component {
   onSwapTypeChanged = (event) => {
     this.props.onSwapTypeChanged(event.target.value);
     console.log(event.target.value)
-    if (event.target.value== "bbdx_to_bdx")
+    if (event.target.value== "bdx_to_bbdx")
     {
       this.setState({loginOpen: true})
     }

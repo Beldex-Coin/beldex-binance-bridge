@@ -8,6 +8,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import Slide from '@material-ui/core/Slide';
 import styles from './styles';
 import { withStyles } from '@material-ui/core/styles';
+import closeIcon from './close.svg'
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -15,7 +16,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 
 function LoginPopup(props) {
   const [open, setOpen] = React.useState(false);
-  const {classes } = props;
+  const { classes } = props;
 
   function handleClickOpen() {
     setOpen(true);
@@ -47,10 +48,8 @@ function LoginPopup(props) {
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={props.loginClose} color="primary">
-          <span className="material-icons">
-            cancel
-            </span> 
+          <Button onClick={props.loginClose} color="primary" className={classes.closeBtn}>
+            <img src={closeIcon} style={{filter: 'invert(1)'}} />
           </Button>
         </DialogActions>
       </Dialog>
