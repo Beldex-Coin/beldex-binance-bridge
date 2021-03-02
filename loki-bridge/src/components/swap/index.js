@@ -215,12 +215,12 @@ class Swap extends Component {
   renderSelection = () => {
     const { classes } = this.props;
 
-    const { loading, swapType } = this.state;
-
+    const { loading, swapType, info } = this.state;
     return (
       <Grid item xs={12} className={classes.item}>
         <SwapSelection
           swapType={swapType}
+          info={info}
           onSwapTypeChanged={(swapType) => this.setState({ swapType })}
           onNext={(address) => {
             this.setState({ address });

@@ -23,26 +23,27 @@ function StyledSelect(props) {
   } = props;
 
   return (
-    <FormControl className={ classes.root } fullWidth={ fullWidth } variant="outlined">
-      <StyledLabel label={ label } />
+    <FormControl className={classes.root} fullWidth={fullWidth} variant="outlined">
+      <StyledLabel label={label} />
       <Select
         native
-        value={ value }
-        onChange={ handleChange }
-        disabled={ disabled }
+        open={true}
+        value={value}
+        onChange={handleChange}
+        disabled={disabled}
         fullWidth
         input={
           <OutlinedInput
             name="age"
-            id={ id }
-            labelWidth={ 0 }
+            id={id}
+            labelWidth={0}
           />
         }
       >
-        { allowNull && <option value={null}>select</option> }
+        {allowNull && <option value={null}>select</option>}
         {
           options ? options.map((option) => {
-            return <option key={option.value} value={option.value}>{option.description}</option>;
+            return <option className={classes.dropdownStyle} key={option.value} value={option.value}>{option.description}</option>;
           }) : null
         }
       </Select>

@@ -6,7 +6,7 @@ import * as info from './info';
 const router = Router();
 
 router.get('/api/v1/getInfo', bodyParser.json(), info.getInfo);
-
+router.get('/api/v1/getBalance', bodyParser.json(), info.getBalance);
 router.get('/api/v1/getUncomfirmedBeldexTransactions', bodyParser.json(), swap.getUncomfirmedBeldexTransactions);
 router.get('/api/v1/getSwaps', bodyParser.json(), swap.getSwaps);
 router.post('/api/v1/swap', bodyParser.json(), swap.swapToken);

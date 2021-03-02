@@ -3,6 +3,7 @@ import LazyLoad from 'react-lazy-load';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles';
 import { Grid, Box } from '@material-ui/core';
+import { store, dispatcher, Actions, Events } from '@store';
 import { Snackbar, Swap, ImageLoader } from '@components';
 import theme from '@theme';
 
@@ -12,7 +13,24 @@ export default class App extends PureComponent {
       message: null,
       variant: 'success',
       open: false,
+      balance: ""
     }
+  }
+
+  componentDidMount = () => {
+    store.on(Events.FETCHED_BALANCE, this.onBalUpdated);
+  }
+
+  componentWillMount() {
+    dispatcher.dispatch({
+      type: Actions.GET_BALANCE
+    });
+  }
+
+  onBalUpdated = () => {
+    this.setState({ balance: store.getStore('balance') || {} }, () => {
+      console.log(this.state.balance)
+    });
   }
 
   showMessage = (message, variant) => {
@@ -55,19 +73,29 @@ export default class App extends PureComponent {
           <ImageLoader className="titleImage" loadedClassName="titleImageLoaded" src="/images/logo.png" alt="Logo" />
         </LazyLoad>
         <div className="moving">
-              
-          </div>
+
+        </div>
       </Box>
     );
   }
 
   render() {
+    let bal = 0
+    if(this.state.balance && this.state.balance.length > 0){
+      bal = Number(parseFloat(this.state.balance[0].free).toFixed(2)).toLocaleString('en', {
+        minimumFractionDigits: 2
+      })
+    }
     return (
-      <MuiThemeProvider theme={ createMuiTheme(theme) }>
+      <MuiThemeProvider theme={createMuiTheme(theme)}>
         <CssBaseline />
         {this.renderBackgroundImage()}
         <div id="content">
           {this.renderTitleImage()}
+          <div className="movedBal">
+            <p>Total bdx moved to Binance chain</p>
+            <p className="movedBal-p2">{bal}</p>
+          </div>
           <Grid
             id="grid"
             container
@@ -76,7 +104,7 @@ export default class App extends PureComponent {
           >
             <Grid item xs={12}>
               <Swap showMessage={this.showMessage} />
-              { this.renderSnackbar() }
+              {this.renderSnackbar()}
             </Grid>
           </Grid>
         </div>

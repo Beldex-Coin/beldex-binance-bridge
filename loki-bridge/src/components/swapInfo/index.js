@@ -207,7 +207,7 @@ class SwapInfo extends PureComponent {
             onClick={onRefresh}
           />
         </Grid>
-        <Link href="/tos/BBDXBridgeTOS.html" target="_blank">Terms of Service</Link>
+        <Link href="BBDXBridgeTOS.html" target="_blank">Terms of Service</Link>
       </div>
     );
   }

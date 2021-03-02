@@ -18,6 +18,7 @@ const endpoints = {
   finalizeSwap: '/api/v1/finalizeSwap',
   createBNBAccount: '/api/v1/createBNBAccount',
   downloadBNBKeystore: '/api/v1/downloadBNBKeystore',
+  getBalance: '/api/v1/getBalance',
 };
 
 class Store extends EventEmitter {
@@ -26,7 +27,7 @@ class Store extends EventEmitter {
     this.store = {};
 
     dispatcher.register(async payload => {
-      switch(payload.type) {
+      switch (payload.type) {
         case Actions.GET_INFO:
           this.getInfo();
           break;
@@ -41,6 +42,9 @@ class Store extends EventEmitter {
           break;
         case Actions.FINALIZE_SWAP_TOKEN:
           this.finalizeSwap(payload);
+          break;
+        case Actions.GET_BALANCE:
+          this.getBalance();
           break;
         default: break;
       }
@@ -127,6 +131,17 @@ class Store extends EventEmitter {
 
       // Some other error occurred
       throw e;
+    }
+  }
+
+  async getBalance() {
+    try {
+      const data = await this.fetch(endpoints.getBalance, 'GET');
+      this.store.balance = data.result;
+      //console.log(data);
+      this.emit(Events.FETCHED_BALANCE, data.result);
+    } catch (e) {
+      this.emit(Events.ERROR, e);
     }
   }
 }
