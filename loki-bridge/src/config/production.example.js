@@ -6,6 +6,6 @@ export default {
     txExplorerUrl: 'https://explorer.binance.org/tx'
   },
   beldex: {
-    txExplorerUrl: 'https://lokiblocks.com/tx'
+    txExplorerUrl: 'https://explorer.beldex.io/'
   }
 };

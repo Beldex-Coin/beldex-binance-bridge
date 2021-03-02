@@ -60,13 +60,11 @@ class SwapSelection extends Component {
   render() {
     const { swapType, loading, classes } = this.props;
     const { options, address, addressError } = this.state;
-
     const addressType = this.getAddressType();
     const inputLabel = addressType === TYPE.BDX ? 'BDX Address' : 'BNB Address';
-    const inputPlaceholder = addressType === TYPE.BDX ? 'L...' : 'bnb...';
+    const inputPlaceholder = addressType === TYPE.BDX ? 'bdx...' : 'bbdx...';
 
     const url = walletCreationUrl[addressType];
-
     return (
       <Grid item xs={ 12 } className={classes.root}>
         <Grid item xs={ 12 }>
@@ -80,6 +78,10 @@ class SwapSelection extends Component {
             className="belSelect"
           />
         </Grid>
+        <Typography style={{fontSize:12}}>
+          Swap Fee : {this.props.info.fees && this.props.info.fees.bdx} {" "} BDX
+        </Typography>
+        
         <Grid item xs={ 12 }>
           <Input
             fullWidth
@@ -104,11 +106,12 @@ class SwapSelection extends Component {
             onClick={this.onNext}
           />
         </Grid>
-        <Link className={classes.belLink} href="/tos/BBDXBridgeTOS.html" target="_blank">Terms of Service</Link>
+        <Link className={classes.belLink} href="BBDXBridgeTOS.html" target="_blank">Terms of Service</Link>
         {
           this.state.loginOpen &&
           <LoginPopup open={this.state.loginOpen} loginClose={this.loginClose} />
         }
+        
         
       </Grid>
     );

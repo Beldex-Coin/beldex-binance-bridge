@@ -1,5 +1,5 @@
 export const GET_INFO = 'GET_INFO';
-
+export const GET_BALANCE = 'GET_BALANCE';
 export const GET_UNCONFIRMED_BELDEX_TXS = 'GET_UNCONFIRMED_BELDEX_TXS';
 export const GET_SWAPS = 'GET_SWAPS';
 export const SWAP_TOKEN = 'SWAP_TOKEN';
