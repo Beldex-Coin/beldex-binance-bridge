@@ -144,7 +144,10 @@ code {
   text-align: center;
   line-height: 2px;
 }
-
+.movedBal p
+{
+  color: #eee;
+}
 .movedBal-p2{
   font-size: 46px;
   font-weight: bold;

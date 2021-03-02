@@ -47,6 +47,13 @@ const theme =  {
     MuiTypography: {
       colorTextSecondary: {
         color: "#000"
+      },
+      colorPrimary: {
+        color: '#000'
+      },
+      body1:
+      {
+        color: '#000'
       }
     },
     MuiSelect:{
@@ -54,6 +61,12 @@ const theme =  {
         color: '#000'
       },
     },
+    MuiIconButton: {
+      root:
+      {
+        color: '#000'
+      }
+    }
   },
   
   palette: {

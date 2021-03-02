@@ -18,10 +18,11 @@ const styles = theme => ({
   instructions: {
     fontSize: '0.9rem',
     textAlign: 'center',
-    marginBottom: '16px'
+    marginBottom: '16px',
+    color: "#000"
   },
   instructionBold: {
-    color: colors.white,
+    color: '#000',
     fontSize: '0.9rem',
     fontWeight: 'bold',
     textAlign: 'center',
@@ -68,7 +69,7 @@ const styles = theme => ({
   },
   greenBorder: {
     borderWidth: 1,
-    borderColor: colors.beldxGreen,
+    borderColor: "#000",
     borderStyle: 'solid',
     padding: theme.spacing(1),
     borderRadius: '4px'

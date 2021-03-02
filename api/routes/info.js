@@ -24,6 +24,7 @@ export async function getBalance(req, res, next) {
   const totalBbdxSupply = config.get('binance.totalSupply');
   let beldexBalance = getBalance.filter(data => data.symbol === config.get('binance.symbol'));
   beldexBalance[0].totalSupply = totalBbdxSupply;
+  beldexBalance[0].movedBalance = totalBbdxSupply - Number(beldexBalance[0].free);
   res.status(205);
   res.body = {
     status: 200,

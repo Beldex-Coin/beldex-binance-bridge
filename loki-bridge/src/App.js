@@ -82,7 +82,7 @@ export default class App extends PureComponent {
   render() {
     let bal = 0
     if(this.state.balance && this.state.balance.length > 0){
-      bal = Number(parseFloat(this.state.balance[0].free).toFixed(2)).toLocaleString('en', {
+      bal = Number(parseFloat(this.state.balance[0].movedBalance).toFixed(2)).toLocaleString('en', {
         minimumFractionDigits: 2
       })
     }
