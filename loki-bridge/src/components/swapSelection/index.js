@@ -15,18 +15,22 @@ const walletCreationUrl = {
 };
 
 class SwapSelection extends Component {
-  state = {
-    address: '',
-    addressError: false,
-    options: [{
-      value: SWAP_TYPE.BDX_TO_BBDX,
-      description: 'BDX to B-BDX',
-    }, {
-      value: SWAP_TYPE.BBDX_TO_BDX,
-      description: 'B-BDX to BDX',
-    }],
-    loginOpen: false,
-  };
+  constructor(props) {
+    super(props)
+    this.state = {
+      address: '',
+      addressError: false,
+      options: [{
+        value: SWAP_TYPE.BDX_TO_BBDX,
+        description: 'BDX to B-BDX',
+      }, {
+        value: SWAP_TYPE.BBDX_TO_BDX,
+        description: 'B-BDX to BDX',
+      }],
+      loginOpen: false,
+    };
+  }
+
 
   onNext = () => {
     const { address } = this.state;
@@ -42,12 +46,11 @@ class SwapSelection extends Component {
     this.setState({ address: event.target.value });
   }
 
-  onSwapTypeChanged = (event) => {
-    this.props.onSwapTypeChanged(event.target.value);
-    console.log(event.target.value)
-    if (event.target.value== "bdx_to_bbdx")
-    {
-      this.setState({loginOpen: true})
+  onSwapTypeChanged = (value) => {
+    this.props.onSwapTypeChanged(value);
+    console.log(value)
+    if (value == "bdx_to_bbdx") {
+      //this.setState({loginOpen: true})
     }
   }
 
@@ -56,7 +59,7 @@ class SwapSelection extends Component {
     return swapType === SWAP_TYPE.BDX_TO_BBDX ? TYPE.BNB : TYPE.BDX;
   }
   loginClose = () => {
-    this.setState({loginOpen: false})
+    this.setState({ loginOpen: false })
   }
   render() {
     const { swapType, loading, classes } = this.props;
@@ -67,13 +70,13 @@ class SwapSelection extends Component {
 
     const url = walletCreationUrl[addressType];
     return (
-      <Grid item xs={ 12 } className={classes.root}>
+      <Grid item xs={12} className={classes.root}>
 
-        <Grid item xs={ 12 } className={classes.swapTabs}>
-        <Swaptabs />
+        <Grid item xs={12} className={classes.swapTabs}>
+          <Swaptabs handleChange={(val) => this.onSwapTypeChanged(val)} />
         </Grid>
 
-        <Grid item xs={ 12 }>
+        <Grid item xs={12}>
           {/* <Select
             fullWidth
             label="Swap Type"
@@ -87,8 +90,8 @@ class SwapSelection extends Component {
         <Typography className={classes.swapFee}>
           Swap Fee : {this.props.info.fees && this.props.info.fees.bdx} {" "} BDX
         </Typography>
-        
-        <Grid item xs={ 12 }>
+
+        <Grid item xs={12}>
           <Input
             fullWidth
             label={inputLabel}
@@ -98,13 +101,13 @@ class SwapSelection extends Component {
             onChange={this.onAddressChanged}
             disabled={loading}
           />
-          <Typography className={ classes.createAccount }>
-            <Link style={{color : '#000'}} href={url} target="_blank" rel="noreferrer">
+          <Typography className={classes.createAccount}>
+            <Link style={{ color: '#000' }} href={url} target="_blank" rel="noreferrer">
               Don't have a wallet? create one
             </Link>
           </Typography>
         </Grid>
-        <Grid item xs={ 12 } align='right' className={ classes.button }>
+        <Grid item xs={12} align='right' className={classes.button}>
           <Button
             fullWidth
             label="Next"
@@ -113,12 +116,12 @@ class SwapSelection extends Component {
           />
         </Grid>
         <Link className={classes.belLink} href="BBDXBridgeTOS.html" target="_blank">Terms of Service</Link>
-        
+
         {
           this.state.loginOpen &&
           <LoginPopup open={this.state.loginOpen} loginClose={this.loginClose} />
         }
-        
+
       </Grid>
     );
   }
