@@ -80,9 +80,12 @@ export default class App extends PureComponent {
   }
 
   render() {
-    let bal = 0
-    if(this.state.balance && this.state.balance.length > 0){
+    let bal = 0, total = 0
+    if (this.state.balance && this.state.balance.length > 0) {
       bal = Number(parseFloat(this.state.balance[0].movedBalance).toFixed(2)).toLocaleString('en', {
+        minimumFractionDigits: 2
+      });
+      total = Number(parseFloat(this.state.balance[0].totalSupply).toFixed(2)).toLocaleString('en', {
         minimumFractionDigits: 2
       })
     }
@@ -94,7 +97,7 @@ export default class App extends PureComponent {
           {this.renderTitleImage()}
           <div className="movedBal">
             <p>Total bdx moved to Binance chain</p>
-            <p className="movedBal-p2">{bal} <span className="availBal">/ 2,000.00</span></p>
+            <p className="movedBal-p2">{bal} <span className="availBal">/ {total}</span></p>
           </div>
           <Grid
             id="grid"
