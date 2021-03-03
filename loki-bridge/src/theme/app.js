@@ -94,7 +94,7 @@ const theme =  {
         color: '#000',
         fontSize: '11px',
         textTransform: 'capitalize',
-        border: '1px solid #ffffff24',
+        border: '1px solid #e3e3e3',
         minHeight: '30px',
         opacity: 1,
         "&:hover": {
@@ -105,6 +105,7 @@ const theme =  {
         '&$selected': {
           backgroundColor: '#000',
           color: '#fff',
+          borderBottom: '2px solid #4b4b4b'
         },
       },
     }
