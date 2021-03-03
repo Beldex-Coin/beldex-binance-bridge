@@ -6,6 +6,7 @@ import { Input, Button, Select } from '@components';
 import { SWAP_TYPE, TYPE } from '@constants';
 import config from '@config';
 import styles from './styles';
+import { store, dispatcher, Actions, Events } from '@store';
 import LoginPopup from './loginpop';
 import Swaptabs from './swapTabs';
 
@@ -27,10 +28,31 @@ class SwapSelection extends Component {
         value: SWAP_TYPE.BBDX_TO_BDX,
         description: 'B-BDX to BDX',
       }],
-      loginOpen: false,
+      //loginOpen: props.totalSupply != props.movedBalance,
+      totalSupply: props.totalSupply,
+      movedBalance: props.movedBalance
     };
   }
 
+  componentDidMount = () => {
+    store.on(Events.FETCHED_BALANCE, this.onBalUpdated);
+  }
+
+  onBalUpdated = () => {
+    const balance =  store.getStore('balance') || {};
+    if (balance && balance.length > 0) {
+    const bal = Number(parseFloat(balance[0].movedBalance).toFixed(2)).toLocaleString('en', {
+      minimumFractionDigits: 2
+    });
+    const total = Number(parseFloat(balance[0].totalSupply).toFixed(2)).toLocaleString('en', {
+      minimumFractionDigits: 2
+    })
+    this.setState({
+      totalSupply : total,
+      movedBalance : bal
+    })
+   }
+  }
 
   onNext = () => {
     const { address } = this.state;
@@ -48,9 +70,12 @@ class SwapSelection extends Component {
 
   onSwapTypeChanged = (value) => {
     this.props.onSwapTypeChanged(value);
+    dispatcher.dispatch({
+      type: Actions.GET_BALANCE
+    });
     console.log(value)
-    if (value == "bdx_to_bbdx") {
-      //this.setState({loginOpen: true})
+    if (this.props.totalSupply != this.props.movedBalance) {
+      this.setState({loginOpen: true})
     }
   }
 
@@ -63,7 +88,7 @@ class SwapSelection extends Component {
   }
   render() {
     const { swapType, loading, classes } = this.props;
-    const { options, address, addressError } = this.state;
+    const { options, address, addressError, movedBalance, totalSupply } = this.state;
     const addressType = this.getAddressType();
     const inputLabel = addressType === TYPE.BDX ? 'BDX Address' : 'BNB Address';
     const inputPlaceholder = addressType === TYPE.BDX ? 'bdx...' : 'bbdx...';
@@ -118,10 +143,14 @@ class SwapSelection extends Component {
         <Link className={classes.belLink} href="BBDXBridgeTOS.html" target="_blank">Terms of Service</Link>
 
         {
-          this.state.loginOpen &&
-          <LoginPopup open={this.state.loginOpen} loginClose={this.loginClose} />
+          totalSupply == movedBalance &&
+          <div className="warningText">
+            <p>Warning text</p>
+          </div>
+          // <LoginPopup open={this.state.loginOpen} loginClose={this.loginClose} />
+          
         }
-
+       
       </Grid>
     );
   }

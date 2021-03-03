@@ -168,3 +168,18 @@ code {
 {
   align-items: flex-start;
 }
+.warningText
+{
+  position: absolute;
+    top: 35px;
+    z-index: 9;
+    background: rgb(0 0 0 / 89%);
+    width: 100%;
+    left: 0;
+    color: #fff;
+    height: 90%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+}

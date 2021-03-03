@@ -212,15 +212,16 @@ class Swap extends Component {
     );
   }
 
-  renderSelection = () => {
-    const { classes } = this.props;
-
+  renderSelection = (props, totalSupply, movedBalance) => {
+    const { classes } = props;
     const { loading, swapType, info } = this.state;
     return (
       <Grid item xs={12} className={classes.item}>
         <SwapSelection
           swapType={swapType}
           info={info}
+          totalSupply={totalSupply}
+          movedBalance={movedBalance}
           onSwapTypeChanged={(swapType) => this.setState({ swapType })}
           onNext={(address) => {
             this.setState({ address });
@@ -256,12 +257,12 @@ class Swap extends Component {
   }
 
   render() {
-    const { classes } = this.props;
+    const { classes, totalSupply, movedBalance } = this.props;
     const { page} = this.state;
 
     return (
       <Grid container className={classes.root} spacing={2}>
-        { page === 0 && this.renderSelection()}
+        { page === 0 && this.renderSelection(this.props, totalSupply, movedBalance)}
         { page === 1 && this.renderInfo()}
       </Grid>
     );

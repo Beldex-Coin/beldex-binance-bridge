@@ -162,7 +162,7 @@ class SwapInfo extends PureComponent {
           </Typography>
         )}
         <Typography className={ classes.instructions }>
-            If you run into any trouble, or your swap request has not gone through, please contact @jpthor on telegram.
+            If you run into any trouble, or your swap request has not gone through, please contact @Beldexadmin on telegram.
         </Typography>
       </Box>
     );

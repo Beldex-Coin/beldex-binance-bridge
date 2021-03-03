@@ -46,6 +46,7 @@ const theme =  {
       }
     },
     MuiTypography: {
+      fontSize: '14px',
       colorTextSecondary: {
         color: "#000"
       },

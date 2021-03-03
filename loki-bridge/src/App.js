@@ -106,7 +106,7 @@ export default class App extends PureComponent {
             alignItems="center"
           >
             <Grid item xs={12}>
-              <Swap showMessage={this.showMessage} />
+              <Swap showMessage={this.showMessage} movedBalance={bal} totalSupply={total}/>
               {this.renderSnackbar()}
             </Grid>
           </Grid>
