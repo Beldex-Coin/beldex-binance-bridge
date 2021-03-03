@@ -3,11 +3,12 @@ import colors from './colors';
 
 const theme =  {
   typography: {
-    fontFamily: ['Lato', 'Roboto', 'Open Sans', 'sans-serif'].join(','),
+    fontFamily: "'Poppins', sans-serif",
     lineHeight: 1.45,
     useNextVariants: true,
+    fontSize: '14px',
     h6: {
-      fontFamily: ['Source Sans Pro','sans-serif'].join(','),
+      fontFamily: "'Poppins', sans-serif",
       fontSize: '0.8rem',
       fontWeight: 600,
       marginBottom: '.5rem'
@@ -69,6 +70,43 @@ const theme =  {
       {
         color: '#000'
       }
+    },
+    MuiTabs: {
+      indicator: {
+        backgroundColor: "transparent",
+      }
+    },
+    MuiAppBar: {
+      colorPrimary:{
+        boxShadow: 'none',
+        border: 0,
+      }
+    },
+    MuiTab: {
+      root: {
+        "&:hover": {
+          backgroundColor: '#999',
+          color: '#fff'
+        }
+      },
+      textColorInherit: {
+        backgroundColor: '#fff',
+        color: '#000',
+        fontSize: '11px',
+        textTransform: 'capitalize',
+        border: '1px solid #ffffff24',
+        minHeight: '30px',
+        opacity: 1,
+        "&:hover": {
+          backgroundColor: '#444',
+          opacity: 1,
+          color: '#fff',
+        },
+        '&$selected': {
+          backgroundColor: '#000',
+          color: '#fff',
+        },
+      },
     }
   },
   

@@ -7,6 +7,7 @@ import { SWAP_TYPE, TYPE } from '@constants';
 import config from '@config';
 import styles from './styles';
 import LoginPopup from './loginpop';
+import Swaptabs from './swapTabs';
 
 const walletCreationUrl = {
   [TYPE.BDX]: config.beldex.walletCreationUrl,
@@ -67,8 +68,13 @@ class SwapSelection extends Component {
     const url = walletCreationUrl[addressType];
     return (
       <Grid item xs={ 12 } className={classes.root}>
+
+        <Grid item xs={ 12 } className={classes.swapTabs}>
+        <Swaptabs />
+        </Grid>
+
         <Grid item xs={ 12 }>
-          <Select
+          {/* <Select
             fullWidth
             label="Swap Type"
             options={options}
@@ -76,9 +82,9 @@ class SwapSelection extends Component {
             handleChange={this.onSwapTypeChanged}
             disabled={loading}
             className={classes.belSelect}
-          />
+          /> */}
         </Grid>
-        <Typography style={{fontSize:12}}>
+        <Typography className={classes.swapFee}>
           Swap Fee : {this.props.info.fees && this.props.info.fees.bdx} {" "} BDX
         </Typography>
         
@@ -107,11 +113,11 @@ class SwapSelection extends Component {
           />
         </Grid>
         <Link className={classes.belLink} href="BBDXBridgeTOS.html" target="_blank">Terms of Service</Link>
+        
         {
           this.state.loginOpen &&
           <LoginPopup open={this.state.loginOpen} loginClose={this.loginClose} />
         }
-        
         
       </Grid>
     );
