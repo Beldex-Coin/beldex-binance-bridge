@@ -37,7 +37,7 @@ const theme =  {
     },
     MuiButton: {
       label: {
-        fontSize: '0.7rem'
+        fontSize: '14px'
       }
     },
     MuiDialogTitle: {
@@ -51,7 +51,8 @@ const theme =  {
         color: "#000"
       },
       colorPrimary: {
-        color: '#000'
+        color: '#000',
+        fontSize: '14px',
       },
       body1:
       {

@@ -16,7 +16,7 @@ const styles = theme => ({
     wordBreak: 'break-word',
   },
   instructions: {
-    fontSize: '0.9rem',
+    fontSize: '14px',
     textAlign: 'center',
     marginBottom: '16px',
     color: "#000"
@@ -24,7 +24,7 @@ const styles = theme => ({
   instructionBold: {
     color: '#000',
     fontSize: '0.9rem',
-    fontWeight: 'bold',
+    fontWeight: '600',
     textAlign: 'center',
     marginBottom: '16px',
     overflowWrap: 'break-word',

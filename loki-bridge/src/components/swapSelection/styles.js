@@ -9,7 +9,7 @@ const styles = theme => ({
     position: 'relative',
     paddingTop: '90px',
     [theme.breakpoints.up('md')]: {
-      maxWidth: '600px',
+      maxWidth: '500px',
     },
     ...common.section,
   },

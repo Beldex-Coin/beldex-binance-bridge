@@ -9,6 +9,7 @@ import { FileCopyOutlined as CopyIcon } from '@material-ui/icons';
 import { Button, QRIcon } from '@components';
 import { SWAP_TYPE } from '@constants';
 import styles from './styles';
+import important from './warning.png';
 
 class SwapInfo extends PureComponent {
   state = {
@@ -86,7 +87,7 @@ class SwapInfo extends PureComponent {
 
     return (
       <Box className={classes.memoFrame}>
-        <Typography className={classes.warningText}>
+        <Typography className={classes.warningText} style={{color: '#000'}}>
           PLEASE READ CAREFULLY
         </Typography>
         <Typography id='memo' className={classes.memo}>
@@ -94,15 +95,16 @@ class SwapInfo extends PureComponent {
         </Typography>
         <Tooltip title="Copy Memo" placement="right">
           <IconButton onClick={() => this.onCopy('memo')} aria-label="Copy Memo">
-            <CopyIcon/>
+            <CopyIcon style={{fontSize: '20px'}}/>
           </IconButton>
         </Tooltip>
         <Typography className={classes.instructionBold}>
           When creating the transaction, please paste the string above into the <b>Memo</b> field. <br/>
           Ensure that this is the only thing that you put in the field.
         </Typography>
-        <Typography className={clsx(classes.warningText, classes.red)}>
+        <Typography className={`blinkAnim ${clsx(classes.warningText, classes.red)}`}>
           If done incorrectly then you will not receive <b>BDX</b> into your designated address.
+          <img src={important} className="blinkImg"/>
         </Typography>
       </Box>
     );
@@ -127,12 +129,12 @@ class SwapInfo extends PureComponent {
           <Box>
             <Tooltip title="Copy Address" placement="left">
               <IconButton onClick={() => this.onCopy('depositAddress')} aria-label="Copy Address">
-                <CopyIcon/>
+                <CopyIcon style={{fontSize: '20px'}}/>
               </IconButton>
             </Tooltip>
             <Tooltip title="Toggle QR" placement="right">
               <IconButton onClick={this.toggleQR} aria-label="Toggle QR">
-                <QRIcon />
+                <QRIcon style={{filter: 'invert(1)', fontSize: '18px'}}/>
               </IconButton>
             </Tooltip>
           </Box>
@@ -207,7 +209,7 @@ class SwapInfo extends PureComponent {
             onClick={onRefresh}
           />
         </Grid>
-        <Link href="BBDXBridgeTOS.html" target="_blank">Terms of Service</Link>
+        <Link href="BBDXBridgeTOS.html" target="_blank" style={{textAlign: 'center', margin: '10px auto 0', display: 'inherit',fontSize: '14px'}}>Terms of Service</Link>
       </div>
     );
   }

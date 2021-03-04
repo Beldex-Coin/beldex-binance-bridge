@@ -5,13 +5,14 @@ const styles = theme => ({
     margin: theme.spacing(2, 0),
   },
   item: {
-    padding: theme.spacing(1, 2)
+    padding: theme.spacing(1, 2),
+    borderBottom: '1px solid #d4d4d4'
   },
   pending: {
     color: orange[500]
   },
   completed: {
-    color: green.A400
+    color: '#338a14'
   },
   time: {
     fontSize: '1em'
@@ -23,7 +24,7 @@ const styles = theme => ({
     margin: '8px 0'
   },
   hashTitle: {
-    fontWeight: '600',
+    fontWeight: '500',
     fontSize: '1em',
     marginRight: '4px'
   },
@@ -33,7 +34,7 @@ const styles = theme => ({
   },
   amount: {
     fontSize: '1.25em',
-    fontWeight: '700'
+    fontWeight: '500'
   },
   emptyTitle: {
     padding: theme.spacing(1, 0),

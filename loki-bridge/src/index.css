@@ -183,3 +183,33 @@ code {
     justify-content: center;
     font-size: 14px;
 }
+
+.blinkAnim
+{
+  -webkit-animation: glowing 1500ms infinite;
+  -moz-animation: glowing 1500ms infinite;
+  -o-animation: glowing 1500ms infinite;
+  animation: glowing 1500ms infinite;
+}
+.blinkImg
+{
+  width: 18px;
+  transform: translate(6px, 2px);
+  animation: blink .7s steps(2, start) infinite;
+  -webkit-animation: blink .7s steps(2, start) infinite;
+}
+
+@keyframes blink 
+{
+  to 
+  { 
+      visibility: hidden; 
+  }
+}
+@-webkit-keyframes blink 
+{
+  to 
+  { 
+      visibility: hidden; 
+  }
+}

@@ -28,9 +28,7 @@ export default class App extends PureComponent {
   }
 
   onBalUpdated = () => {
-    this.setState({ balance: store.getStore('balance') || {} }, () => {
-      console.log(this.state.balance)
-    });
+    this.setState({ balance: store.getStore('balance') || {} });
   }
 
   showMessage = (message, variant) => {

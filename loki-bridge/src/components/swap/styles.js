@@ -25,10 +25,15 @@ const styles = theme => ({
     fontSize: '0.94rem'
   },
   transactionTitle: {
-    fontSize: '1.3rem'
+    fontSize: '16px'
+  },
+  hash:{
+    fontSize: '14px'
   },
   section: {
     ...common.section,
+    height: '467px',
+    overflowX: 'hidden',
     [theme.breakpoints.up('md')]: {
       maxWidth: '800px',
       margin: 'auto',

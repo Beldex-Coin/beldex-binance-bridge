@@ -4,14 +4,15 @@ const styles = theme => ({
   },
   button: {
     minWidth: '100px',
-    fontWeight: 700,
+    fontWeight: 600,
     border: `1px solid #fff`,
     transition: 'all 0.2s ease-in-out',
     padding: '0.8rem 2.5rem',
     letterSpacing: '0.03em',
-    fontSize: '0.8rem',
+    fontSize: '14px',
     backgroundColor: '#000',
     color: '#fff',
+    textTransform: 'capitalize',
     '&:hover': {
       backgroundColor: '#fff',
       color: '#000',

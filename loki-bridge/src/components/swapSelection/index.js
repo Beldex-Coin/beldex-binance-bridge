@@ -30,7 +30,9 @@ class SwapSelection extends Component {
       }],
       //loginOpen: props.totalSupply != props.movedBalance,
       totalSupply: props.totalSupply,
-      movedBalance: props.movedBalance
+      movedBalance: props.movedBalance,
+      swapType : 'bdx_to_bbdx',
+      loginOpen : false
     };
   }
 
@@ -47,6 +49,14 @@ class SwapSelection extends Component {
     const total = Number(parseFloat(balance[0].totalSupply).toFixed(2)).toLocaleString('en', {
       minimumFractionDigits: 2
     })
+    if(this.state.swapType == 'bdx_to_bbdx'){
+      if (total == bal) {
+        this.setState({loginOpen: true})
+      }
+    }
+    else{
+      this.setState({loginOpen: false})
+    }
     this.setState({
       totalSupply : total,
       movedBalance : bal
@@ -70,13 +80,12 @@ class SwapSelection extends Component {
 
   onSwapTypeChanged = (value) => {
     this.props.onSwapTypeChanged(value);
+    this.setState({
+      swapType : value
+    })    
     dispatcher.dispatch({
       type: Actions.GET_BALANCE
-    });
-    console.log(value)
-    if (this.props.totalSupply != this.props.movedBalance) {
-      this.setState({loginOpen: true})
-    }
+    });     
   }
 
   getAddressType = () => {
@@ -143,9 +152,9 @@ class SwapSelection extends Component {
         <Link className={classes.belLink} href="BBDXBridgeTOS.html" target="_blank">Terms of Service</Link>
 
         {
-          totalSupply == movedBalance &&
+          this.state.loginOpen &&
           <div className="warningText">
-            <p>Warning text</p>
+            <p>The maximum BDX swap limit was reached.<br></br> You can buy BBDX from <a href="https://testnet.binance.org/en/trade/mini/175-0B3M_BNB" style={{color: '#67d040', textAlign: 'center'}}>Binance dex.</a></p>
           </div>
           // <LoginPopup open={this.state.loginOpen} loginClose={this.loginClose} />
           
