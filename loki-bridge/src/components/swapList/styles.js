@@ -1,4 +1,4 @@
-import { orange, green } from '@material-ui/core/colors';
+import { orange } from '@material-ui/core/colors';
 
 const styles = theme => ({
   root: {

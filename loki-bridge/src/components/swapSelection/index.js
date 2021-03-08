@@ -2,12 +2,11 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Grid, Typography, Link } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
-import { Input, Button, Select } from '@components';
+import { Input, Button } from '@components';
 import { SWAP_TYPE, TYPE } from '@constants';
 import config from '@config';
 import styles from './styles';
 import { store, dispatcher, Actions, Events } from '@store';
-import LoginPopup from './loginpop';
 import Swaptabs from './swapTabs';
 
 const walletCreationUrl = {
@@ -31,8 +30,8 @@ class SwapSelection extends Component {
       //loginOpen: props.totalSupply != props.movedBalance,
       totalSupply: props.totalSupply,
       movedBalance: props.movedBalance,
-      swapType : 'bdx_to_bbdx',
-      loginOpen : false
+      swapType: 'bdx_to_bbdx',
+      loginOpen: false
     };
   }
 
@@ -41,27 +40,27 @@ class SwapSelection extends Component {
   }
 
   onBalUpdated = () => {
-    const balance =  store.getStore('balance') || {};
+    const balance = store.getStore('balance') || {};
     if (balance && balance.length > 0) {
-    const bal = Number(parseFloat(balance[0].movedBalance).toFixed(2)).toLocaleString('en', {
-      minimumFractionDigits: 2
-    });
-    const total = Number(parseFloat(balance[0].totalSupply).toFixed(2)).toLocaleString('en', {
-      minimumFractionDigits: 2
-    })
-    if(this.state.swapType == 'bdx_to_bbdx'){
-      if (total == bal) {
-        this.setState({loginOpen: true})
+      const bal = Number(parseFloat(balance[0].movedBalance).toFixed(2)).toLocaleString('en', {
+        minimumFractionDigits: 2
+      });
+      const total = Number(parseFloat(balance[0].totalSupply).toFixed(2)).toLocaleString('en', {
+        minimumFractionDigits: 2
+      })
+      if (this.state.swapType === 'bdx_to_bbdx') {
+        if (total === bal) {
+          this.setState({ loginOpen: true })
+        }
       }
+      else {
+        this.setState({ loginOpen: false })
+      }
+      this.setState({
+        totalSupply: total,
+        movedBalance: bal
+      })
     }
-    else{
-      this.setState({loginOpen: false})
-    }
-    this.setState({
-      totalSupply : total,
-      movedBalance : bal
-    })
-   }
   }
 
   onNext = () => {
@@ -81,11 +80,11 @@ class SwapSelection extends Component {
   onSwapTypeChanged = (value) => {
     this.props.onSwapTypeChanged(value);
     this.setState({
-      swapType : value
-    })    
+      swapType: value
+    })
     dispatcher.dispatch({
       type: Actions.GET_BALANCE
-    });     
+    });
   }
 
   getAddressType = () => {
@@ -96,8 +95,8 @@ class SwapSelection extends Component {
     this.setState({ loginOpen: false })
   }
   render() {
-    const { swapType, loading, classes } = this.props;
-    const { options, address, addressError, movedBalance, totalSupply } = this.state;
+    const { loading, classes } = this.props;
+    const { address, addressError } = this.state;
     const addressType = this.getAddressType();
     const inputLabel = addressType === TYPE.BDX ? 'BDX Address' : 'BNB Address';
     const inputPlaceholder = addressType === TYPE.BDX ? 'bdx...' : 'bbdx...';
@@ -154,12 +153,12 @@ class SwapSelection extends Component {
         {
           this.state.loginOpen &&
           <div className="warningText">
-            <p>The maximum BDX swap limit was reached.<br></br> You can buy BBDX from <a href="https://testnet.binance.org/en/trade/mini/175-0B3M_BNB" style={{color: '#67d040', textAlign: 'center'}}>Binance dex.</a></p>
+            <p>The maximum BDX swap limit was reached.<br></br> You can buy BBDX from <a href="https://testnet.binance.org/en/trade/mini/175-0B3M_BNB" style={{ color: '#67d040', textAlign: 'center' }}>Binance dex.</a></p>
           </div>
           // <LoginPopup open={this.state.loginOpen} loginClose={this.loginClose} />
-          
+
         }
-       
+
       </Grid>
     );
   }

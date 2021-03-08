@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import clsx from  'clsx';
+import clsx from 'clsx';
 import QRCode from 'qrcode.react';
 import AnimateHeight from 'react-animate-height';
 import { Grid, Typography, IconButton, Link, Tooltip, Box } from '@material-ui/core';
@@ -82,12 +82,12 @@ class SwapInfo extends PureComponent {
   }
 
   renderMemo = () => {
-    const { classes, swapInfo: { memo }} = this.props;
+    const { classes, swapInfo: { memo } } = this.props;
     if (!memo) return null;
 
     return (
       <Box className={classes.memoFrame}>
-        <Typography className={classes.warningText} style={{color: '#000'}}>
+        <Typography className={classes.warningText} style={{ color: '#000' }}>
           PLEASE READ CAREFULLY
         </Typography>
         <Typography id='memo' className={classes.memo}>
@@ -95,16 +95,16 @@ class SwapInfo extends PureComponent {
         </Typography>
         <Tooltip title="Copy Memo" placement="right">
           <IconButton onClick={() => this.onCopy('memo')} aria-label="Copy Memo">
-            <CopyIcon style={{fontSize: '20px'}}/>
+            <CopyIcon style={{ fontSize: '20px' }} />
           </IconButton>
         </Tooltip>
         <Typography className={classes.instructionBold}>
-          When creating the transaction, please paste the string above into the <b>Memo</b> field. <br/>
+          When creating the transaction, please paste the string above into the <b>Memo</b> field. <br />
           Ensure that this is the only thing that you put in the field.
         </Typography>
         <Typography className={`blinkAnim ${clsx(classes.warningText, classes.red)}`}>
           If done incorrectly then you will not receive <b>BDX</b> into your designated address.
-          <img src={important} className="blinkImg"/>
+          <img alt="" src={important} className="blinkImg" />
         </Typography>
       </Box>
     );
@@ -118,29 +118,29 @@ class SwapInfo extends PureComponent {
 
     return (
       <React.Fragment>
-        <Typography className={ classes.instructionBold }>
-            Transfer your {depositCurrency}
+        <Typography className={classes.instructionBold}>
+          Transfer your {depositCurrency}
         </Typography>
-        <Typography className={ classes.instructions }>
-            to
+        <Typography className={classes.instructions}>
+          to
         </Typography>
-        <Typography component={'div'} className={ classes.instructionBold }>
+        <Typography component={'div'} className={classes.instructionBold}>
           <Box id='depositAddress' className={classes.greenBorder}>{depositAddress}</Box>
           <Box>
             <Tooltip title="Copy Address" placement="left">
               <IconButton onClick={() => this.onCopy('depositAddress')} aria-label="Copy Address">
-                <CopyIcon style={{fontSize: '20px'}}/>
+                <CopyIcon style={{ fontSize: '20px' }} />
               </IconButton>
             </Tooltip>
             <Tooltip title="Toggle QR" placement="right">
               <IconButton onClick={this.toggleQR} aria-label="Toggle QR">
-                <QRIcon style={{filter: 'invert(1)', fontSize: '18px'}}/>
+                <QRIcon style={{ filter: 'invert(1)', fontSize: '18px' }} />
               </IconButton>
             </Tooltip>
           </Box>
         </Typography>
-        {this.renderQR() }
-        {this.renderMemo() }
+        {this.renderQR()}
+        {this.renderMemo()}
       </React.Fragment>
     );
   }
@@ -154,17 +154,17 @@ class SwapInfo extends PureComponent {
       <Box className={classes.instructionContainer}>
         {this.renderDepositInstructions()}
         { swapType === SWAP_TYPE.BDX_TO_BBDX && (
-          <Typography className={ classes.instructions }>
+          <Typography className={classes.instructions}>
             <b>Note:</b> You will have to wait for the transaction to be checkpointed before you're added to our processing queue, this usually takes 8 blocks.
           </Typography>
         )}
         { swapType === SWAP_TYPE.BBDX_TO_BDX && (
-          <Typography className={ classes.instructionBold }>
-              There will be a processing fee of {beldexFee} BDX which will be charged when processing all your pending swaps.
+          <Typography className={classes.instructionBold}>
+            There will be a processing fee of {beldexFee} BDX which will be charged when processing all your pending swaps.
           </Typography>
         )}
-        <Typography className={ classes.instructions }>
-            If you run into any trouble, or your swap request has not gone through, please contact @Beldexadmin on telegram.
+        <Typography className={classes.instructions}>
+          If you run into any trouble, or your swap request has not gone through, please contact @Beldexadmin on telegram.
         </Typography>
       </Box>
     );
@@ -181,7 +181,7 @@ class SwapInfo extends PureComponent {
     const displayTotal = total / 1e9;
 
     return (
-      <Grid item xs={ 12 } align='right' className={ classes.stats }>
+      <Grid item xs={12} align='right' className={classes.stats}>
         <Typography className={classes.statTitle}>Pending Amount:</Typography>
         <Typography className={classes.statAmount}>{displayTotal} {receivingCurrency}</Typography>
       </Grid>
@@ -193,7 +193,7 @@ class SwapInfo extends PureComponent {
 
     return (
       <div className={classes.root}>
-        <Grid item xs={ 12 } align='left' className={ classes.back }>
+        <Grid item xs={12} align='left' className={classes.back}>
           <Typography>
             <Link className={classes.link} onClick={onBack}>
               &lt; Back
@@ -209,7 +209,7 @@ class SwapInfo extends PureComponent {
             onClick={onRefresh}
           />
         </Grid>
-        <Link href="BBDXBridgeTOS.html" target="_blank" style={{textAlign: 'center', margin: '10px auto 0', display: 'inherit',fontSize: '14px'}}>Terms of Service</Link>
+        <Link href="BBDXBridgeTOS.html" target="_blank" style={{ textAlign: 'center', margin: '10px auto 0', display: 'inherit', fontSize: '14px' }}>Terms of Service</Link>
       </div>
     );
   }

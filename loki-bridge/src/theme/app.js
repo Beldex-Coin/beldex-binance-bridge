@@ -1,4 +1,3 @@
-import color from '@material-ui/core/colors/amber';
 import colors from './colors';
 
 const theme =  {

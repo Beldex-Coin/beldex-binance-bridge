@@ -15,14 +15,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 });
 
 function LoginPopup(props) {
-  const [open, setOpen] = React.useState(false);
   const { classes } = props;
-
-
-  function handleClose() {
-    setOpen(false);
-  }
-
   return (
     <div>
       {/* <Button variant="outlined" color="primary" onClick={handleClickOpen}>
@@ -32,7 +25,7 @@ function LoginPopup(props) {
         open={true}
         TransitionComponent={Transition}
         keepMounted
-        onClose={handleClose}
+        onClose={props.loginClose}
         aria-labelledby="alert-dialog-slide-title"
         aria-describedby="alert-dialog-slide-description"
         className={classes.LoginPopup}
@@ -46,7 +39,7 @@ function LoginPopup(props) {
         </DialogContent>
         <DialogActions>
           <Button onClick={props.loginClose} color="primary" className={classes.closeBtn}>
-            <img src={closeIcon}  />
+            <img alt="" src={closeIcon} />
           </Button>
         </DialogActions>
       </Dialog>
