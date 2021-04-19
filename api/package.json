@@ -24,7 +24,8 @@
     "helmet": "^3.16.0",
     "https": "^1.0.0",
     "morgan": "^1.9.1",
-    "sha256": "^0.2.0"
+    "sha256": "^0.2.0",
+    "wallet-address-validator": "^0.2.4"
   },
   "devDependencies": {
     "chai": "^4.2.0",
