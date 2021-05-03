@@ -80,6 +80,75 @@ export function swapToken(req, res, next) {
  * Request Data:
  *  - uuid: The uuid that was returned in `swapToken` (client account uuid)
  */
+export function nowfil(req, res, next) {
+  crypto.decryptAPIPayload(req, res, next, async data => {
+    const result = validation.validateUuidPresent(data);
+    if (result != null) {
+      res.status(400);
+      res.body = { status: 400, success: false, result };
+      return next(null, req, res, next);
+    }
+
+    let currentHashes = [];
+    const { uuid } = data;
+    try {
+      const clientAccount = await db.getClientAccountForUuid(uuid);
+      if (!clientAccount) {
+        res.status(400);
+        res.body = { status: 400, success: false, result: 'Unable to find swap details' };
+        return next(null, req, res, next);
+      }
+
+      // // Prepare the cache
+      // if (!txCache[uuid]) { txCache[uuid] = []; }
+
+      // const { account, accountType } = clientAccount;
+      // const [transactions, swaps] = await Promise.all([
+      //   transactionHelper.getIncomingTransactions(account, accountType),
+      //   db.getSwapsForClientAccount(uuid),
+      // ]);
+      // if (!transactions || transactions.length === 0) {
+      //   res.status(205);
+      //   res.body = { status: 200, success: false, result: 'Unable to find a deposit' };
+      //   return next(null, req, res, next);
+      // }
+
+      // const newTransactions = transactions.filter(tx => {
+      //   // Filter out any transactions we aren't processing and haven't added to our swaps db
+      //   const isProcessingTransaction = txCache[uuid].includes(tx.hash);
+      //   const processedTransaction = swaps.find(s => s.deposit_transaction_hash === tx.hash) !== undefined;
+      //   return !isProcessingTransaction && !processedTransaction;
+      //   // return true;
+      // });
+      // if (newTransactions.length === 0) {
+      //   res.status(205);
+      //   res.body = { status: 200, success: false, result: 'Unable to find any new deposits' };
+      //   return next(null, req, res, next);
+      // }
+
+      // // Add the new transactions to our processing cache
+      // currentHashes = newTransactions.map(tx => tx.hash);
+      // txCache[uuid].push(...currentHashes);
+
+      // Give back the new swaps to the user
+      const newSwaps = await db.insertSwaps(newTransactions, clientAccount);
+      res.status(205);
+      res.body = { status: 200, success: true, result: formatSwaps(newSwaps) };
+    } catch (error) {
+      console.log(error);
+      const message = (error && error.message);
+      res.status(500);
+      res.body = { status: 500, success: false, result: message || error };
+    }
+
+    // Clear out the new transactions from the cache as we have done our work on them
+    // This will allow us to retry swap creation if we somehow failed
+    txCache[uuid] = txCache[uuid].filter(hash => !currentHashes.includes(hash));
+
+    return next(null, req, res, next);
+  });
+}
+
 export function finalizeSwap(req, res, next) {
   crypto.decryptAPIPayload(req, res, next, async data => {
     const result = validation.validateUuidPresent(data);
@@ -131,6 +200,7 @@ export function finalizeSwap(req, res, next) {
       txCache[uuid].push(...currentHashes);
 
       // Give back the new swaps to the user
+      console.log("INSERT:", newTransactions, clientAccount)
       const newSwaps = await db.insertSwaps(newTransactions, clientAccount);
       res.status(205);
       res.body = { status: 200, success: true, result: formatSwaps(newSwaps) };
