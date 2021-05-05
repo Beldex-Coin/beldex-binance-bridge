@@ -80,9 +80,8 @@ export function swapToken(req, res, next) {
  * Request Data:
  *  - uuid: The uuid that was returned in `swapToken` (client account uuid)
  */
-export function nowfil(req, res, next) {
+export function transfer(req, res, next) {
   crypto.decryptAPIPayload(req, res, next, async data => {
-    console.log("data:", data)
     const result = validation.validateUuidPresent(data);
     if (result != null) {
       res.status(400);
@@ -108,19 +107,14 @@ export function nowfil(req, res, next) {
         // transactionHelper.getIncomingTransactions(account, accountType),
         db.getSwapsForClientAccount(uuid),
       ]);
-      // if (!transactions || transactions.length === 0) {
-      //   res.status(205);
-      //   res.body = { status: 200, success: false, result: 'Unable to find a deposit' };
-      //   return next(null, req, res, next);
-      // }
+      data.amount = data.amount * 1e9;
       let transactions = [data];
-      console.log("tras:", transactions)
       const newTransactions = transactions.filter(tx => {
         // Filter out any transactions we aren't processing and haven't added to our swaps db
         const isProcessingTransaction = txCache[uuid].includes(tx.hash);
         const processedTransaction = swaps.find(s => s.deposit_transaction_hash === tx.hash) !== undefined;
         return !isProcessingTransaction && !processedTransaction;
-        return true;
+        // return true;
       });
       if (newTransactions.length === 0) {
         res.status(205);
@@ -128,34 +122,11 @@ export function nowfil(req, res, next) {
         return next(null, req, res, next);
       }
 
-      // // Add the new transactions to our processing cache
-      console.log("da:", data)
-
-      let totalAmount = data.amount;
-      let [s1, s2] = totalAmount.split('.');
-      console.log(s1, s2)
-      let len = '000000000';
-      let final;
-      if (s2) {
-        console.log("s2:", s2.length)
-        let len2 = len.slice(s2.length)
-        console.log("le2:", len2)
-        let str = s2 + len2;
-        console.log(str, s2);
-        final = s1 + str;
-        // final = final.slice(s2.length)
-        console.log(Number(final), Number(final.length))
-        final = Number(final);
-      } else {
-        final = s1 + len;
-      }
-      transactions[0].amount = final.toString();
-      console.log("final:", final, final.length)
+      // Add the new transactions to our processing cache
       currentHashes = transactions.map(tx => tx.hash);
       txCache[uuid].push(...currentHashes);
 
       // Give back the new swaps to the user
-      console.log("3:",transactions)
       const newSwaps = await db.insertSwaps(transactions, clientAccount);
       res.status(205);
       res.body = { status: 200, success: true, result: formatSwaps(newSwaps) };

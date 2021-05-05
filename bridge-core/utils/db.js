@@ -241,7 +241,6 @@ export default class Database {
   * @returns {Promise<[{ uuid, type, amount, txHash }]>} An array of inserted swaps.
   */
   async insertSwaps(transactions, clientAccount) {
-    console.log("4:",transactions,clientAccount)
     if (!clientAccount || !transactions || transactions.length === 0) return [];
 
     const swaps = await this.postgres.tx(t => t.batch(transactions.map(tx => this.insertSwap(tx, clientAccount))));
