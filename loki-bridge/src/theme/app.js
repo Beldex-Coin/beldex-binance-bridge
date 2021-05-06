@@ -5,7 +5,7 @@ const theme =  {
     fontFamily: "'Poppins', sans-serif",
     lineHeight: 1.45,
     useNextVariants: true,
-    fontSize: '14px',
+    fontSize: 14,
     h6: {
       fontFamily: "'Poppins', sans-serif",
       fontSize: '0.8rem',

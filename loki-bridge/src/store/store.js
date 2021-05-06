@@ -19,6 +19,7 @@ const endpoints = {
   createBNBAccount: '/api/v1/createBNBAccount',
   downloadBNBKeystore: '/api/v1/downloadBNBKeystore',
   getBalance: '/api/v1/getBalance',
+  sendTransaction: '/api/v1/transfer',
 };
 
 class Store extends EventEmitter {
@@ -46,6 +47,9 @@ class Store extends EventEmitter {
         case Actions.GET_BALANCE:
           this.getBalance();
           break;
+        case Actions.SEND_TRANSACTION_HASH:
+          this.sendTransactionHash(payload)
+          break;
         default: break;
       }
     });
@@ -54,6 +58,17 @@ class Store extends EventEmitter {
   getStore(key) {
     return this.store[key];
   };
+
+  async sendTransactionHash(payload) {
+      console.log('-payload-', payload);
+      try {
+        const data = await this.fetch(endpoints.sendTransaction, 'POST', payload.content);
+        this.store.info = data.result;
+        this.emit(Events.TRANSACTION_INFO, data.result);
+      } catch (e) {
+        this.emit(Events.ERROR, e);
+      }
+  }
 
   async getInfo() {
     try {
@@ -122,7 +137,7 @@ class Store extends EventEmitter {
 
       return data;
     } catch (e) {
-      console.log(`Failed fetch ${url}: `, e);
+      // console.log(`Failed fetch ${url}: `, e);
 
       // If we got an error from the api then throw it
       if (e.response && e.response.data) {

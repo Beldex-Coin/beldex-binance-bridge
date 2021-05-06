@@ -152,11 +152,9 @@ const module = {
     const validSwaps = module.getValidSwaps(swaps, swapType);
     const ids = validSwaps.map(s => s.uuid);
     const transactions = module.getTransactions(validSwaps);
-    console.log("transa:", transactions,swapType)
     if (!transactions || transactions.length === 0) throw new NoSwapsToProcess();
 
     const txHashes = await module.send(swapType, transactions);
-    console.log("txhash:", txHashes)
     await db.updateSwapsTransferTransactionHash(ids, txHashes.join(','));
 
     const sentCurrency = swapType === SWAP_TYPE.BDX_TO_BBDX ? TYPE.BNB : TYPE.BDX;
@@ -243,15 +241,12 @@ const module = {
       //     amount,
       //   }],
       // }));
-      let a = [];
+      let response = [];
       for (let index = 0; index < transactions.length; index++) {
-        console.log("tra:", transactions[index]);
-        let b = await module.sendToBsc(transactions[index].address, transactions[index].amount, transactions, swapType);
-        console.log("B:", b)
-        a.push(b);
-        console.log("A:", a)
+        let responseTransactionDetails = await module.sendToBsc(transactions[index].address, transactions[index].amount, transactions, swapType);
+        response.push(responseTransactionDetails);
       }
-      return a;
+      return response;
       // Send BNB to the users
       // await module.sendToBsc(address);
       // return bnb.multiSend(config.get('binance.mnemonic'), outputs, 'Beldex Bridge');
@@ -271,15 +266,18 @@ const module = {
     throw new Error('Invalid swap type');
   },
   async sendToBsc(toAddress, amount, transactions, swapType) {
+    //toAddress -> where to send it
     const sentCurrency = swapType === SWAP_TYPE.BDX_TO_BBDX ? TYPE.BNB : TYPE.BDX;
     const transactionAmounta = transactions.reduce((total, current) => total + current.amount, 0);
     // Fee is per transaction (1 transaction = 1 user)
     const totalFeea = (module.fees[sentCurrency] || 0) * transactions.length;
-    const totalAmounta = transactionAmounta - totalFeea;
-    const Web3js = await new Web3(await new Web3.providers.HttpProvider('https://data-seed-prebsc-1-s1.binance.org:8545/'));
-    let tokenAddress = '0x56036904a3c18a633dcbef3538f1128ec314c9bf'; // HST contract address
-    // let toAddress = toAddress; // where to send it
-    let fromAddress = '0x2bC7C89B2288b3d116873486A926f07aaEecdBDD'; // your wallet
+    const transferAmount = transactionAmounta - totalFeea;
+    const bscUrl = config.get('bsc.url');
+    const Web3js = await new Web3(await new Web3.providers.HttpProvider(bscUrl));
+    //   let tokenAddress = '0x56036904a3c18a633dcbef3538f1128ec314c9bf'; // HST contract address
+    const contractAddr = config.get('bsc.contractAddr');
+    // let fromAddress = '0x2bC7C89B2288b3d116873486A926f07aaEecdBDD'; // your wallet
+    const fromAddress = config.get('bsc.fromAddress');
     let privateKey = Buffer.from('1d69967a6bd08a0d1380dac548943768e383569ce126a7694050bd90741a3efc', 'hex');
     let contractABI = [
       // transfer
@@ -305,40 +303,27 @@ const module = {
         'type': 'function'
       }
     ];
-    let contract = await new Web3js.eth.Contract(contractABI, tokenAddress, { from: fromAddress });
-    // 1e18 === 1 HST
-    let totalAmount = (totalAmounta / 1e9).toString();
-    let [s1, s2] = totalAmount.split('.');
-    console.log(s1, s2)
-    let len = '000000000000000000';
-    let final;
-    if (s2) {
-      let len2 = len.slice(s2.length)
-      let str = s2 + len2;
-      console.log(str, str.length);
-      final = s1 + str;
-    } else {
-      final = s1 + len;
-    }
-    console.log("final:", final,final.length)
-    let amountChangeFormat = await Web3js.utils.toHex(final);
-    let checkCount = await Web3js.eth.getTransactionCount(fromAddress);
-    let rawTransaction = {
-      'from': fromAddress,
-      'gasPrice': await Web3js.utils.toHex(20 * 1e9),
-      'gasLimit': await Web3js.utils.toHex(210000),
-      'to': tokenAddress,
-      'value': 0x0,
-      'data': contract.methods.transfer(toAddress + '', amountChangeFormat).encodeABI(),
-      'nonce': await Web3js.utils.toHex(checkCount)
-    };
-    // let transaction = new Tx(rawTransaction)
-    let transaction = await new Tx(rawTransaction);
-    transaction.sign(privateKey);
-    console.log("SUCCCEESSS")
-    // var serializedTx = tx.serialize();
-    let a = await Web3js.eth.sendSignedTransaction('0x' + transaction.serialize().toString('hex'));
-    return a.blockHash;
+    let contract = await new Web3js.eth.Contract(contractABI, contractAddr, { from: fromAddress });
+    //   // 1e18 === 1 HST
+    let totalAmount = (transferAmount / 1e9).toString();
+    let finalAmount = (totalAmount * 1e18).toString();
+      let amountChangeFormat = await Web3js.utils.toHex(finalAmount);
+      let checkCount = await Web3js.eth.getTransactionCount(fromAddress);
+      let rawTransaction = {
+        'from': fromAddress,
+        'gasPrice': await Web3js.utils.toHex(20 * 1e9),
+        'gasLimit': await Web3js.utils.toHex(210000),
+        'to': contractAddr,
+        'value': 0x0,
+        'data': contract.methods.transfer(toAddress + '', amountChangeFormat).encodeABI(),
+        'nonce': await Web3js.utils.toHex(checkCount)
+      };
+      // let transaction = new Tx(rawTransaction)
+      let transaction = await new Tx(rawTransaction);
+      transaction.sign(privateKey);
+      // var serializedTx = tx.serialize();
+      let a = await Web3js.eth.sendSignedTransaction('0x' + transaction.serialize().toString('hex'));
+      return a.blockHash;
 
   }
 

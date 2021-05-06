@@ -19,6 +19,7 @@ class SwapSelection extends Component {
     super(props)
     this.state = {
       address: '',
+      amount: 0,
       addressError: false,
       options: [{
         value: SWAP_TYPE.BDX_TO_BBDX,
@@ -63,18 +64,28 @@ class SwapSelection extends Component {
     }
   }
 
-  onNext = () => {
-    const { address } = this.state;
+  onNext = async () => {
+    const { address, swapType, amount } = this.state;
     const { onNext } = this.props;
 
     const isValidAddress = address && address.length > 0;
     this.setState({ addressError: !isValidAddress });
+    if (isValidAddress) {
+      if (amount > 0 && swapType === SWAP_TYPE.BBDX_TO_BDX) {
+        onNext(address, amount);
 
-    if (isValidAddress) onNext(address);
+      } else if(swapType === SWAP_TYPE.BDX_TO_BBDX) {
+        onNext(address, '');
+      }
+    }
   }
 
   onAddressChanged = (event) => {
     this.setState({ address: event.target.value });
+  }
+
+  onAmountChanged = (event) => {
+    this.setState({ amount: event.target.value });
   }
 
   onSwapTypeChanged = (value) => {
@@ -96,7 +107,7 @@ class SwapSelection extends Component {
   }
   render() {
     const { loading, classes } = this.props;
-    const { address, addressError } = this.state;
+    const { address, addressError, amount } = this.state;
     const addressType = this.getAddressType();
     const inputLabel = addressType === TYPE.BDX ? 'BDX Address' : 'BNB Address';
     const inputPlaceholder = addressType === TYPE.BDX ? 'bdx...' : 'bbdx...';
@@ -131,9 +142,22 @@ class SwapSelection extends Component {
             placeholder={inputPlaceholder}
             value={address}
             error={addressError}
+            type="text"
             onChange={this.onAddressChanged}
             disabled={loading}
           />
+          {addressType === 'bdx' &&
+            <Input
+              fullWidth
+              label="Amount"
+              placeholder="Amount"
+              value={amount}
+              type="number"
+              onChange={this.onAmountChanged}
+              disabled={loading}
+            />
+
+          }
           <Typography className={classes.createAccount}>
             <Link style={{ color: '#000' }} href={url} target="_blank" rel="noreferrer">
               Don't have a wallet? create one
@@ -159,7 +183,7 @@ class SwapSelection extends Component {
 
         }
 
-      </Grid>
+      </Grid >
     );
   }
 }

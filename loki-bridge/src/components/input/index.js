@@ -26,7 +26,8 @@ function StyledInput(props) {
     onChange,
     error,
     disabled,
-    password
+    password,
+    type
   } = props;
 
 
@@ -61,7 +62,7 @@ function StyledInput(props) {
         value={ value }
         onChange={ onChange }
         disabled={ disabled }
-        type={ password ? values.showPassword ? 'text' : 'password' : 'text' }
+        type={ password ? values.showPassword ? 'text' : 'password' : type }
         endAdornment={ endAdornment }
       />
       { helpertext && <FormHelperText>{helpertext}</FormHelperText> }
@@ -80,7 +81,8 @@ StyledInput.propTypes = {
   disabled: PropTypes.bool,
   value: PropTypes.string,
   onChange: PropTypes.func,
-  password: PropTypes.bool
+  password: PropTypes.bool,
+  type: PropTypes.string
 };
 
 export default withStyles(styles)(StyledInput);

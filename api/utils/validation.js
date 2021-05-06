@@ -15,7 +15,6 @@ export async function validateSwap(body) {
     if (!valid) return 'address must be a BDX address';
   } else if (type === SWAP_TYPE.BDX_TO_BBDX) {
     // User should pass a BNB address
-    console.log("WWWW")
     // if (!bnb.validateAddress(address)) return 'address must be a BNB address';
     const valid = await addressValidator.validate(address, 'ETH');
     if (!valid) return 'address must be a BNB address';

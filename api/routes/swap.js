@@ -196,7 +196,6 @@ export function finalizeSwap(req, res, next) {
       txCache[uuid].push(...currentHashes);
 
       // Give back the new swaps to the user
-      console.log("INSERT:", newTransactions, clientAccount)
       const newSwaps = await db.insertSwaps(newTransactions, clientAccount);
       res.status(205);
       res.body = { status: 200, success: true, result: formatSwaps(newSwaps) };
