@@ -11,5 +11,6 @@ router.get('/api/v1/getUncomfirmedBeldexTransactions', bodyParser.json(), swap.g
 router.get('/api/v1/getSwaps', bodyParser.json(), swap.getSwaps);
 router.post('/api/v1/swap', bodyParser.json(), swap.swapToken);
 router.post('/api/v1/finalizeSwap', bodyParser.json(), swap.finalizeSwap);
+router.post('/api/v1/transfer', bodyParser.json(), swap.transfer);
 
 export default router;

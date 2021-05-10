@@ -1,5 +1,6 @@
 import { SWAP_TYPE } from 'bridge-core';
 import { bnb, beldex } from '../core';
+import addressValidator from 'wallet-address-validator';
 
 export async function validateSwap(body) {
   if (!body) return 'invalid params';
@@ -14,7 +15,9 @@ export async function validateSwap(body) {
     if (!valid) return 'address must be a BDX address';
   } else if (type === SWAP_TYPE.BDX_TO_BBDX) {
     // User should pass a BNB address
-    if (!bnb.validateAddress(address)) return 'address must be a BNB address';
+    // if (!bnb.validateAddress(address)) return 'address must be a BNB address';
+    const valid = await addressValidator.validate(address, 'ETH');
+    if (!valid) return 'address must be a BNB address';
   }
 
   return null;

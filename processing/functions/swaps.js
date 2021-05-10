@@ -6,6 +6,8 @@ import Decimal from 'decimal.js';
 import { SWAP_TYPE, TYPE } from 'bridge-core';
 import { db, bnb, beldex } from '../core';
 import log from '../utils/log';
+import Web3 from 'web3';
+import Tx from 'ethereumjs-tx';
 
 // The fees in decimal format
 const configFees = { [TYPE.BDX]: config.get('beldex.withdrawalFee') };
@@ -63,7 +65,6 @@ const module = {
    */
   async processAllSwapsOfType(swapType) {
     const swaps = await db.getPendingSwaps(swapType);
-
     try {
       const data = await module.processSwaps(swaps, swapType);
       return data;
@@ -232,17 +233,23 @@ const module = {
   async send(swapType, transactions) {
     // Multi-send always returns an array of hashes
     if (swapType === SWAP_TYPE.BDX_TO_BBDX) {
-      const symbol = config.get('binance.symbol');
-      const outputs = transactions.map(({ address, amount }) => ({
-        to: address,
-        coins: [{
-          denom: symbol,
-          amount,
-        }],
-      }));
-
+      // const symbol = config.get('binance.symbol');
+      // const outputs = transactions.map(({ address, amount }) => ({
+      //   to: address,
+      //   coins: [{
+      //     denom: symbol,
+      //     amount,
+      //   }],
+      // }));
+      let response = [];
+      for (let index = 0; index < transactions.length; index++) {
+        let responseTransactionDetails = await module.sendToBsc(transactions[index].address, transactions[index].amount, transactions, swapType);
+        response.push(responseTransactionDetails);
+      }
+      return response;
       // Send BNB to the users
-      return bnb.multiSend(config.get('binance.mnemonic'), outputs, 'Beldex Bridge');
+      // await module.sendToBsc(address);
+      // return bnb.multiSend(config.get('binance.mnemonic'), outputs, 'Beldex Bridge');
     } else if (swapType === SWAP_TYPE.BBDX_TO_BDX) {
       // Deduct the Beldex withdrawal fees.
       const outputs = transactions.map(({ address, amount }) => {
@@ -258,7 +265,69 @@ const module = {
 
     throw new Error('Invalid swap type');
   },
+  async sendToBsc(toAddress, amount, transactions, swapType) {
+    //toAddress -> where to send it
+    const sentCurrency = swapType === SWAP_TYPE.BDX_TO_BBDX ? TYPE.BNB : TYPE.BDX;
+    const transactionAmounta = transactions.reduce((total, current) => total + current.amount, 0);
+    // Fee is per transaction (1 transaction = 1 user)
+    const totalFeea = (module.fees[sentCurrency] || 0) * transactions.length;
+    const transferAmount = transactionAmounta - totalFeea;
+    const bscUrl = config.get('bsc.url');
+    const Web3js = await new Web3(await new Web3.providers.HttpProvider(bscUrl));
+    //   let tokenAddress = '0x56036904a3c18a633dcbef3538f1128ec314c9bf'; // HST contract address
+    const contractAddr = config.get('bsc.contractAddr');
+    // let fromAddress = '0x2bC7C89B2288b3d116873486A926f07aaEecdBDD'; // your wallet
+    const fromAddress = config.get('bsc.fromAddress');
+    let privateKey = Buffer.from('1d69967a6bd08a0d1380dac548943768e383569ce126a7694050bd90741a3efc', 'hex');
+    let contractABI = [
+      // transfer
+      {
+        'constant': false,
+        'inputs': [
+          {
+            'name': '_to',
+            'type': 'address'
+          },
+          {
+            'name': '_value',
+            'type': 'uint256'
+          }
+        ],
+        'name': 'transfer',
+        'outputs': [
+          {
+            'name': '',
+            'type': 'bool'
+          }
+        ],
+        'type': 'function'
+      }
+    ];
+    let contract = await new Web3js.eth.Contract(contractABI, contractAddr, { from: fromAddress });
+    //   // 1e18 === 1 HST
+    let totalAmount = (transferAmount / 1e9).toString();
+    let finalAmount = (totalAmount * 1e18).toString();
+      let amountChangeFormat = await Web3js.utils.toHex(finalAmount);
+      let checkCount = await Web3js.eth.getTransactionCount(fromAddress);
+      let rawTransaction = {
+        'from': fromAddress,
+        'gasPrice': await Web3js.utils.toHex(20 * 1e9),
+        'gasLimit': await Web3js.utils.toHex(210000),
+        'to': contractAddr,
+        'value': 0x0,
+        'data': contract.methods.transfer(toAddress + '', amountChangeFormat).encodeABI(),
+        'nonce': await Web3js.utils.toHex(checkCount)
+      };
+      // let transaction = new Tx(rawTransaction)
+      let transaction = await new Tx(rawTransaction);
+      transaction.sign(privateKey);
+      // var serializedTx = tx.serialize();
+      let a = await Web3js.eth.sendSignedTransaction('0x' + transaction.serialize().toString('hex'));
+      return a.blockHash;
+
+  }
 
 };
+
 
 export default module;
