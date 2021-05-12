@@ -71,7 +71,7 @@ class SwapSelection extends Component {
     const isValidAddress = address && address.length > 0;
     this.setState({ addressError: !isValidAddress });
     if (isValidAddress) {
-      if (amount > 0 && swapType === SWAP_TYPE.BBDX_TO_BDX) {
+      if (swapType === SWAP_TYPE.BBDX_TO_BDX) {
         onNext(address, amount);
 
       } else if(swapType === SWAP_TYPE.BDX_TO_BBDX) {

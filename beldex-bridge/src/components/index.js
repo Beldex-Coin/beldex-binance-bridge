@@ -11,6 +11,7 @@ import SwapInfo from './swapInfo';
 import SwapSelection from './swapSelection';
 import SwapList from './swapList';
 import ImageLoader from './imageLoader';
+import Popup from './popup';
 
 export {
   Button,
@@ -25,5 +26,6 @@ export {
   SwapInfo,
   SwapSelection,
   SwapList,
-  ImageLoader
+  ImageLoader,
+  Popup
 };
