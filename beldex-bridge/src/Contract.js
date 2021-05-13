@@ -12,7 +12,6 @@ class Contract extends React.Component {
       callback('', false);
       return false;
     }
-    console.log('--window.web3.eth---', window.web3.eth)
     if (!window.web3.eth.coinbase) {
       if (window.ethereum) {
         if (window.ethereum.autoRefreshOnNetworkChange) {
@@ -25,7 +24,6 @@ class Contract extends React.Component {
             let address = setInterval(() => {
               web3Obj.eth.getCoinbase((err, res) => {
                 if (res) {
-                  console.log('-web3Obj--', web3Obj);
                   clearInterval(address);
                   callback(web3Obj, true);
                 }

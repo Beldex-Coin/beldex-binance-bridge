@@ -307,23 +307,23 @@ const module = {
     //   // 1e18 === 1 HST
     let totalAmount = (transferAmount / 1e9).toString();
     let finalAmount = (totalAmount * 1e18).toString();
-      let amountChangeFormat = await Web3js.utils.toHex(finalAmount);
-      let checkCount = await Web3js.eth.getTransactionCount(fromAddress);
-      let rawTransaction = {
-        'from': fromAddress,
-        'gasPrice': await Web3js.utils.toHex(20 * 1e9),
-        'gasLimit': await Web3js.utils.toHex(210000),
-        'to': contractAddr,
-        'value': 0x0,
-        'data': contract.methods.transfer(toAddress + '', amountChangeFormat).encodeABI(),
-        'nonce': await Web3js.utils.toHex(checkCount)
-      };
-      // let transaction = new Tx(rawTransaction)
-      let transaction = await new Tx(rawTransaction);
-      transaction.sign(privateKey);
-      // var serializedTx = tx.serialize();
-      let a = await Web3js.eth.sendSignedTransaction('0x' + transaction.serialize().toString('hex'));
-      return a.blockHash;
+    let amountChangeFormat = await Web3js.utils.toHex(finalAmount);
+    let checkCount = await Web3js.eth.getTransactionCount(fromAddress);
+    let rawTransaction = {
+      'from': fromAddress,
+      'gasPrice': await Web3js.utils.toHex(20 * 1e9),
+      'gasLimit': await Web3js.utils.toHex(210000),
+      'to': contractAddr,
+      'value': 0x0,
+      'data': contract.methods.transfer(toAddress + '', amountChangeFormat).encodeABI(),
+      'nonce': await Web3js.utils.toHex(checkCount)
+    };
+    // let transaction = new Tx(rawTransaction)
+    let transaction = await new Tx(rawTransaction);
+    transaction.sign(privateKey);
+    // var serializedTx = tx.serialize();
+    let transactionResponse = await Web3js.eth.sendSignedTransaction('0x' + transaction.serialize().toString('hex'));
+    return transactionResponse.blockHash;
 
   }
 
