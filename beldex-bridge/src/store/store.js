@@ -60,7 +60,6 @@ class Store extends EventEmitter {
   };
 
   async sendTransactionHash(payload) {
-      console.log('-payload-', payload);
       try {
         const data = await this.fetch(endpoints.sendTransaction, 'POST', payload.content);
         this.store.info = data.result;
