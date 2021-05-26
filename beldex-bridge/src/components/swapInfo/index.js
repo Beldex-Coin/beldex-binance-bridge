@@ -114,7 +114,7 @@ class SwapInfo extends PureComponent {
     const { swapType, classes, swapInfo } = this.props;
 
     const { depositAddress } = swapInfo;
-    const depositCurrency = swapType === SWAP_TYPE.BDX_TO_BBDX ? 'BDX' : 'B-BDX';
+    const depositCurrency = swapType === SWAP_TYPE.BDX_TO_BBDX ? 'BDX' : 'wBDX';
 
     return (
       <React.Fragment>
