@@ -46,12 +46,12 @@ export default function SwapTabs(props) {
     <div className={classes.root}>
       <AppBar position="static">
         <Tabs value={value} onChange={handleChange}>
-          <Tab label="BDX to Binance BDX" />
-          <Tab label="Binance BDX to BDX" />
+          <Tab label="BDX to wBDX" />
+          <Tab label="wBDX to BDX" />
         </Tabs>
       </AppBar>
-      {value === 0 && <TabContainer>BDX to Binance BDX</TabContainer>}
-      {value === 1 && <TabContainer>Binance BDX to BDX</TabContainer>}
+      {value === 0 && <TabContainer>BDX to wBDX</TabContainer>}
+      {value === 1 && <TabContainer>wBDX to BDX</TabContainer>}
     </div>
   );
 }
