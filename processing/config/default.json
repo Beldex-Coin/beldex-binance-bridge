@@ -17,16 +17,16 @@
   },
   "beldex": {
     "walletRPC": {
-      "host": "localhost",
-      "port": 18082,
+      "host": "34.70.224.110",
+      "port": 19097,
       "username": "test",
       "password": "test"
     },
     "withdrawalFee": 0
   },
   "bsc": {
-    "contractAddr": "Enter your contract address",
-    "url":"https://data-seed-prebsc-1-s1.binance.org:8545/",
-    "fromAddress":"Enter your from address"
+    "contractAddr": "0x56036904a3c18a633dcbef3538f1128ec314c9bf",
+    "url": "https://data-seed-prebsc-1-s1.binance.org:8545/",
+    "fromAddress": "0xdFc515De6EA5eE5502FF1Bdd5b5Bded2C41140Fb"
   }
 }
