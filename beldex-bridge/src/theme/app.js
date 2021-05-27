@@ -104,9 +104,9 @@ const theme =  {
           color: '#fff',
         },
         '&$selected': {
-          backgroundColor: '#000',
+          backgroundColor: '#35af3b',
           color: '#fff',
-          borderBottom: '2px solid #4b4b4b'
+          borderBottom: '2px solid #2e9a34'
         },
       },
     }

@@ -110,7 +110,7 @@ class SwapSelection extends Component {
     const { address, addressError, amount } = this.state;
     const addressType = this.getAddressType();
     const inputLabel = addressType === TYPE.BDX ? 'BDX Address' : 'BNB Address';
-    const inputPlaceholder = addressType === TYPE.BDX ? 'bdx...' : 'bbdx...';
+    const inputPlaceholder = addressType === TYPE.BDX ? 'bdx...' : 'wbdx...';
 
     const url = walletCreationUrl[addressType];
     return (
