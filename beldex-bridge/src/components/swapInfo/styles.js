@@ -1,5 +1,5 @@
 import { red } from '@material-ui/core/colors';
-import { colors, common } from '@theme';
+import { common } from '@theme';
 
 const styles = theme => ({
   root: {
