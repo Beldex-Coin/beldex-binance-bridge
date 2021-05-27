@@ -31,7 +31,7 @@
     "withdrawalFee": 0
   },
   "bsc": {
-    "contractAddr": "Enter your contact address",
+    "contractAddr": "Enter your contract address",
     "url": "https://data-seed-prebsc-1-s1.binance.org:8545/",
     "fromAddress": "Enter your address"
   }
