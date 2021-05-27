@@ -17,7 +17,7 @@
   },
   "beldex": {
     "walletRPC": {
-      "host": "34.70.224.110",
+      "host": "localhost",
       "port": 19097,
       "username": "test",
       "password": "test"
