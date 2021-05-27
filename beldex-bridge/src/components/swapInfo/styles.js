@@ -1,5 +1,5 @@
 import { red } from '@material-ui/core/colors';
-import { colors, common } from '@theme';
+import { common } from '@theme';
 
 const styles = theme => ({
   root: {
@@ -37,9 +37,9 @@ const styles = theme => ({
   },
   memo: {
     border: '1px solid',
-    borderColor: colors.beldexBlack90,
+    borderColor: '#35af3b',
     borderRadius: '3px',
-    backgroundColor: colors.beldexBlack90,
+    backgroundColor: '#35af3b',
     color: 'white',
     padding: '1rem',
     overflowWrap: 'break-word',

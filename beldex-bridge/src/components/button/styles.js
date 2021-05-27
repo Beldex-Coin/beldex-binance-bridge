@@ -10,7 +10,7 @@ const styles = theme => ({
     padding: '0.8rem 2.5rem',
     letterSpacing: '0.03em',
     fontSize: '14px',
-    backgroundColor: '#000',
+    backgroundColor: '#35af3b',
     color: '#fff',
     textTransform: 'capitalize',
     '&:hover': {
