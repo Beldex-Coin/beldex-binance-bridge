@@ -68,10 +68,11 @@ class Swap extends Component {
   }
   onTokenSwapped = (swapInfo) => {
     this.setState({ swapInfo, page: 1 }, async () => {
-      const {walletAddress, swapType, amount, selectedWallet } = this.state;
+      const { walletAddress, swapType, amount, selectedWallet } = this.state;
       if (swapType === SWAP_TYPE.BBDX_TO_BDX && walletAddress) {
         const result = await this.contract.methods.balanceOf(walletAddress).call();
-        const balance = this.web3Obj.utils.fromWei(result?.toString());
+        // const balance = this.web3Obj.utils.fromWei(result?.toString());
+        const balance = result / 1e9;
         if (swapType === SWAP_TYPE.BBDX_TO_BDX && walletAddress) {
           if (parseFloat(amount) > parseFloat(balance)) {
             this.props.showMessage(`Entered amount is exceeding the balance.`, 'error');
@@ -96,7 +97,7 @@ class Swap extends Component {
         let address = setInterval(() => {
           this.web3Obj.eth.getCoinbase((err, res) => {
             if (res) {
-              this.contract = new this.web3Obj.eth.Contract(matrixAbi, '0x56036904a3c18A633dCBeF3538f1128ec314c9bf');
+              this.contract = new this.web3Obj.eth.Contract(matrixAbi, '0xd514398Ba7ce5fE4827af193CdaB3c781E3055f0');
               clearInterval(address);
               this.setState({ walletAddress: res });
               window.ethereum.on('accountsChanged', async (accounts) => {
@@ -118,7 +119,7 @@ class Swap extends Component {
       if (this.web3Obj) {
         const accounts = await window.BinanceChain.request({ method: 'eth_accounts' });
         const address = accounts[0] || null;
-        this.contract = new this.web3Obj.eth.Contract(matrixAbi, '0x56036904a3c18A633dCBeF3538f1128ec314c9bf');
+        this.contract = new this.web3Obj.eth.Contract(matrixAbi, '0xd514398Ba7ce5fE4827af193CdaB3c781E3055f0');
         this.setState({ walletAddress: address });
         window.BinanceChain.on('accountsChanged', async accounts => {
           const address = accounts[0] || null;
@@ -131,7 +132,8 @@ class Swap extends Component {
   }
   makeTransaction = () => {
     const { amount, walletAddress, swapInfo } = this.state;
-    let amountToWei = this.web3Obj.utils.toWei(amount);
+    // let amountToWei = this.web3Obj.utils.toHex(amount);
+    let amountToWei = amount * 1e9;
     const options = {
       from: walletAddress,
       to: this.contract._address,

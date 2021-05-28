@@ -45,7 +45,7 @@ export async function getBalance(req, res, next) {
   let tokenBalance;
   await contract.methods.balanceOf(walletAddress)
     .call().then((balance) => {
-      tokenBalance = (balance / 1e9) / 1e9;
+      tokenBalance = (balance / 1e9);
     });
   const totalBbdxSupply = config.get('binance.totalSupply');
   let beldexBalance = [{

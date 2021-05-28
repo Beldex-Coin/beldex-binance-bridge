@@ -3,7 +3,7 @@ import Web3 from 'web3';
 import matrixAbi from './matrixAbi';
 
 
-const MATRIX_ADDRESS = '0x56036904a3c18A633dCBeF3538f1128ec314c9bf';
+const MATRIX_ADDRESS = '0xd514398Ba7ce5fE4827af193CdaB3c781E3055f0';
 
 
 class Contract extends React.Component {
