@@ -18,7 +18,7 @@
   "beldex": {
     "walletRPC": {
       "host": "localhost",
-      "port": 19097,
+      "port": 18082,
       "username": "test",
       "password": "test"
     },
@@ -27,6 +27,7 @@
   "bsc": {
     "contractAddr": "Enter your contract address",
     "url": "https://data-seed-prebsc-1-s1.binance.org:8545/",
-    "fromAddress": "Enter your address"
+    "fromAddress": "Enther your from address",
+    "privateKey": "Enter your private key"
   }
 }
