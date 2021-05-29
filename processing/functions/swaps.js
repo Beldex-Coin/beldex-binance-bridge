@@ -14,7 +14,7 @@ const configFees = { [TYPE.BDX]: config.get('beldex.withdrawalFee') };
 
 const symbols = {
   [TYPE.BDX]: 'BDX',
-  [TYPE.BNB]: 'B-BDX',
+  [TYPE.BNB]: 'wBDX',
 };
 
 class PriceFetchFailed extends Error { }

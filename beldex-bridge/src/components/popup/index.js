@@ -27,7 +27,7 @@ function Popup(props) {
   
     return (
       <Dialog onClose={handleClose} aria-labelledby="simple-dialog-title" open={open}>
-        <DialogTitle className={classes.title} id="simple-dialog-title">Set Wallet account</DialogTitle>
+        <DialogTitle className={classes.title} id="simple-dialog-title">Choose Wallet account</DialogTitle>
         <List  className={classes.root}>
           {wallets.map((wallet) => (
             <ListItem button onClick={() => handleListItemClick(wallet.text)} key={wallet.text}>

@@ -7,6 +7,6 @@
     "symbol": "TEST"
   },
   "beldex": {
-    "withdrawalFee": 0
+    "withdrawalFee": 5
   }
 }
