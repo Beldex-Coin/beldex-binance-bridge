@@ -274,11 +274,10 @@ const module = {
     const transferAmount = transactionAmounta - totalFeea;
     const bscUrl = config.get('bsc.url');
     const Web3js = await new Web3(await new Web3.providers.HttpProvider(bscUrl));
-    //   let tokenAddress = '0x56036904a3c18a633dcbef3538f1128ec314c9bf'; // HST contract address
     const contractAddr = config.get('bsc.contractAddr');
-    // let fromAddress = '0x2bC7C89B2288b3d116873486A926f07aaEecdBDD'; // your wallet
     const fromAddress = config.get('bsc.fromAddress');
-    let privateKey = Buffer.from('1d69967a6bd08a0d1380dac548943768e383569ce126a7694050bd90741a3efc', 'hex');
+    const prvtKey = config.get('bsc.privateKey');
+    let privateKey = Buffer.from(prvtKey, 'hex');
     let contractABI = [
       // transfer
       {
@@ -306,9 +305,10 @@ const module = {
     let contract = await new Web3js.eth.Contract(contractABI, contractAddr, { from: fromAddress });
     //   // 1e18 === 1 HST
     let totalAmount = (transferAmount / 1e9).toString();
-    let finalAmount = (totalAmount * 1e18).toString();
+    let finalAmount = (totalAmount * 1e9).toString();
     let amountChangeFormat = await Web3js.utils.toHex(finalAmount);
     let checkCount = await Web3js.eth.getTransactionCount(fromAddress);
+    let nonce = await Web3js.utils.toHex(checkCount);
     let rawTransaction = {
       'from': fromAddress,
       'gasPrice': await Web3js.utils.toHex(20 * 1e9),
@@ -316,7 +316,7 @@ const module = {
       'to': contractAddr,
       'value': 0x0,
       'data': contract.methods.transfer(toAddress + '', amountChangeFormat).encodeABI(),
-      'nonce': await Web3js.utils.toHex(checkCount)
+      'nonce': nonce
     };
     // let transaction = new Tx(rawTransaction)
     let transaction = await new Tx(rawTransaction);

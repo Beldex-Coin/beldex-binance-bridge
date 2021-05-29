@@ -5,7 +5,7 @@
     "api": "https://testnet-dex.binance.org/",
     "network": "testnet",
     "symbol": "BDX-7BA",
-    "depositAddress": "0x2bC7C89B2288b3d116873486A926f07aaEecdBDD",
+    "depositAddress": "Enter your deposit address",
     "totalSupply": 2000000
   },
   "database": {
@@ -19,13 +19,13 @@
   "beldex": {
     "walletRPC": {
       "host": "localhost",
-      "port": 19097,
+      "port": 18082,
       "username": "test",
       "password": "test"
     },
     "wallet": {
-      "filename": "binance",
-      "password": "binance",
+      "filename": "test",
+      "password": "test",
       "accountIndex": 0
     },
     "withdrawalFee": 0
@@ -33,6 +33,6 @@
   "bsc": {
     "contractAddr": "Enter your contract address",
     "url": "https://data-seed-prebsc-1-s1.binance.org:8545/",
-    "fromAddress": "Enter your address"
+    "fromAddress": "Enther your from address"
   }
 }
