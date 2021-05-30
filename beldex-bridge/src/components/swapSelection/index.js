@@ -32,7 +32,8 @@ class SwapSelection extends Component {
       totalSupply: props.totalSupply,
       movedBalance: props.movedBalance,
       swapType: 'bdx_to_bbdx',
-      loginOpen: false
+      loginOpen: false,
+      amountError: false
     };
   }
 
@@ -85,6 +86,11 @@ class SwapSelection extends Component {
   }
 
   onAmountChanged = (event) => {
+    if ((this.props.info.fees && this.props.info.fees.bdx / 1e9) >= event.target.value) {
+      this.setState({ amountError: "Entered amount should be greater than the swap fee." })
+    }else{
+      this.setState({ amountError: '' })
+    }
     this.setState({ amount: event.target.value });
   }
 
@@ -147,18 +153,23 @@ class SwapSelection extends Component {
             disabled={loading}
           />
           {addressType === 'bdx' &&
-            <Input
-              fullWidth
-              label="Amount"
-              placeholder="Amount"
-              value={amount}
-              type="number"
-              onChange={this.onAmountChanged}
-              disabled={loading}
-            />
-
+            <>
+              <Input
+                fullWidth
+                label="Amount"
+                placeholder="Amount"
+                value={amount}
+                type="number"
+                onChange={this.onAmountChanged}
+                disabled={loading}
+                error={this.state.amountError}
+              />
+              <Typography style={{ color: 'red',fontSize:'12px' }}>
+                {this.state.amountError}
+              </Typography>
+            </>
           }
-          <Typography className={classes.createAccount}>
+          <Typography style={{marginTop:'10px'}} className={classes.createAccount}>
             <Link style={{ color: '#000' }} href={url} target="_blank" rel="noreferrer">
               view on bscscan            </Link>
           </Typography>

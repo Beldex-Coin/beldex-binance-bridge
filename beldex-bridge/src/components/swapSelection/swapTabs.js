@@ -31,7 +31,6 @@ export default function SwapTabs(props) {
 
   function handleChange(e, newValue) {
     setValue(newValue);
-    console.log(newValue)
     let value = '';
     if (newValue === 0) {
       value = "bdx_to_bbdx"

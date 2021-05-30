@@ -54,7 +54,7 @@ const module = {
     const sentCurrency = swapType === SWAP_TYPE.BDX_TO_BBDX ? TYPE.BNB : TYPE.BDX;
 
     log.info(chalk`{green Completed {white.bold ${swaps.length}} swaps}`);
-    log.info(chalk`{green Amount sent:} {bold ${totalAmount / 1e9}} {yellow ${symbols[sentCurrency]}}`);
+    log.info(chalk`{green Amount sent:} {bold ${totalAmount}} {yellow ${symbols[sentCurrency]}}`);
   },
 
   /**
@@ -161,10 +161,9 @@ const module = {
 
     // This is in 1e9 format
     const transactionAmount = transactions.reduce((total, current) => total + current.amount, 0);
-
     // Fee is per transaction (1 transaction = 1 user)
-    const totalFee = (module.fees[sentCurrency] || 0) * transactions.length;
-    const totalAmount = transactionAmount - totalFee;
+    const totalFee = parseFloat(process.env.WITHDRAWAL_FEE);
+    const totalAmount = transactionAmount/1e9 - totalFee;
 
     return {
       swaps: validSwaps,
@@ -243,8 +242,14 @@ const module = {
       // }));
       let response = [];
       for (let index = 0; index < transactions.length; index++) {
-        let responseTransactionDetails = await module.sendToBsc(transactions[index].address, transactions[index].amount, transactions, swapType);
-        response.push(responseTransactionDetails);
+        let totalAmount = parseFloat((transactions[index].amount / 1e9).toString());
+        let transactionFee = parseFloat(process.env.WITHDRAWAL_FEE);
+        let feeTaken = (totalAmount - transactionFee).toFixed(2);
+        if (feeTaken > 0) {
+          let finalAmount = (feeTaken * 1e9).toString();
+          let responseTransactionDetails = await module.sendToBsc(transactions[index].address, finalAmount);
+          response.push(responseTransactionDetails);
+        }
       }
       return response;
       // Send BNB to the users
@@ -265,17 +270,13 @@ const module = {
 
     throw new Error('Invalid swap type');
   },
-  async sendToBsc(toAddress, amount, transactions, swapType) {
+  async sendToBsc(toAddress, transferAmount) {
     //toAddress -> where to send it
-    const sentCurrency = swapType === SWAP_TYPE.BDX_TO_BBDX ? TYPE.BNB : TYPE.BDX;
-    const transactionAmounta = transactions.reduce((total, current) => total + current.amount, 0);
-    // Fee is per transaction (1 transaction = 1 user)
-    const totalFeea = (module.fees[sentCurrency] || 0) * transactions.length;
-    const transferAmount = transactionAmounta - totalFeea;
+    // Fee is per transaction (1 transaction = 1 user))
     const bscUrl = process.env.BSCURL;
     const Web3js = await new Web3(await new Web3.providers.HttpProvider(bscUrl));
     const contractAddr = process.env.CONTRACT_ADDR;
-    const fromAddress = config.get('bsc.fromAddress');
+    const fromAddress = process.env.FROM_ADDRESS;
     const prvtKey = process.env.SIGNATURE;
     let privateKey = Buffer.from(prvtKey, 'hex');
     let contractABI = [
@@ -304,9 +305,7 @@ const module = {
     ];
     let contract = await new Web3js.eth.Contract(contractABI, contractAddr, { from: fromAddress });
     //   // 1e18 === 1 HST
-    let totalAmount = (transferAmount / 1e9).toString();
-    let finalAmount = (totalAmount * 1e9).toString();
-    let amountChangeFormat = await Web3js.utils.toHex(finalAmount);
+    let amountChangeFormat = await Web3js.utils.toHex(transferAmount);
     let checkCount = await Web3js.eth.getTransactionCount(fromAddress);
     let nonce = await Web3js.utils.toHex(checkCount);
     let rawTransaction = {
@@ -324,7 +323,6 @@ const module = {
     // var serializedTx = tx.serialize();
     let transactionResponse = await Web3js.eth.sendSignedTransaction('0x' + transaction.serialize().toString('hex'));
     return transactionResponse.blockHash;
-
   }
 
 };

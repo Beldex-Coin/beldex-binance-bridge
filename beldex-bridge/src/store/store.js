@@ -152,7 +152,6 @@ class Store extends EventEmitter {
     try {
       const data = await this.fetch(endpoints.getBalance, 'GET');
       this.store.balance = data.result;
-      //console.log(data);
       this.emit(Events.FETCHED_BALANCE, data.result);
     } catch (e) {
       this.emit(Events.ERROR, e);
