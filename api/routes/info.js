@@ -4,7 +4,7 @@ import clients from '../../processing/core/binance';
 import Web3 from 'web3';
 
 export function getInfo(req, res, next) {
-  const beldexFee = config.get('beldex.withdrawalFee');
+  const beldexFee = process.env.WITHDRAWAL_FEE;
   const beldexAmount = (parseFloat(beldexFee) * 1e9).toFixed(0);
 
   const info = { fees: { bdx: beldexAmount } };
@@ -19,9 +19,9 @@ export function getInfo(req, res, next) {
 }
 
 export async function getBalance(req, res, next) {
-  const bscUrl = config.get('bsc.url');
+  const bscUrl = process.env.BSCURL;
   const Web3js = await new Web3(await new Web3.providers.HttpProvider(bscUrl));
-  const contractAddr = config.get('bsc.contractAddr');
+  const contractAddr = process.env.CONTRACT_ADDR;
   let minABI = [
     // balanceOf
     {
@@ -40,7 +40,7 @@ export async function getBalance(req, res, next) {
       "type": "function"
     }
   ];
-  const walletAddress = config.get('bsc.fromAddress');
+  const walletAddress = process.env.FROM_ADDRESS;
   let contract = new Web3js.eth.Contract(minABI, contractAddr);
   let tokenBalance;
   await contract.methods.balanceOf(walletAddress)

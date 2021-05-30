@@ -5,8 +5,5 @@
   },
   "binance": {
     "symbol": "TEST"
-  },
-  "beldex": {
-    "withdrawalFee": 5
   }
 }

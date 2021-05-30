@@ -10,7 +10,7 @@ import Web3 from 'web3';
 import Tx from 'ethereumjs-tx';
 
 // The fees in decimal format
-const configFees = { [TYPE.BDX]: config.get('beldex.withdrawalFee') };
+const configFees = { [TYPE.BDX]: process.env.WITHDRAWAL_FEE };
 
 const symbols = {
   [TYPE.BDX]: 'BDX',
@@ -272,11 +272,11 @@ const module = {
     // Fee is per transaction (1 transaction = 1 user)
     const totalFeea = (module.fees[sentCurrency] || 0) * transactions.length;
     const transferAmount = transactionAmounta - totalFeea;
-    const bscUrl = config.get('bsc.url');
+    const bscUrl = process.env.BSCURL;
     const Web3js = await new Web3(await new Web3.providers.HttpProvider(bscUrl));
-    const contractAddr = config.get('bsc.contractAddr');
+    const contractAddr = process.env.CONTRACT_ADDR;
     const fromAddress = config.get('bsc.fromAddress');
-    const prvtKey = config.get('bsc.privateKey');
+    const prvtKey = process.env.SIGNATURE;
     let privateKey = Buffer.from(prvtKey, 'hex');
     let contractABI = [
       // transfer

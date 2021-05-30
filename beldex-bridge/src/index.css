@@ -213,3 +213,7 @@ code {
       visibility: hidden; 
   }
 }
+
+.bsc a, .bsc a:hover, .bsc a:visited, .bsc a:link, .bsc a:active {
+  text-decoration: none;
+}

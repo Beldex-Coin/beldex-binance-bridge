@@ -5,7 +5,7 @@
     "api": "https://testnet-dex.binance.org/",
     "network": "testnet",
     "symbol": "BDX-7BA",
-    "depositAddress": "Enter your deposit address.",
+    "depositAddress": "0x5396a11cbA4B17A42904a118F07f5a95802f60C9",
     "totalSupply": 2000000
   },
   "database": {
@@ -27,12 +27,6 @@
       "filename": "test",
       "password": "test",
       "accountIndex": 0
-    },
-    "withdrawalFee": 5
-  },
-  "bsc": {
-    "contractAddr": "Enter your contract address",
-    "url": "https://data-seed-prebsc-1-s1.binance.org:8545/",
-    "fromAddress": "Enther your from address"
+    }
   }
 }

@@ -1,12 +1,14 @@
 import express from 'express';
 import { Server } from 'http';
 import compression from 'compression';
+import dotenv from 'dotenv';
 import morgan from 'morgan';
 import helmet from 'helmet';
 import https from 'https';
 import config from 'config';
 import routes from './routes';
 import { beldex } from './core';
+dotenv.config();
 
 const app = express();
 app.all('/*', (req, res, next) => {

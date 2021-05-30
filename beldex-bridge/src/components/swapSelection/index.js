@@ -160,8 +160,7 @@ class SwapSelection extends Component {
           }
           <Typography className={classes.createAccount}>
             <Link style={{ color: '#000' }} href={url} target="_blank" rel="noreferrer">
-              Don't have a wallet? create one
-            </Link>
+              view on bscscan            </Link>
           </Typography>
         </Grid>
         <Grid item xs={12} align='right' className={classes.button}>

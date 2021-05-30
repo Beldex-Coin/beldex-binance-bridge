@@ -21,13 +21,6 @@
       "port": 18082,
       "username": "test",
       "password": "test"
-    },
-    "withdrawalFee": 5
-  },
-  "bsc": {
-    "contractAddr": "Enter your contract address",
-    "url": "https://data-seed-prebsc-1-s1.binance.org:8545/",
-    "fromAddress": "Enther your from address",
-    "privateKey": "Enter your private key"
+    }
   }
 }
