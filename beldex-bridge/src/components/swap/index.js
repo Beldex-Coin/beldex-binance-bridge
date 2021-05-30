@@ -11,7 +11,7 @@ import styles from './styles';
 import matrixAbi from '../../matrixAbi';
 const currencySymbols = {
   [TYPE.BDX]: 'BDX',
-  [TYPE.BNB]: 'B-BDX'
+  [TYPE.BNB]: 'wBDX'
 };
 class Swap extends Component {
   state = {

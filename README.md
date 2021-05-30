@@ -1,10 +1,10 @@
 # Beldex Binance Bridge
 
 ### Features:
-- [x] Swap BDX to B-BDX.
-- [x] Swap B-BDX to BDX.
-- [x] See balance of BDX and B-BDX accounts.
-- [x] Process all BDX and B-BDX swaps.
+- [x] Swap BDX to wBDX.
+- [x] Swap wBDX to BDX.
+- [x] See balance of BDX and wBDX accounts.
+- [x] Process all BDX and wBDX swaps.
 - [x] Print invalid transactions
 
 | Folder | Description |

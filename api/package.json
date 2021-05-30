@@ -1,7 +1,7 @@
 {
   "name": "beldex-bridge-api",
   "version": "1.0.0",
-  "description": "Bridge API for converting BDX to B-BDX",
+  "description": "Bridge API for converting BDX to wBDX",
   "main": "index.js",
   "private": true,
   "scripts": {

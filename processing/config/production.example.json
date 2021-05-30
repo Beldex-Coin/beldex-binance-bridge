@@ -15,6 +15,6 @@
       "username": "test",
       "password": "test"
     },
-    "withdrawalFee": 0
+    "withdrawalFee": 5
   }
 }

@@ -94,7 +94,7 @@ export default class App extends PureComponent {
         <div id="content">
           {this.renderTitleImage()}
           <div className="movedBal">
-            <p>Total bdx moved to Binance chain</p>
+            <p>Total bdx moved to Binance smart chain</p>
             <p className="movedBal-p2">{bal} <span className="availBal">/ {total}</span></p>
           </div>
           <Grid

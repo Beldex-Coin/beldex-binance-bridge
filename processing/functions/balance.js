@@ -14,8 +14,8 @@ const module = {
   },
 
   printBalance(swapType, balance, showWarning = true) {
-    const receiveCurrency = swapType === SWAP_TYPE.BDX_TO_BBDX ? 'BDX' : 'B-BDX';
-    const swapCurrency = swapType === SWAP_TYPE.BDX_TO_BBDX ? 'B-BDX' : 'BDX';
+    const receiveCurrency = swapType === SWAP_TYPE.BDX_TO_BBDX ? 'BDX' : 'wBDX';
+    const swapCurrency = swapType === SWAP_TYPE.BDX_TO_BBDX ? 'wBDX' : 'BDX';
     log.header(chalk.blue(`Balance of ${swapType}`));
     log.info(chalk`{green Transaction balance:} {bold ${balance.transaction / 1e9}} {yellow ${receiveCurrency}}`);
     log.info(chalk`{green Swap balance:} {bold ${balance.swap / 1e9}} {yellow ${swapCurrency}}`);

@@ -23,10 +23,10 @@ class SwapSelection extends Component {
       addressError: false,
       options: [{
         value: SWAP_TYPE.BDX_TO_BBDX,
-        description: 'BDX to B-BDX',
+        description: 'BDX to wBDX',
       }, {
         value: SWAP_TYPE.BBDX_TO_BDX,
-        description: 'B-BDX to BDX',
+        description: 'wBDX to BDX',
       }],
       //loginOpen: props.totalSupply != props.movedBalance,
       totalSupply: props.totalSupply,
@@ -74,7 +74,7 @@ class SwapSelection extends Component {
       if (swapType === SWAP_TYPE.BBDX_TO_BDX) {
         onNext(address, amount);
 
-      } else if(swapType === SWAP_TYPE.BDX_TO_BBDX) {
+      } else if (swapType === SWAP_TYPE.BDX_TO_BBDX) {
         onNext(address, '');
       }
     }
@@ -132,7 +132,7 @@ class SwapSelection extends Component {
           /> */}
         </Grid>
         <Typography className={classes.swapFee}>
-          Swap Fee : {this.props.info.fees && this.props.info.fees.bdx} {" "} BDX
+          Swap Fee : {this.props.info.fees && this.props.info.fees.bdx / 1e9} {" "} BDX
         </Typography>
 
         <Grid item xs={12}>
