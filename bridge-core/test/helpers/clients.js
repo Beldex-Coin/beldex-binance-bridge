@@ -1,4 +1,6 @@
 import { PostgresClient, beldexClient, BinanceClient } from '../../clients';
+import dotenv from 'dotenv';
+dotenv.config();
 
 export const beldex = new beldexClient({
   hostname: 'localhost',
@@ -6,10 +8,10 @@ export const beldex = new beldexClient({
   username: 'test',
   password: 'test',
 },
-{
-  filename: 'test',
-  password: 'test',
-});
+  {
+    filename: 'test',
+    password: 'test',
+  });
 
 export const bnb = new BinanceClient({
   api: 'https://testnet-dex.binance.org/',
@@ -17,10 +19,18 @@ export const bnb = new BinanceClient({
   symbol: 'BDX-7BA',
 });
 
+// export const postgres = PostgresClient({
+//   host: 'localhost',
+//   port: 5432,
+//   database: "postgres",
+//   user: "postgres",
+//   password: "postgres"
+// });
+
 export const postgres = PostgresClient({
-  host: 'localhost',
-  port: 5432,
-  database: 'postgres',
-  user: 'postgres',
-  password: 'postgres',
+  host: process.env.POSTGRES_HOST,
+  port: process.env.POSTGRES_PORT,
+  database: process.env.POSTGRES_DATABASE,
+  user: process.env.POSTGRES_USER,
+  password: process.env.POSTGRES_PASSWORD
 });

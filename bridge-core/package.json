@@ -11,6 +11,7 @@
   "license": "ISC",
   "dependencies": {
     "@binance-chain/javascript-sdk": "^2.14.0",
+    "dotenv": "^10.0.0",
     "esm": "^3.2.25",
     "pg-promise": "^8.7.3",
     "request": "^2.88.0",
