@@ -24,10 +24,10 @@ const rpc = {
 //   password,
 //   accountIndex,
 // };
-const wallet = {
-  filename: process.env.BELDEX_WALLET_FILENAME,
-  password: process.env.BELDEX_WALLET_PASSWORD,
-  accountIndex: Number(process.env.BELDEX_WALLET_ACCOUNTINDEX),
-};
+// const wallet = {
+  // filename: process.env.BELDEX_WALLET_FILENAME,
+  // password: process.env.BELDEX_WALLET_PASSWORD,
+  // accountIndex: Number(process.env.BELDEX_WALLET_ACCOUNTINDEX),
+// };
 
-export default new clients.beldexClient(rpc, wallet);
+export default new clients.beldexClient(rpc);

@@ -2,6 +2,8 @@
 import config from 'config';
 import clients from '../../processing/core/binance';
 import Web3 from 'web3';
+import dotenv from 'dotenv';
+dotenv.config();
 
 export function getInfo(req, res, next) {
   const beldexFee = process.env.WITHDRAWAL_FEE;
@@ -47,7 +49,7 @@ export async function getBalance(req, res, next) {
     .call().then((balance) => {
       tokenBalance = (balance / 1e9);
     });
-  const totalBbdxSupply = config.get('binance.totalSupply');
+  const totalBbdxSupply = process.env.TOTAL_SUPPLY;
   let beldexBalance = [{
     totalSupply: totalBbdxSupply,
     movedBalance: totalBbdxSupply - Number(tokenBalance)

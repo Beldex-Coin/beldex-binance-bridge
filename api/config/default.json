@@ -5,8 +5,8 @@
     "api": "https://testnet-dex.binance.org/",
     "network": "testnet",
     "symbol": "BDX-7BA",
-    "depositAddress": "0x5396a11cbA4B17A42904a118F07f5a95802f60C9",
-    "totalSupply": 2000000
+    "depositAddress": "0x4B07413e81D8a546301Ee9669b6C8aC1F5804560",
+    "totalSupply": 20000000
   },
   "database": {
     "host": "localhost",

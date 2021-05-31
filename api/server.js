@@ -110,11 +110,16 @@ app.use((err, req, res, next) => {
 https.globalAgent.maxSockets = 50;
 app.set('port', config.get('serverPort'));
 
-beldex.openWallet().then(() => {
-  const server = Server(app);
-  server.listen(app.get('port'), () => {
-    console.log('[Beldex Bridge API] Stared server on', server.address().port);
-  });
-}).catch(error => {
-  console.log(`Failed to open Beldex Wallet - ${error.message}`);
+const server = Server(app);
+server.listen(app.get('port'), () => {
+  console.log('[Beldex Bridge API] Stared server on', server.address().port);
 });
+
+// beldex.openWallet().then(() => {
+//   const server = Server(app);
+//   server.listen(app.get('port'), () => {
+//     console.log('[Beldex Bridge API] Stared server on', server.address().port);
+//   });
+// }).catch(error => {
+//   console.log(`Failed to open Beldex Wallet - ${error.message}`);
+// });
