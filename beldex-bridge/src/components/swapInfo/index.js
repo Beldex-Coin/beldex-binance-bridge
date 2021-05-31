@@ -209,7 +209,11 @@ class SwapInfo extends PureComponent {
             onClick={onRefresh}
           />
         </Grid>
-        <Link href="BBDXBridgeTOS.html" target="_blank" style={{ textAlign: 'center', margin: '10px auto 0', display: 'inherit', fontSize: '14px' }}>Terms of Service</Link>
+        {/* <Link href="BBDXBridgeTOS.html" target="_blank" style={{ textAlign: 'center', margin: '10px auto 0', display: 'inherit', fontSize: '14px' }}>Terms of Service</Link> */}
+
+        <Typography className={classes.instructions}>
+          wBDX Contract address :<br/><b>0x90bbdDbF3223363898065b9C736e2B86C655762b </b>
+        </Typography>
       </div>
     );
   }

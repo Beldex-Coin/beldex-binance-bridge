@@ -283,7 +283,7 @@ export default class Database {
   * @param {string} transactionHash The transaction hash to set on the swaps.
   */
   async updateSwapsTransferTransactionHash(swapUuids, transactionHash) {
-    const query = 'update swaps set transfer_transaction_hash = $1, processed = now() where uuid in ($2:csv)';
+    const query = 'update swaps set transfer_transaction_hash = $1, processed = now() where uuid = $2';
     return this.postgres.none(query, [transactionHash, swapUuids]);
   }
 }
