@@ -15,7 +15,7 @@ export default new clients.beldexClient({
   hostname: process.env.BELDEX_WALLETRPC_HOST,
   port:process.env.BELDEX_WALLETRPC_PORT,
   username:process.env.BELDEX_WALLETRPC_USERNAME,
-  password:process.env.BELDEX_WALLETRPC_PASSWORD,
+  password:process.env.BELDEX_WALLETRPC_PASSWORD
 });
 
 

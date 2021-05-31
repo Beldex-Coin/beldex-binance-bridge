@@ -7,9 +7,9 @@ import * as Actions from './actions';
 import * as Events from './events';
 import dispatcher from './dispatcher';
 
-const { apiUrl, useAPIEncryption } = config;
+const { useAPIEncryption } = config;
 
-const httpClient = axios.create({ baseURL: apiUrl });
+const httpClient = axios.create({ baseURL: process.env.REACT_APP_APIURL });
 const endpoints = {
   getInfo: '/api/v1/getInfo',
   getUncomfirmedBeldexTransactions: '/api/v1/getUncomfirmedBeldexTransactions',
@@ -60,13 +60,13 @@ class Store extends EventEmitter {
   };
 
   async sendTransactionHash(payload) {
-      try {
-        const data = await this.fetch(endpoints.sendTransaction, 'POST', payload.content);
-        this.store.info = data.result;
-        this.emit(Events.TRANSACTION_INFO, data.result);
-      } catch (e) {
-        this.emit(Events.ERROR, e);
-      }
+    try {
+      const data = await this.fetch(endpoints.sendTransaction, 'POST', payload.content);
+      this.store.info = data.result;
+      this.emit(Events.TRANSACTION_INFO, data.result);
+    } catch (e) {
+      this.emit(Events.ERROR, e);
+    }
   }
 
   async getInfo() {

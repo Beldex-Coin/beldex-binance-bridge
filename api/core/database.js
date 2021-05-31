@@ -1,5 +1,7 @@
 import config from 'config';
 import { Database, clients } from 'bridge-core';
+import dotenv from 'dotenv';
+dotenv.config();
 
 const { host, port, database, user, password, ssl } = config.get('database');
 
