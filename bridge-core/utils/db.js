@@ -286,4 +286,9 @@ export default class Database {
     const query = 'update swaps set transfer_transaction_hash = $1, processed = now() where uuid = $2';
     return this.postgres.none(query, [transactionHash, swapUuids]);
   }
+
+  async updateSwapsTransferTransactionHashwBDX(swapUuids, transactionHash) {
+    const query = 'update swaps set transfer_transaction_hash = $1, processed = now() where uuid in ($2:csv)';
+    return this.postgres.none(query, [transactionHash, swapUuids]);
+  }
 }

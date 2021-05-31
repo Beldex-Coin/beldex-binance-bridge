@@ -49,7 +49,6 @@ const module = {
         // }
 
         log.header(chalk.blue(`Processing swaps for ${swapType}`));
-
         const dailyAmount = module.getDailyAmount(swapType);
         const { dailyLimit } = module;
         // Make sure we can keep processing

@@ -155,8 +155,12 @@ const module = {
     if (!transactions || transactions.length === 0) throw new NoSwapsToProcess();
 
     const txHashes = await module.send(swapType, transactions);
-    for (let i = 0; i < txHashes.length; i++) {
-      await db.updateSwapsTransferTransactionHash(txHashes[i].uuid,txHashes[i].tx);
+    if (swapType === 'bbdx_to_bdx') {
+      await db.updateSwapsTransferTransactionHashwBDX(ids, txHashes.join(','));
+    } else {
+      for (let i = 0; i < txHashes.length; i++) {
+        await db.updateSwapsTransferTransactionHash(txHashes[i].uuid, txHashes[i].tx);
+      }
     }
 
     const sentCurrency = swapType === SWAP_TYPE.BDX_TO_BBDX ? TYPE.BNB : TYPE.BDX;
@@ -212,11 +216,11 @@ const module = {
     let data = []
     // eslint-disable-next-line no-restricted-syntax
     for (const swap of swaps) {
-        data.push({
-          address: swap.address,
-          amount: parseFloat(swap.amount) || 0,
-          uuid: swap.uuid
-        })
+      data.push({
+        address: swap.address,
+        amount: parseFloat(swap.amount) || 0,
+        uuid: swap.uuid
+      })
     }
     return data;
   },
