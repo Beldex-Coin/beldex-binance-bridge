@@ -18,6 +18,9 @@ export const beldex = new beldexClient({
   port: process.env.BELDEX_WALLETRPC_PORT,
   username: process.env.BELDEX_WALLETRPC_USERNAME,
   password: process.env.BELDEX_WALLETRPC_PASSWORD,
+}, {
+  filename: process.env.BELDEX_WALLET_FILENAME,
+  password: process.env.BELDEX_WALLET_PASSWORD,
 });
 
 export const bnb = new BinanceClient({
