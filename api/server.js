@@ -1,12 +1,14 @@
 import express from 'express';
 import { Server } from 'http';
 import compression from 'compression';
+import dotenv from 'dotenv';
 import morgan from 'morgan';
 import helmet from 'helmet';
 import https from 'https';
 import config from 'config';
 import routes from './routes';
 import { beldex } from './core';
+dotenv.config();
 
 const app = express();
 app.all('/*', (req, res, next) => {
@@ -108,11 +110,16 @@ app.use((err, req, res, next) => {
 https.globalAgent.maxSockets = 50;
 app.set('port', config.get('serverPort'));
 
-beldex.openWallet().then(() => {
-  const server = Server(app);
-  server.listen(app.get('port'), () => {
-    console.log('[Beldex Bridge API] Stared server on', server.address().port);
-  });
-}).catch(error => {
-  console.log(`Failed to open Beldex Wallet - ${error.message}`);
+const server = Server(app);
+server.listen(app.get('port'), () => {
+  console.log('[Beldex Bridge API] Stared server on', server.address().port);
 });
+
+// beldex.openWallet().then(() => {
+//   const server = Server(app);
+//   server.listen(app.get('port'), () => {
+//     console.log('[Beldex Bridge API] Stared server on', server.address().port);
+//   });
+// }).catch(error => {
+//   console.log(`Failed to open Beldex Wallet - ${error.message}`);
+// });

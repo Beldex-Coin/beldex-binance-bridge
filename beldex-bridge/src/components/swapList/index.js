@@ -75,7 +75,7 @@ class SwapList extends Component {
     const { classes } = this.props;
 
     const isPending = transferTxHashes && transferTxHashes.length === 0;
-    const depositCurrency = type === SWAP_TYPE.BDX_TO_BBDX ? 'BDX' : 'B-BDX';
+    const depositCurrency = type === SWAP_TYPE.BDX_TO_BBDX ? 'BDX' : 'wBDX';
     const displayAmount = amount / 1e9;
 
     let status = 'Completed';

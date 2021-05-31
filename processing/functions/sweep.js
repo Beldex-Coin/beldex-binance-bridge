@@ -78,7 +78,6 @@ const module = {
     const memos = newTransactions.map(t => t.memo.trim());
     const clientAccounts = await db.getClientAccountsWithMemos(memos);
     if (clientAccounts.length === 0) {
-      console.log('tx memos', memos);
       log.error(chalk.red('Failed to insert new transactions. Could not find any client accounts'));
       return;
     }

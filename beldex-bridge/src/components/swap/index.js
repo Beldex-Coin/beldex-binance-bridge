@@ -11,7 +11,7 @@ import styles from './styles';
 import matrixAbi from '../../matrixAbi';
 const currencySymbols = {
   [TYPE.BDX]: 'BDX',
-  [TYPE.BNB]: 'B-BDX'
+  [TYPE.BNB]: 'wBDX'
 };
 class Swap extends Component {
   state = {
@@ -158,7 +158,6 @@ class Swap extends Component {
           });
         }
       })
-      // .on('receipt', (receipt) => console.log('-receipt-',receipt))
       .on('error', (error) => {
         if (error?.code === 4001) {
           this.props.showMessage('User denied transaction signature.', 'error');

@@ -43,16 +43,15 @@ const module = {
         // Get balances and check
         const currentBalance = await balance.getBalances(swapType);
         balance.printBalance(swapType, currentBalance, false);
-        if (currentBalance.transaction !== currentBalance.swap) {
-          log.error(chalk.red('Balances do not match. Aborting!'));
-          return Promise.resolve();
-        }
+        // if (currentBalance.transaction !== currentBalance.swap) {
+        //   log.error(chalk.red('Balances do not match. Aborting!'));
+        //   return Promise.resolve();
+        // }
 
         log.header(chalk.blue(`Processing swaps for ${swapType}`));
 
         const dailyAmount = module.getDailyAmount(swapType);
         const { dailyLimit } = module;
-
         // Make sure we can keep processing
         if (dailyAmount >= dailyLimit) {
           log.info(chalk.yellow('Daily limit hit!'));
@@ -65,7 +64,6 @@ const module = {
         // Process swaps
         try {
           const info = await swaps.processAutoSwaps(dailyAmount, dailyLimit, swapType);
-
           // Save processed amount
           const newDailyAmount = new Decimal(dailyAmount).add(info.totalUSD || 0).toNumber();
           module.saveDailyAmount(swapType, newDailyAmount);

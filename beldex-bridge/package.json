@@ -1,7 +1,7 @@
 {
   "name": "beldex-bridge",
   "version": "1.0.0",
-  "description": "Bridge Frontend for converting BDX to B-BDX",
+  "description": "Bridge Frontend for converting BDX to wBDX",
   "private": true,
   "dependencies": {
     "@material-ui/core": "^4.11.4",

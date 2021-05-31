@@ -4,6 +4,9 @@ import { Command } from 'commander';
 import { SWAP_TYPE } from 'bridge-core';
 import { swaps, sweep, balance, auto } from './functions';
 import log from './utils/log';
+import dotenv from 'dotenv';
+dotenv.config();
+
 
 const program = new Command();
 
@@ -20,8 +23,8 @@ async function run(options) {
   if (options.swap) {
     log.header(chalk.bold('Swap'));
     await swaps.processAllSwaps();
-    
-   // Set daily balance to 0
+
+    // Set daily balance to 0
     Object.values(SWAP_TYPE).forEach(t => auto.saveDailyAmount(t, 0));
   } else if (options.sweep) {
     log.header(chalk.bold('=========== Sweep ==========='));

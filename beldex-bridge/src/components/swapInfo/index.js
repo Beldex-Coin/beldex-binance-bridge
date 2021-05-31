@@ -90,20 +90,20 @@ class SwapInfo extends PureComponent {
         <Typography className={classes.warningText} style={{ color: '#000' }}>
           PLEASE READ CAREFULLY
         </Typography>
-        <Typography id='memo' className={classes.memo}>
+        {/* <Typography id='memo' className={classes.memo}>
           {memo}
-        </Typography>
-        <Tooltip title="Copy Memo" placement="right">
+        </Typography> */}
+        {/* <Tooltip title="Copy Memo" placement="right">
           <IconButton onClick={() => this.onCopy('memo')} aria-label="Copy Memo">
             <CopyIcon style={{ fontSize: '20px' }} />
           </IconButton>
-        </Tooltip>
-        <Typography className={classes.instructionBold}>
+        </Tooltip> */}
+        {/* <Typography className={classes.instructionBold}>
           When creating the transaction, please paste the string above into the <b>Memo</b> field. <br />
           Ensure that this is the only thing that you put in the field.
-        </Typography>
+        </Typography> */}
         <Typography className={`blinkAnim ${clsx(classes.warningText, classes.red)}`}>
-          If done incorrectly then you will not receive <b>BDX</b> into your designated address.
+          Please send <b>wBDX</b> only to the address mentioned above, the amount sent to any other address will be lost.
           <img alt="" src={important} className="blinkImg" />
         </Typography>
       </Box>
@@ -174,7 +174,7 @@ class SwapInfo extends PureComponent {
     const { classes, swapType, swapInfo } = this.props;
     if (!swapInfo || !swapInfo.swaps || swapInfo.swaps.length === 0) return null;
 
-    const receivingCurrency = swapType === SWAP_TYPE.BDX_TO_BBDX ? 'B-BDX' : 'BDX';
+    const receivingCurrency = swapType === SWAP_TYPE.BDX_TO_BBDX ? 'wBDX' : 'BDX';
 
     const pendingSwaps = swapInfo.swaps.filter(s => s.transferTxHashes && s.transferTxHashes.length === 0);
     const total = pendingSwaps.reduce((total, swap) => total + parseFloat(swap.amount), 0);

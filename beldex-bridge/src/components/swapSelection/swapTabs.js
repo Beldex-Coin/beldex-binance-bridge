@@ -31,13 +31,12 @@ export default function SwapTabs(props) {
 
   function handleChange(e, newValue) {
     setValue(newValue);
-    console.log(newValue)
     let value = '';
-    if(newValue === 0){
-        value = "bdx_to_bbdx"
+    if (newValue === 0) {
+      value = "bdx_to_bbdx"
     }
-    if(newValue === 1){
-        value = 'bbdx_to_bdx'
+    if (newValue === 1) {
+      value = 'bbdx_to_bdx'
     }
     props.handleChange(value);
   }
