@@ -290,7 +290,7 @@ const module = {
       'gasPrice': await Web3js.utils.toHex(20 * 1e9),
       'gasLimit': await Web3js.utils.toHex(210000),
       'to': contractAddr,
-      'value': 0x38,
+      'value': 0x0,
       'data': contract.methods.transfer(toAddress + '', amountChangeFormat).encodeABI(),
       'nonce': nonce
     };
