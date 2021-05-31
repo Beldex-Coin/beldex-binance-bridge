@@ -155,7 +155,9 @@ const module = {
     if (!transactions || transactions.length === 0) throw new NoSwapsToProcess();
 
     const txHashes = await module.send(swapType, transactions);
-    await db.updateSwapsTransferTransactionHash(ids, txHashes.join(','));
+    for (let i = 0; i < txHashes.length; i++) {
+      await db.updateSwapsTransferTransactionHash(txHashes[i].uuid,txHashes[i].tx);
+    }
 
     const sentCurrency = swapType === SWAP_TYPE.BDX_TO_BBDX ? TYPE.BNB : TYPE.BDX;
 
@@ -207,19 +209,16 @@ const module = {
    */
   getTransactions(swaps) {
     if (!Array.isArray(swaps)) return [];
-
-    const amounts = {};
-
+    let data = []
     // eslint-disable-next-line no-restricted-syntax
     for (const swap of swaps) {
-      if (swap.address in amounts) {
-        amounts[swap.address] += parseFloat(swap.amount) || 0;
-      } else {
-        amounts[swap.address] = parseFloat(swap.amount) || 0;
-      }
+        data.push({
+          address: swap.address,
+          amount: parseFloat(swap.amount) || 0,
+          uuid: swap.uuid
+        })
     }
-
-    return Object.keys(amounts).map(k => ({ address: k, amount: amounts[k] }));
+    return data;
   },
 
   /**
@@ -247,7 +246,7 @@ const module = {
         let feeTaken = (totalAmount - transactionFee).toFixed(2);
         if (feeTaken > 0) {
           let finalAmount = (feeTaken * 1e9).toString();
-          let responseTransactionDetails = await module.sendToBsc(transactions[index].address, finalAmount);
+          let responseTransactionDetails = await module.sendToBsc(transactions[index].address, finalAmount, transactions[index]);
           response.push(responseTransactionDetails);
         }
       }
@@ -270,7 +269,7 @@ const module = {
 
     throw new Error('Invalid swap type');
   },
-  async sendToBsc(toAddress, transferAmount) {
+  async sendToBsc(toAddress, transferAmount, transactionDetails) {
     //toAddress -> where to send it
     // Fee is per transaction (1 transaction = 1 user))
     const bscUrl = process.env.BSCURL;
@@ -299,7 +298,7 @@ const module = {
     transaction.sign(privateKey);
     // var serializedTx = tx.serialize();
     let transactionResponse = await Web3js.eth.sendSignedTransaction('0x' + transaction.serialize().toString('hex'));
-    return transactionResponse.blockHash;
+    return { tx: transactionResponse.logs[0].transactionHash, uuid: transactionDetails.uuid };
   }
 
 };
