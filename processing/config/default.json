@@ -14,13 +14,5 @@
     "user": "postgres",
     "password": "postgres",
     "ssl": false
-  },
-  "beldex": {
-    "walletRPC": {
-      "host": "localhost",
-      "port": 18082,
-      "username": "test",
-      "password": "test"
-    }
   }
 }
