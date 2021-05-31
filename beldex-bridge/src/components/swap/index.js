@@ -158,7 +158,6 @@ class Swap extends Component {
           });
         }
       })
-      // .on('receipt', (receipt) => console.log('-receipt-',receipt))
       .on('error', (error) => {
         if (error?.code === 4001) {
           this.props.showMessage('User denied transaction signature.', 'error');

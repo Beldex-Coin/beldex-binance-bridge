@@ -8,7 +8,7 @@ const getInfo = params => wrapRouterFunction(infoRoutes.getInfo, params);
 describe('Info API', () => {
   describe('#getInfo', () => {
     it('should return the correct fees', async () => {
-      const beldexFee = config.get('beldex.withdrawalFee');
+      const beldexFee = process.env.WITHDRAWAL_FEE;
       const { status, success, result } = await getInfo();
       assert.equal(status, 200);
       assert.isTrue(success);

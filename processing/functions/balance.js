@@ -69,7 +69,6 @@ const module = {
  */
   async getBalanceFromIncomingTransactions(accountType, from, to) {
     const clientAccounts = await db.getClientAccounts(accountType);
-
     let filtered = [];
 
     if (accountType === TYPE.BDX) {

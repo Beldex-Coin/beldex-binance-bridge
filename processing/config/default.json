@@ -1,6 +1,6 @@
 {
-  "dailyLimit": 100,
-  "autoRunInterval": 10,
+  "dailyLimit": 100000,
+  "autoRunInterval": 1,
   "binance": {
     "api": "https://testnet-dex.binance.org/",
     "network": "testnet",
@@ -14,20 +14,5 @@
     "user": "postgres",
     "password": "postgres",
     "ssl": false
-  },
-  "beldex": {
-    "walletRPC": {
-      "host": "localhost",
-      "port": 18082,
-      "username": "test",
-      "password": "test"
-    },
-    "withdrawalFee": 5
-  },
-  "bsc": {
-    "contractAddr": "Enter your contract address",
-    "url": "https://data-seed-prebsc-1-s1.binance.org:8545/",
-    "fromAddress": "Enther your from address",
-    "privateKey": "Enter your private key"
   }
 }

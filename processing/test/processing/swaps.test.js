@@ -180,7 +180,7 @@ describe('Processing Swaps', () => {
     });
 
     it('should deduct the widthdrawal fee from each transaction for Beldex', async () => {
-      const fee = config.get('beldex.withdrawalFee');
+      const fee = process.env.WITHDRAWAL_FEE;
 
       await functions.send(SWAP_TYPE.BBDX_TO_BDX, transactions);
 
