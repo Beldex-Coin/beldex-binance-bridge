@@ -88,7 +88,6 @@ const module = {
 
     // Get our pending swaps and their transactions
     const pendingSwaps = await db.getPendingSwaps(swapType);
-
     // Sort by lowest first
     const pendingTransactions = module.getTransactions(pendingSwaps).sort((a, b) => a.amount - b.amount);
 
@@ -115,12 +114,10 @@ const module = {
       currentAmount = currentAmount.add(usdAmount);
       total = total.add(usdAmount);
     }
-
     // We need to map transaction back to swaps
-    const swaps = transactions.flatMap(t => pendingSwaps.filter(s => s.address === t.address));
-
+    // const swaps = transactions.flatMap(t => pendingSwaps.filter(s => s.address === t.address));
     // Process these swaps
-    const info = await module.processSwaps(swaps, swapType);
+    const info = await module.processSwaps(pendingSwaps, swapType);
 
     // Return the total value in usd
     return {
@@ -193,7 +190,6 @@ const module = {
 
     // If it's BBDX_TO_BDX we need to sum up the swaps values and check that they're greater than the bdx fee
     const transactions = module.getTransactions(swaps);
-
     // A transaction is invalid if the amount - fee is negative
     const invalidTransactions = transactions.filter(({ amount }) => {
       const fee = module.fees[TYPE.BDX] || 0;
