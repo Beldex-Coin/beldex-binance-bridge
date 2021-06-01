@@ -194,7 +194,6 @@ export function finalizeSwap(req, res, next) {
       // Add the new transactions to our processing cache
       currentHashes = newTransactions.map(tx => tx.hash);
       txCache[uuid].push(...currentHashes);
-
       // Give back the new swaps to the user
       const newSwaps = await db.insertSwaps(newTransactions, clientAccount);
       res.status(205);

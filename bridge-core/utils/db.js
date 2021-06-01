@@ -258,22 +258,27 @@ export default class Database {
   * @returns {Promise<{ uuid, type, amount, deposit_transaction_hash }>} The inserted swap or `null` if we failed.
   */
   async insertSwap(transaction, clientAccount) {
-    if (!transaction || !clientAccount) return null;
+    const queryData = `select * from swaps where deposit_transaction_hash = '${transaction.hash}' and amount = '${transaction.amount}' ;`;
+    let response = await this.postgres.oneOrNone(queryData);
+    if (!response) {
+      if (!transaction || !clientAccount) return null;
 
-    const { uuid: clientAccountUuid, addressType } = clientAccount;
+      const { uuid: clientAccountUuid, addressType } = clientAccount;
+      // Since we only have 2 currencies to swap between, we can simple check the address type.
+      // If you want to extend to more than 2 currencies then you need to do this differently.
 
-    // Since we only have 2 currencies to swap between, we can simple check the address type.
-    // If you want to extend to more than 2 currencies then you need to do this differently.
+      // eslint-disable-next-line max-len
+      // If the client address is BDX then it must mean that we generated a BNB address for them to deposit into and thus they want to swap BNB for BDX.
+      // Same logic applies the other way
+      const type = addressType === TYPE.BDX ? SWAP_TYPE.BBDX_TO_BDX : SWAP_TYPE.BDX_TO_BBDX;
 
-    // eslint-disable-next-line max-len
-    // If the client address is BDX then it must mean that we generated a BNB address for them to deposit into and thus they want to swap BNB for BDX.
-    // Same logic applies the other way
-    const type = addressType === TYPE.BDX ? SWAP_TYPE.BBDX_TO_BDX : SWAP_TYPE.BDX_TO_BBDX;
+      // eslint-disable-next-line max-len
+      // const query = 'insert into swaps(uuid, type, amount, client_account_uuid, deposit_transaction_hash, deposit_transaction_created, created) values (md5(random()::text || clock_timestamp()::text)::uuid, $1, $2, $3, $4, to_timestamp($5), now()) returning uuid, type, amount, deposit_transaction_hash;';
+      const query = `insert into swaps(uuid, type, amount, client_account_uuid, deposit_transaction_hash, deposit_transaction_created, created) values (md5(random()::text || clock_timestamp()::text)::uuid, '${type}', '${transaction.amount}','${clientAccountUuid}', '${transaction.hash}', to_timestamp('${transaction.timestamp}'), now()) returning uuid, type, amount, deposit_transaction_hash;`;
+      // Postgres stores timestamps in seconds, so we have to make sure the transaction timestamps are also in seconds
+      return this.postgres.oneOrNone(query);
+    }
 
-    // eslint-disable-next-line max-len
-    const query = 'insert into swaps(uuid, type, amount, client_account_uuid, deposit_transaction_hash, deposit_transaction_created, created) values (md5(random()::text || clock_timestamp()::text)::uuid, $1, $2, $3, $4, to_timestamp($5), now()) returning uuid, type, amount, deposit_transaction_hash;';
-    // Postgres stores timestamps in seconds, so we have to make sure the transaction timestamps are also in seconds
-    return this.postgres.oneOrNone(query, [type, transaction.amount, clientAccountUuid, transaction.hash, transaction.timestamp]);
   }
 
   /**
