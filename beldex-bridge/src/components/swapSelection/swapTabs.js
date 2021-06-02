@@ -29,16 +29,24 @@ export default function SwapTabs(props) {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
 
-  function handleChange(e, newValue) {
+
+  async function handleChange(e, newValue) {
     setValue(newValue);
     let value = '';
     if (newValue === 0) {
       value = "bdx_to_bbdx"
+      props.handleChange(value);
     }
     if (newValue === 1) {
       value = 'bbdx_to_bdx'
+      props.handleChange(value);
+      if (window.innerWidth < 720) {
+        const account = await window.ethereum.request({ method: 'eth_requestAccounts' });
+        if (account) props.connectToMetaMask();
+      } else {
+      }
     }
-    props.handleChange(value);
+
   }
 
   return (

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import Avatar from '@material-ui/core/Avatar';
 import List from '@material-ui/core/List';
@@ -11,11 +11,15 @@ import binance  from './binance.png';
 import metamask  from './metamask.png';
 import styles from './styles';
 
-const wallets = [{text:'Binance', img: binance}, {text:'Metamask', img: metamask}];
+// let wallets = [{text:'Binance', img: binance}, {text:'Metamask', img: metamask}];
+
 
 
 function Popup(props) {
     const { onClose, selectedValue, open, classes } = props;
+
+    const [wallets, setWallet] = useState([{text:'Binance', img: binance}, {text:'Metamask', img: metamask}]);
+
   
     const handleClose = () => {
       onClose(selectedValue);
@@ -24,6 +28,17 @@ function Popup(props) {
     const handleListItemClick = (value) => {
       onClose(value);
     };
+    const handleResize = () => {
+      if (window.innerWidth < 720) {
+          setWallet([{text:'Trust Wallet', img: binance}, {text:'Metamask', img: metamask}])
+      } else {
+        setWallet([{text:'Binance', img: binance}, {text:'Metamask', img: metamask}])
+      }
+    }
+    // create an event listener
+    useEffect(() => {
+      window.addEventListener("resize", handleResize)
+    }, []);
   
     return (
       <Dialog onClose={handleClose} aria-labelledby="simple-dialog-title" open={open}>

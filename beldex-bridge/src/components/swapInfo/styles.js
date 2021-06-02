@@ -73,6 +73,17 @@ const styles = theme => ({
     borderStyle: 'solid',
     padding: theme.spacing(1),
     borderRadius: '4px'
+  },
+  walletConnSucc:{
+    color: "#35af3b !important",
+    textAlign: "center",
+    marginBottom: "10px"
+  },
+  walletConnErr:{
+    color: "red !important",
+    textAlign: "center",
+    fontSize:'14px',
+    marginBottom: "10px"
   }
 });
 

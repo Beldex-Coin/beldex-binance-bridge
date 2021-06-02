@@ -123,7 +123,7 @@ class SwapSelection extends Component {
       <Grid item xs={12} className={classes.root}>
 
         <Grid item xs={12} className={classes.swapTabs}>
-          <Swaptabs handleChange={(val) => this.onSwapTypeChanged(val)} />
+          <Swaptabs handleChange={(val) => this.onSwapTypeChanged(val)} connectToMetaMask={()=>this.props.connectToMetaMask()}/>
         </Grid>
 
         <Grid item xs={12}>

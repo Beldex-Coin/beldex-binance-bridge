@@ -27,6 +27,8 @@ class Swap extends Component {
     swapInfo: {},
     swaps: [],
     unconfirmed: [],
+    walletConnBin : false,
+    walletConnMeta : false
   };
   componentWillMount() {
     this.onInfoUpdated();
@@ -93,10 +95,13 @@ class Swap extends Component {
     this.web3Obj = new Web3(window.ethereum);
     try {
       window.ethereum.enable();
-      if (this.web3Obj) {
+      if (this.web3Obj) {        
         let address = setInterval(() => {
-          this.web3Obj.eth.getCoinbase((err, res) => {
+          this.web3Obj.eth.getCoinbase((err, res) => {         
             if (res) {
+              this.setState({
+                walletConnMeta : true
+              })
               this.contract = new this.web3Obj.eth.Contract(matrixAbi, '0x90bbdDbF3223363898065b9C736e2B86C655762b');
               clearInterval(address);
               this.setState({ walletAddress: res });
@@ -117,6 +122,9 @@ class Swap extends Component {
     try {
       await window.BinanceChain.enable();
       if (this.web3Obj) {
+        this.setState({
+          walletConnBin : true
+        })
         const accounts = await window.BinanceChain.request({ method: 'eth_accounts' });
         const address = accounts[0] || null;
         this.contract = new this.web3Obj.eth.Contract(matrixAbi, '0x90bbdDbF3223363898065b9C736e2B86C655762b');
@@ -295,7 +303,7 @@ class Swap extends Component {
     const { walletAddress } = this.state;
     this.setState({ swapType }, async () => {
       if (swapType === SWAP_TYPE.BBDX_TO_BDX) {
-        if (walletAddress === '') {
+        if (walletAddress === '' && window.innerWidth > 720) {
           // this.connectToMetaMask();
           this.setState({ showPopup: !this.state.showPopup })
         }
@@ -330,6 +338,7 @@ class Swap extends Component {
             setImmediate(() => this.onNext());
           }}
           loading={loading}
+          connectToMetaMask={()=>this.connectToMetaMask()}
         />
         <Popup selectedValue={selectedWallet} open={showPopup} onClose={this.handlePopupClose} />
       </Grid>
@@ -337,7 +346,7 @@ class Swap extends Component {
   }
   renderInfo = () => {
     const { classes } = this.props;
-    const { loading, swapType, swapInfo, info } = this.state;
+    const { loading, swapType, swapInfo, info, walletConnMeta, walletConnBin, selectedWallet } = this.state;
     return (
       <React.Fragment>
         <Grid item xs={12} md={6} className={classes.item}>
@@ -347,7 +356,9 @@ class Swap extends Component {
             info={info}
             onRefresh={this.onRefresh}
             onBack={this.resetState}
+            connectToMetaMask={()=>this.connectToMetaMask()}
             loading={loading}
+            walletConnected={selectedWallet === 'Binance' ? walletConnBin : walletConnMeta}
           />
         </Grid>
         {this.renderTransactions()}
