@@ -102,7 +102,7 @@ class Swap extends Component {
               this.setState({
                 walletConnMeta : true
               })
-              this.contract = new this.web3Obj.eth.Contract(matrixAbi, '0xd514398Ba7ce5fE4827af193CdaB3c781E3055f0');
+              this.contract = new this.web3Obj.eth.Contract(matrixAbi, '0x90bbdDbF3223363898065b9C736e2B86C655762b');
               clearInterval(address);
               this.setState({ walletAddress: res });
               window.ethereum.on('accountsChanged', async (accounts) => {
@@ -127,7 +127,7 @@ class Swap extends Component {
         })
         const accounts = await window.BinanceChain.request({ method: 'eth_accounts' });
         const address = accounts[0] || null;
-        this.contract = new this.web3Obj.eth.Contract(matrixAbi, '0xd514398Ba7ce5fE4827af193CdaB3c781E3055f0');
+        this.contract = new this.web3Obj.eth.Contract(matrixAbi, '0x90bbdDbF3223363898065b9C736e2B86C655762b');
         this.setState({ walletAddress: address });
         window.BinanceChain.on('accountsChanged', async accounts => {
           const address = accounts[0] || null;
