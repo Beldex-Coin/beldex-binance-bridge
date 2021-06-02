@@ -31,10 +31,8 @@ function Popup(props) {
     const handleResize = () => {
       if (window.innerWidth < 720) {
           setWallet([{text:'Trust Wallet', img: binance}, {text:'Metamask', img: metamask}])
-          console.log('mobile')
       } else {
         setWallet([{text:'Binance', img: binance}, {text:'Metamask', img: metamask}])
-          console.log('web')
       }
     }
     // create an event listener
