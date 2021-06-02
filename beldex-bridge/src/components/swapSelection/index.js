@@ -118,7 +118,7 @@ class SwapSelection extends Component {
     const inputLabel = addressType === TYPE.BDX ? 'BDX Address' : 'BNB Address';
     const inputPlaceholder = addressType === TYPE.BDX ? 'bdx...' : 'wbdx...';
 
-    const url = walletCreationUrl[addressType];
+    const url = walletCreationUrl['bnb'];
     return (
       <Grid item xs={12} className={classes.root}>
 
