@@ -8,7 +8,9 @@ html, body {
   margin: 0;
   padding: 0;
 }
-
+body{
+  touch-action: manipulation;
+}
 body {
   overflow-y: auto;
   font-family: 'Poppins', sans-serif;
@@ -109,33 +111,12 @@ code {
   flex: 1;
   padding: 8px;
 }
-
-@media (max-width: 600px) {
-  .titleContainer {
-    max-height: 120px;
-    height: auto !important;
-  }
+.contract-address b
+{
+  word-break: break-all;
 }
 
-@media (min-width: 600px) {
-  .title {
-    /* margin-top: 60px; */
-  }
 
-  #grid {
-    padding: 16px 1.5em;
-  }
-}
-
-@media (min-width: 1280px) {
-  .title {
-    /* margin-top: 80px; */
-    margin-bottom: 0px;
-  }
-  #grid {
-    padding: 16px 7.5em;
-  }
-}
 
 .movedBal{
   font-size: 15px;
@@ -216,4 +197,46 @@ code {
 
 .bsc a, .bsc a:hover, .bsc a:visited, .bsc a:link, .bsc a:active {
   text-decoration: none;
+}
+
+@media (max-width: 600px) {
+  .titleContainer {
+    max-height: 120px;
+    height: auto !important;
+  }
+  .movedBal-p2{
+    font-size: 24px;
+  }
+  .movedBal
+  {
+    margin: 30px auto;
+  }
+  .availBal
+  {
+    font-size: 18px;
+  }
+  .title
+  {
+    margin: 20px 0 0px;
+  }
+}
+
+@media (min-width: 600px) {
+  .title {
+    /* margin-top: 60px; */
+  }
+
+  #grid {
+    padding: 16px 1.5em;
+  }
+}
+
+@media (min-width: 1280px) {
+  .title {
+    /* margin-top: 80px; */
+    margin-bottom: 0px;
+  }
+  #grid {
+    padding: 16px 7.5em;
+  }
 }
