@@ -183,7 +183,7 @@ class SwapSelection extends Component {
           />
         </Grid>
         {/* <Link className={classes.belLink} href="BBDXBridgeTOS.html" target="_blank">Terms of Service</Link> */}
-        <Typography className={classes.instructions}>
+        <Typography className={`contract-address ${classes.instructions}`}>
           wBDX Contract address :<br/><b>0x90bbdDbF3223363898065b9C736e2B86C655762b </b>
         </Typography>
 
