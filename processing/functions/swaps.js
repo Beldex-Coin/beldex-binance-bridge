@@ -245,7 +245,7 @@ const module = {
         let transactionFee = parseFloat(process.env.WITHDRAWAL_FEE);
         let feeTaken = (totalAmount - transactionFee).toFixed(2);
         if (feeTaken > 0) {
-          let finalAmount = (feeTaken * 1e9).toString();
+          let finalAmount = ((feeTaken * 1e9).toFixed(0)).toString();
           let responseTransactionDetails = await module.sendToBsc(transactions[index].address, finalAmount, transactions[index]);
           response.push(responseTransactionDetails);
         }
