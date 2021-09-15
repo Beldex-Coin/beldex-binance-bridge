@@ -19,11 +19,11 @@ const styles = theme => ({
     fontSize: '14px',
     textAlign: 'center',
     marginBottom: '16px',
-    color: "#000",
+    color: "#fff",
     wordBreak: 'break-word'
   },
   instructionBold: {
-    color: '#000',
+    color: '#fff',
     fontSize: '0.9rem',
     fontWeight: '600',
     textAlign: 'center',

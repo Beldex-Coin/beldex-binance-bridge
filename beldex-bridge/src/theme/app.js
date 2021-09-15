@@ -55,7 +55,7 @@ const theme =  {
         color: "#fff"
       },
       colorPrimary: {
-        color: '#000',
+        color: '#fff',
         fontSize: '14px',
       },
       body1:
@@ -79,7 +79,10 @@ const theme =  {
     MuiIconButton: {
       root:
       {
-        color: '#000'
+        color: '#fff',
+        background: '#67C22D',
+        borderRadius: '10px',
+        marginTop: '15px'
       }
     },
     MuiTabs: {
