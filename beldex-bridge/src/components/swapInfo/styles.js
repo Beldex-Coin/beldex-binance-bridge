@@ -73,7 +73,11 @@ const styles = theme => ({
     borderColor: "#000",
     borderStyle: 'solid',
     padding: theme.spacing(1),
-    borderRadius: '4px'
+    borderRadius: '4px',
+    border: 'none',
+    background: '#4a4a63',
+    padding: '10px',
+    borderRadius: '10px'
   },
   walletConnSucc:{
     color: "#35af3b !important",
