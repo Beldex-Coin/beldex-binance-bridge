@@ -81,9 +81,17 @@ const theme =  {
       {
         color: '#fff',
         background: '#67C22D',
-        borderRadius: '10px',
-        marginTop: '15px'
+        borderRadius: '8px',
+        marginTop: '15px',
+        display: 'inline-block',
+        marginRight: '8px',
+        padding: '8px'
+      },
+      MuiSvgIcon:
+      {
+        color: '#fff'
       }
+
     },
     MuiTabs: {
       indicator: {
