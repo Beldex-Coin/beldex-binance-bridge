@@ -8,7 +8,7 @@ export default {
   beldexBlack60: '#313131',
   beldexBlack50: '#7E7E7E',
   white: '#fff',
-  black: '#fff',
+  black: '#000',
   gray: '#e1e1e1',
   lightGray: '#fafafa',
   lightBlack: '#6a6a6a',
