@@ -70,7 +70,7 @@ const styles = theme => ({
   },
   greenBorder: {
     borderWidth: 1,
-    borderColor: "#000",
+    borderColor: "transparent",
     borderStyle: 'solid',
     padding: theme.spacing(1),
     borderRadius: '4px',
