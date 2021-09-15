@@ -155,7 +155,7 @@ class SwapInfo extends PureComponent {
         {swapType === SWAP_TYPE.BDX_TO_BBDX && this.renderDepositInstructions()}
         { swapType === SWAP_TYPE.BDX_TO_BBDX && (
           <Typography className={classes.instructions}>
-            <b>Note:</b> You will have to wait for the transaction to be checkpointed before you're added to our processing queue, this usually takes 8 blocks.
+              <b>Note:</b> You will have to wait for the transaction to be checkpointed before you're added to our processing queue, this usually takes 8 blocks.
           </Typography>
         )}
         { swapType === SWAP_TYPE.BBDX_TO_BDX && (
@@ -219,8 +219,8 @@ class SwapInfo extends PureComponent {
           />
         </Grid>
         {/* <Link href="BBDXBridgeTOS.html" target="_blank" style={{ textAlign: 'center', margin: '10px auto 0', display: 'inherit', fontSize: '14px' }}>Terms of Service</Link> */}
-
-        <Typography className={classes.instructions}>
+        
+        <Typography className={classes.instructions} style={{marginTop: '20px'}}>
           wBDX Contract address :<br /><b>0x90bbdDbF3223363898065b9C736e2B86C655762b </b>
         </Typography>
       </div>

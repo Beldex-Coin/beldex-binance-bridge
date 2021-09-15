@@ -5,18 +5,19 @@ const styles = theme => ({
   button: {
     minWidth: '100px',
     fontWeight: 600,
-    border: `1px solid #fff`,
+    border: 'none',
     transition: 'all 0.2s ease-in-out',
     padding: '0.8rem 2.5rem',
     letterSpacing: '0.03em',
     fontSize: '14px',
-    backgroundColor: '#35af3b',
-    color: '#fff',
+    backgroundColor: '#20c128',
+    color: '#000',
     textTransform: 'capitalize',
+    borderRadius: '8px',
     '&:hover': {
-      backgroundColor: '#fff',
-      color: '#000',
-      border: `1px solid #000`,
+      backgroundColor: '#198c1e',
+      color: '#fff',
+      border: 'none'
     }
   },
   secondary: {

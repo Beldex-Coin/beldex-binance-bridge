@@ -170,8 +170,8 @@ class SwapSelection extends Component {
             </>
           }
           <Typography style={{marginTop:'10px'}} className={classes.createAccount}>
-            <Link style={{ color: '#000' }} href={url} target="_blank" rel="noreferrer">
-              view on bscscan            </Link>
+            <Link style={{ color: '#40ce47' }} href={url} target="_blank" rel="noreferrer">
+              View on bscscan            </Link>
           </Typography>
         </Grid>
         <Grid item xs={12} align='right' className={classes.button}>
@@ -183,7 +183,7 @@ class SwapSelection extends Component {
           />
         </Grid>
         {/* <Link className={classes.belLink} href="BBDXBridgeTOS.html" target="_blank">Terms of Service</Link> */}
-        <Typography className={`contract-address ${classes.instructions}`}>
+        <Typography className={`contract-address ${classes.instructions}`}  style={{marginTop: '20px'}}>
           wBDX Contract address :<br/><b>0x90bbdDbF3223363898065b9C736e2B86C655762b </b>
         </Typography>
 

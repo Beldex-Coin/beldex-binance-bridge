@@ -124,6 +124,8 @@ code {
   text-align: center;
   margin: 40px auto;
   border: 1px solid #222;
+  border-radius: 10px;
+  background: #4a4a63;
 }
 .movedBal p
 {
@@ -133,17 +135,18 @@ code {
     margin: 0;
 }
 .movedBal-p2{
-  font-size: 35px;
+    font-size: 35px;
     font-weight: 600;
-    background: #202020;
+    background: #333344;
     width: 100%;
     color: #35af3b !important;
+    border-radius: 0px 0px 10px 10px;
 }
 .availBal
 {
   font-size: 25px;
   font-weight: normal;
-  color: #999;
+  color: #5084f5;
 }
 #grid
 {
