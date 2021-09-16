@@ -5,7 +5,6 @@ const styles = theme => ({
     backgroundColor: '#292a33 !important',
     padding: '1.5rem',
     // boxShadow: "0px 0px 30px rgb(36 36 36)",
-    border: 'none !important',
     color: '#000',
     border: '1px solid #f00',
     position: 'relative',

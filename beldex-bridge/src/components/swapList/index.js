@@ -25,7 +25,7 @@ class SwapList extends Component {
 
     const hashes = hasTransferHashes? transferTxHashes : [txHash];
     const hashItems = hashes.map(hash => {
-      const url = `${baseUrl}/${hash}`;
+      const url = `${baseUrl}${hash}`;
       return (
         <Typography key={hash} className={classes.hash}>
           <Link href={url} target="_blank" rel="noreferrer">
