@@ -7,8 +7,8 @@ export const flexCenter = {
 };
 
 export const section = {
-  borderRadius: '4px',
+  borderRadius: '10px',
   backgroundColor: colors.belColorWhite,
-  padding: '1rem',
-  border: '1px solid #000'
+  padding: '1.5rem',
+  border: 'none'
 };

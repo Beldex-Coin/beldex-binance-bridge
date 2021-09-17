@@ -6,7 +6,9 @@ const styles = theme => ({
   },
   item: {
     padding: theme.spacing(1, 2),
-    borderBottom: '1px solid #d4d4d4'
+    borderBottom: '0px solid #d4d4d4',
+    background: '#4a4a63',
+    borderRadius: '10px'
   },
   pending: {
     color: orange[500]

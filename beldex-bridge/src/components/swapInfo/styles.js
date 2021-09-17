@@ -19,11 +19,11 @@ const styles = theme => ({
     fontSize: '14px',
     textAlign: 'center',
     marginBottom: '16px',
-    color: "#000",
+    color: "#fff",
     wordBreak: 'break-word'
   },
   instructionBold: {
-    color: '#000',
+    color: '#fff',
     fontSize: '0.9rem',
     fontWeight: '600',
     textAlign: 'center',
@@ -70,10 +70,12 @@ const styles = theme => ({
   },
   greenBorder: {
     borderWidth: 1,
-    borderColor: "#000",
+    borderColor: "transparent",
     borderStyle: 'solid',
-    padding: theme.spacing(1),
-    borderRadius: '4px'
+    borderRadius: '4px',
+    border: 'none',
+    background: '#4a4a63',
+    padding: '10px'
   },
   walletConnSucc:{
     color: "#35af3b !important",

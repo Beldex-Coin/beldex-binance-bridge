@@ -7,7 +7,7 @@ export default {
     },
     beldex: {
       walletCreationUrl: 'https://wallet.beldex.io/#!/',
-      txExplorerUrl: 'https://explorer.beldex.io/tx'
+      txExplorerUrl: 'https://explorer.beldex.io/search?value='
     }
   };
   

@@ -14,7 +14,7 @@ import important from './warning.png';
 class SwapInfo extends PureComponent {
   state = {
     showQR: false,
-    qrSize: 128,
+    qrSize: 128
   };
 
   onCopy = (id) => {
@@ -153,12 +153,12 @@ class SwapInfo extends PureComponent {
     return (
       <Box className={classes.instructionContainer}>
         {swapType === SWAP_TYPE.BDX_TO_BBDX && this.renderDepositInstructions()}
-        { swapType === SWAP_TYPE.BDX_TO_BBDX && (
+        {swapType === SWAP_TYPE.BDX_TO_BBDX && (
           <Typography className={classes.instructions}>
             <b>Note:</b> You will have to wait for the transaction to be checkpointed before you're added to our processing queue, this usually takes 8 blocks.
           </Typography>
         )}
-        { swapType === SWAP_TYPE.BBDX_TO_BDX && (
+        {swapType === SWAP_TYPE.BBDX_TO_BDX && (
           <Typography className={classes.instructionBold}>
             There will be a processing fee of {beldexFee} BDX which will be charged.
           </Typography>
@@ -193,7 +193,7 @@ class SwapInfo extends PureComponent {
   }
 
   render() {
-    const { classes, loading, onRefresh, walletConnected,swapType } = this.props;
+    const { classes, loading, onRefresh, walletConnected, swapType, selectedWallet } = this.props;
     return (
       <div className={classes.root}>
         <Grid item xs={12} align='left' className={classes.back}>
@@ -206,8 +206,8 @@ class SwapInfo extends PureComponent {
             wallet not connected. Please connect your wallet.
           </Typography> :
             <Typography className={classes.walletConnSucc}>
-              Wallet Connected
-          </Typography>)}
+             {selectedWallet} Wallet Connected
+            </Typography>)}
         </Grid>
         {this.renderInstructions()}
         <Grid item xs={12} className={classes.button}>
@@ -220,7 +220,7 @@ class SwapInfo extends PureComponent {
         </Grid>
         {/* <Link href="BBDXBridgeTOS.html" target="_blank" style={{ textAlign: 'center', margin: '10px auto 0', display: 'inherit', fontSize: '14px' }}>Terms of Service</Link> */}
 
-        <Typography className={classes.instructions}>
+        <Typography className={classes.instructions} style={{ marginTop: '20px' }}>
           wBDX Contract address :<br /><b>0x90bbdDbF3223363898065b9C736e2B86C655762b </b>
         </Typography>
       </div>

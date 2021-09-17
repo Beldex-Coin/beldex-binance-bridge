@@ -18,15 +18,20 @@ const theme =  {
     MuiInputBase: {
       root: {
         fontSize: '13px',
-        background: colors.belColorWhite,
-        border: '1px solid #d4d4d4',
-        color: '#000',
+        background: '#4a4a63',
+        border: '1px solid #4a4a63',
+        color: '#fff',
+        borderRadius: '8px !important',
+        height: '52px'
       }
     },
     MuiOutlinedInput: {
       input: {
         padding: '14px',
         background: 'transparent'
+      },
+      notchedOutline: {
+        border: "none"
       }
     },
     MuiPrivateNotchedOutline: {
@@ -47,16 +52,21 @@ const theme =  {
     MuiTypography: {
       fontSize: '14px',
       colorTextSecondary: {
-        color: "#000"
+        color: "#fff"
       },
       colorPrimary: {
-        color: '#000',
+        color: '#fff',
         fontSize: '14px',
       },
       body1:
       {
-        color: '#000'
-      }
+        color: '#fff'
+      },
+      h6:
+      {
+        color: '#fff',
+        marginBottom: '10px !important'
+      },
     },
     MuiSelect:{
       root: {
@@ -69,8 +79,19 @@ const theme =  {
     MuiIconButton: {
       root:
       {
-        color: '#000'
+        color: '#000',
+        background: '#67C22D',
+        borderRadius: '8px',
+        marginTop: '15px',
+        display: 'inline-block',
+        marginRight: '8px',
+        padding: '8px'
+      },
+      MuiSvgIcon:
+      {
+        color: '#fff'
       }
+
     },
     MuiTabs: {
       indicator: {
@@ -81,6 +102,9 @@ const theme =  {
       colorPrimary:{
         boxShadow: 'none',
         border: 0,
+        backgroundColor: '#333344',
+        borderRadius: '10px',
+        paddingLeft: '6px'
       }
     },
     MuiTab: {
@@ -91,22 +115,23 @@ const theme =  {
         }
       },
       textColorInherit: {
-        backgroundColor: '#fff',
-        color: '#000',
+        backgroundColor: '#4a4a63',
+        color: '#fff',
         fontSize: '11px',
         textTransform: 'capitalize',
-        border: '1px solid #e3e3e3',
+        border: 'none',
         minHeight: '30px',
         opacity: 1,
+        marginTop: '6px',
         "&:hover": {
-          backgroundColor: '#444',
+          backgroundColor: '#2f60cc',
           opacity: 1,
           color: '#fff',
         },
         '&$selected': {
-          backgroundColor: '#35af3b',
+          backgroundColor: '#3773f7',
           color: '#fff',
-          borderBottom: '2px solid #2e9a34'
+          borderBottom: '0px solid #2e9a34'
         },
       },
     }

@@ -151,7 +151,7 @@ export default class beldexClient {
       address,
       any_net_type: false,
     });
-
+    
     if (data.error) {
       console.log('[Beldex Wallet] Failed to validate address: ', data.error);
       return false;

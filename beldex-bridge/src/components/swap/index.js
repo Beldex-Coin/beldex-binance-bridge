@@ -354,6 +354,7 @@ class Swap extends Component {
             swapType={swapType}
             swapInfo={swapInfo}
             info={info}
+            selectedWallet={selectedWallet}
             onRefresh={this.onRefresh}
             onBack={this.resetState}
             connectToMetaMask={()=>this.connectToMetaMask()}
