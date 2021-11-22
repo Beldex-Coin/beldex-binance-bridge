@@ -79,10 +79,10 @@ const theme =  {
     MuiIconButton: {
       root:
       {
-        color: '#000',
-        background: '#67C22D',
+        color: '#fff',
+        background: 'transparent',
         borderRadius: '8px',
-        marginTop: '15px',
+        marginTop: '0px !important',
         display: 'inline-block',
         marginRight: '8px',
         padding: '8px'

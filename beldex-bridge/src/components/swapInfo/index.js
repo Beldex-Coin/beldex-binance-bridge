@@ -134,7 +134,7 @@ class SwapInfo extends PureComponent {
             </Tooltip>
             <Tooltip title="Toggle QR" placement="right">
               <IconButton onClick={this.toggleQR} aria-label="Toggle QR">
-                <QRIcon style={{ filter: 'invert(1)', fontSize: '18px' }} />
+                <QRIcon style={{ filter: 'invert(0)', fontSize: '18px' }} />
               </IconButton>
             </Tooltip>
           </Box>
