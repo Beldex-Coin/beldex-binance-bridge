@@ -1,0 +1,6 @@
+{
+    "name": "processingScript",
+            "script": "npm run autoSwap",
+            "cwd" : ".",
+            "cron_restart": "0 * * * *"
+  }
