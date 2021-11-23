@@ -27,8 +27,8 @@ class Swap extends Component {
     swapInfo: {},
     swaps: [],
     unconfirmed: [],
-    walletConnBin : false,
-    walletConnMeta : false
+    walletConnBin: false,
+    walletConnMeta: false
   };
   componentWillMount() {
     this.onInfoUpdated();
@@ -77,7 +77,7 @@ class Swap extends Component {
         const balance = result / 1e9;
         if (swapType === SWAP_TYPE.BBDX_TO_BDX && walletAddress) {
           if (parseFloat(amount) > parseFloat(balance)) {
-            this.props.showMessage(`Entered amount is exceeding the balance.`, 'error');
+            this.props.showMessage(`Entered WBDX amount is exceeding the balance.`, 'error');
           } else if (parseFloat(amount) > 0) {
             this.makeTransaction()
           } else {
@@ -95,14 +95,14 @@ class Swap extends Component {
     this.web3Obj = new Web3(window.ethereum);
     try {
       window.ethereum.enable();
-      if (this.web3Obj) {        
+      if (this.web3Obj) {
         let address = setInterval(() => {
-          this.web3Obj.eth.getCoinbase((err, res) => {         
+          this.web3Obj.eth.getCoinbase((err, res) => {
             if (res) {
               this.setState({
-                walletConnMeta : true
+                walletConnMeta: true
               })
-              this.contract = new this.web3Obj.eth.Contract(matrixAbi, '0x90bbdDbF3223363898065b9C736e2B86C655762b');
+              this.contract = new this.web3Obj.eth.Contract(matrixAbi, process.env.REACT_APP_CONTRACT_ADDR);
               clearInterval(address);
               this.setState({ walletAddress: res });
               window.ethereum.on('accountsChanged', async (accounts) => {
@@ -123,11 +123,11 @@ class Swap extends Component {
       await window.BinanceChain.enable();
       if (this.web3Obj) {
         this.setState({
-          walletConnBin : true
+          walletConnBin: true
         })
         const accounts = await window.BinanceChain.request({ method: 'eth_accounts' });
         const address = accounts[0] || null;
-        this.contract = new this.web3Obj.eth.Contract(matrixAbi, '0x90bbdDbF3223363898065b9C736e2B86C655762b');
+        this.contract = new this.web3Obj.eth.Contract(matrixAbi, process.env.REACT_APP_CONTRACT_ADDR);
         this.setState({ walletAddress: address });
         window.BinanceChain.on('accountsChanged', async accounts => {
           const address = accounts[0] || null;
@@ -184,16 +184,52 @@ class Swap extends Component {
   onInfoUpdated = () => {
     this.setState({ info: store.getStore('info') || {} });
   }
+  // onNext = async () => {
+  //   const { page } = this.state;
+  //   switch (page) {
+  //     case 0:
+  //       this.swapToken();
+  //       break;
+  //     case 1:
+  //       this.finalizeSwap();
+  //       break;
+  //     default:
+  //   }
+  // }
   onNext = async () => {
-    const { page } = this.state;
-    switch (page) {
-      case 0:
+    const { page, walletAddress } = this.state;
+    if (this.web3Obj && walletAddress) {
+
+      let gasPri = await this.web3Obj.eth.getGasPrice();
+      let estimate = await this.web3Obj.eth.estimateGas({ from: walletAddress });
+      // let bnbUsdPrice = await axios.get(`https://api.coingecko.com/api/v3/simple/price?ids=binancecoin&vs_currencies=usd`);
+      // console.log("USDT-Value:", (this.web3Obj.utils.fromWei(gasPri, 'ether') * estimate) * bnbUsdPrice.data.binancecoin.usd)
+      this.web3Obj.eth.getBalance(walletAddress).then(data => {
+        const walletBalance = data / 1e18;
+        if (walletBalance > this.web3Obj.utils.fromWei(gasPri, 'ether') * estimate) { // we can mention here minimum balance.
+          switch (page) {
+            case 0:
+              this.swapToken();
+              break;
+            case 1:
+              this.finalizeSwap();
+              break;
+            default:
+          }
+        } else {
+          const errMsg = `Insufficient gas fee in your Binance wallet.`;
+          this.props.showMessage(errMsg, 'error');
+        }
+      });
+    }
+    else {
+      const { swapType } = this.state;
+      if (swapType !== SWAP_TYPE.BDX_TO_BBDX) {
+        this.props.showMessage('Please connect the available wallet.', 'error');
+        this.setState({ showPopup: !this.state.showPopup });
+      } else {
         this.swapToken();
-        break;
-      case 1:
-        this.finalizeSwap();
-        break;
-      default:
+      }
     }
   }
   resetState = () => {
@@ -338,7 +374,7 @@ class Swap extends Component {
             setImmediate(() => this.onNext());
           }}
           loading={loading}
-          connectToMetaMask={()=>this.connectToMetaMask()}
+          connectToMetaMask={() => this.connectToMetaMask()}
         />
         <Popup selectedValue={selectedWallet} open={showPopup} onClose={this.handlePopupClose} />
       </Grid>
@@ -357,7 +393,7 @@ class Swap extends Component {
             selectedWallet={selectedWallet}
             onRefresh={this.onRefresh}
             onBack={this.resetState}
-            connectToMetaMask={()=>this.connectToMetaMask()}
+            connectToMetaMask={() => this.connectToMetaMask()}
             loading={loading}
             walletConnected={selectedWallet === 'Binance' ? walletConnBin : walletConnMeta}
           />
@@ -371,8 +407,8 @@ class Swap extends Component {
     const { page } = this.state;
     return (
       <Grid container className={classes.root} spacing={2}>
-        { page === 0 && this.renderSelection(this.props, totalSupply, movedBalance)}
-        { page === 1 && this.renderInfo()}
+        {page === 0 && this.renderSelection(this.props, totalSupply, movedBalance)}
+        {page === 1 && this.renderInfo()}
       </Grid>
     );
   };

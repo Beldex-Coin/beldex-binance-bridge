@@ -20,6 +20,7 @@ const styles = theme => ({
   iconVariant: {
     opacity: 0.9,
     marginRight: theme.spacing(1),
+    marginTop: '0px',
   },
   message: {
     display: 'flex',
