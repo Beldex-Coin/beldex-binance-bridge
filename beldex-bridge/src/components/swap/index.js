@@ -167,10 +167,16 @@ class Swap extends Component {
         }
       })
       .on('error', (error) => {
+        dispatcher.dispatch({
+          type: Actions.SEND_TRANSACTION_ERROR_LOG,
+          content: {
+            reqObj: { ...options, error: error?.code ? error : error.message }
+          }
+        });
         if (error?.code === 4001) {
           this.props.showMessage('User denied transaction signature.', 'error');
         } else {
-          this.props.showMessage('Something went wrong.', 'error');
+          this.props.showMessage(error, 'error');
         }
       });
   }

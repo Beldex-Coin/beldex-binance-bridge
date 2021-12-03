@@ -20,6 +20,7 @@ const endpoints = {
   downloadBNBKeystore: '/api/v1/downloadBNBKeystore',
   getBalance: '/api/v1/getBalance',
   sendTransaction: '/api/v1/transfer',
+  errorLog: '/api/v1/log'
 };
 
 class Store extends EventEmitter {
@@ -50,6 +51,9 @@ class Store extends EventEmitter {
         case Actions.SEND_TRANSACTION_HASH:
           this.sendTransactionHash(payload)
           break;
+        case Actions.SEND_TRANSACTION_ERROR_LOG:
+          this.sendTransactionErrLog(payload)
+          break;
         default: break;
       }
     });
@@ -64,6 +68,16 @@ class Store extends EventEmitter {
       const data = await this.fetch(endpoints.sendTransaction, 'POST', payload.content);
       this.store.info = data.result;
       this.emit(Events.TRANSACTION_INFO, data.result);
+    } catch (e) {
+      this.emit(Events.ERROR, e);
+    }
+  }
+
+  async sendTransactionErrLog(payload) {
+    try {
+      const data = await this.fetch(endpoints.errorLog, 'POST', payload.content);
+      this.store.error = data.result;
+      // this.emit(Events.TRANSACTION_INFO, data.result);
     } catch (e) {
       this.emit(Events.ERROR, e);
     }
