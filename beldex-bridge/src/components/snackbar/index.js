@@ -42,7 +42,7 @@ function StyledSnackbar(props) {
         horizontal: 'left',
       }}
       open={open}
-      autoHideDuration={6000}
+      autoHideDuration={variant === 'error' ? 10000 : 6000}
       disableWindowBlurListener
       onClose={onClose}
       ContentProps={{

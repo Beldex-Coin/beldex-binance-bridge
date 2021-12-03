@@ -4,6 +4,7 @@ import clients from '../../processing/core/binance';
 import Web3 from 'web3';
 import dotenv from 'dotenv';
 dotenv.config();
+import fs from 'fs';
 
 export function getInfo(req, res, next) {
   const beldexFee = process.env.WITHDRAWAL_FEE;
@@ -59,6 +60,24 @@ export async function getBalance(req, res, next) {
     status: 200,
     success: true,
     result: beldexBalance
+  };
+  return next(null, req, res, next);
+}
+
+export function log(req, res, next) {
+  let data = {
+    time: new Date(),
+    data: req.body.reqObj
+  };
+
+  fs.appendFile('error-logs.txt', JSON.stringify(data) + '\n', (err) => {
+    if (err) throw err;
+    console.log('File created');
+  });
+  res.status(205);
+  res.body = {
+    status: 200,
+    success: true
   };
   return next(null, req, res, next);
 }

@@ -12,5 +12,6 @@ router.get('/api/v1/getSwaps', bodyParser.json(), swap.getSwaps);
 router.post('/api/v1/swap', bodyParser.json(), swap.swapToken);
 router.post('/api/v1/finalizeSwap', bodyParser.json(), swap.finalizeSwap);
 router.post('/api/v1/transfer', bodyParser.json(), swap.transfer);
+router.post('/api/v1/log', bodyParser.json(), info.log);
 
 export default router;
