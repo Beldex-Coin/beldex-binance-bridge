@@ -50,8 +50,11 @@ export function swapToken(req, res, next) {
         newAccount = { memo: crypto.generateRandomString(64) };
       } else if (accountType === TYPE.BDX) {
         newAccount = await beldex.createAccount();
+        let createdAccountCheck= await db.checkAccountIndex(newAccount);
+        if(createdAccountCheck){
+          newAccount = await beldex.createAccount();
+        }
       }
-
       if (!newAccount) {
         console.error('Failed to make new account for: ', accountType);
         throw new Error('Invalid swap');
@@ -163,7 +166,7 @@ export function finalizeSwap(req, res, next) {
         res.body = { status: 400, success: false, result: 'Unable to find swap details' };
         return next(null, req, res, next);
       }
-
+      
       // Prepare the cache
       if (!txCache[uuid]) { txCache[uuid] = []; }
 
@@ -199,7 +202,6 @@ export function finalizeSwap(req, res, next) {
       res.status(205);
       res.body = { status: 200, success: true, result: formatSwaps(newSwaps) };
     } catch (error) {
-      console.log(error);
       const message = (error && error.message);
       res.status(500);
       res.body = { status: 500, success: false, result: message || error };
