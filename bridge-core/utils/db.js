@@ -10,6 +10,24 @@ export default class Database {
   }
 
   /**
+  * Get the client account with the given address and address_index.
+  * This function is different from `CheckAccount` in that it will return non sanitized values.
+  * The return of this functions SHOULD NOT be sent to the client.
+  *
+  * @param {string} address The unique identifier of the client address
+  * @param {string} address_index The unique identifier of the client address_index
+  * @returns The client address_index or `null` if something went wrong.
+  */
+
+  async checkAccountIndex(account){
+    const query = 'select address_index from accounts_bdx where address = $1 and address_index = $2;';
+    const clientAccount = await this.postgres.oneOrNone(query, [account.address,account.address_index]);
+    if (!clientAccount) 
+        return false;
+    return true;
+  }
+
+  /**
   * Get the client account with the given uuid.
   * This function is different from `getClientAccount` in that it will return non sanitized values.
   * The return of this functions SHOULD NOT be sent to the client.
@@ -258,7 +276,7 @@ export default class Database {
   * @returns {Promise<{ uuid, type, amount, deposit_transaction_hash }>} The inserted swap or `null` if we failed.
   */
   async insertSwap(transaction, clientAccount) {
-    const queryData = `select * from swaps where deposit_transaction_hash = '${transaction.hash}' and amount = '${transaction.amount}' ;`;
+    const queryData = `select uuid from swaps where deposit_transaction_hash = '${transaction.hash}' and amount = '${transaction.amount}' ;`;
     let response = await this.postgres.oneOrNone(queryData);
     if (!response) {
       if (!transaction || !clientAccount) return null;
