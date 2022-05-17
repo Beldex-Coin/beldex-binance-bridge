@@ -1,5 +1,7 @@
 #### NODE ####
 
+#Production config
+config/production.json
 # Logs
 logs
 *.log
