@@ -1,19 +1,20 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700&display=swap");
 html {
   overflow-y: hidden;
 }
 
-html, body {
+html,
+body {
   height: 100vh;
   margin: 0;
   padding: 0;
 }
-body{
+body {
   touch-action: manipulation;
 }
 body {
   overflow-y: auto;
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #000 !important;
@@ -32,7 +33,6 @@ code {
   flex-direction: column;
   min-width: 100px;
   background: #000; /* Old browsers */
-  
 }
 
 #content {
@@ -50,6 +50,7 @@ code {
   left: 0;
   right: 0;
   bottom: 0;
+  background-color: #21212d;
 }
 
 .backgroundImage {
@@ -61,8 +62,27 @@ code {
   -webkit-transition: opacity 0.3s ease-out;
 }
 
-.moving
-{
+.appName {
+  color: #fff;
+  font-size: 2rem;
+  font-weight: 300;
+}
+.beldexName {
+  color: #3ec745;
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: 700;
+  /* font-size: 1.8rem; */
+  line-height: normal;
+}
+.app-left-content {
+  color: #afafbe;
+  font-family: Poppins;
+  font-size: 22px;
+  font-style: normal;
+  font-weight: 300;
+}
+.moving {
   position: absolute;
   bottom: 0;
   animation: drive 10s linear;
@@ -74,16 +94,15 @@ code {
   opacity: 0;
 }
 
-@keyframes drive{
-  0%{
+@keyframes drive {
+  0% {
     transform: translateX(0px);
     opacity: 1;
   }
-  100%{
+  100% {
     transform: translateX(100vw);
     opacity: 1;
   }
-  
 }
 .backgroundImageLoaded {
   opacity: 1;
@@ -91,7 +110,7 @@ code {
 
 .title {
   margin: 20px 0 20px;
-  position: relative;
+  /* position: relative; */
 }
 
 .titleImage {
@@ -108,97 +127,120 @@ code {
 }
 
 #grid {
-  flex: 1;
-  padding: 8px;
+  /* flex: 1; */
+  /* padding: 8px; */
+  width: 100%;
+  height: 85%;
 }
-.contract-address b
-{
+
+.contract-address b {
   word-break: break-all;
 }
 
-
-
-.movedBal{
+.movedBal {
+  width: 66%;
   font-size: 15px;
   color: #585757;
   text-align: center;
-  margin: 40px auto;
-  border: 1px solid #222;
-  border-radius: 10px;
-  background: #4a4a63;
+  margin: auto;
+  /* border: 1px solid #222;
+  border-radius: 10px; */
+  /* background: #4a4a63; */
+
+  border-radius: 16px;
+  border: 1px solid #393954;
+  background: #1f1f2e;
+  padding: 20px 0;
 }
-.movedBal p
-{
-  color: #eee;
-    padding: 0px 10px;
-    line-height: 40px;
-    margin: 0;
+.movedBal .bal-title {
+  /* color: #eee;
+  padding: 0px 10px;
+  line-height: 40px;
+  margin: 0; */
+  margin: 0;
+  color: #afafbe;
+  text-align: center;
+  font-family: Poppins;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
 }
-.movedBal-p2{
-    font-size: 35px;
-    font-weight: 600;
-    background: #333344;
-    width: 100%;
-    color: #35af3b !important;
-    border-radius: 0px 0px 10px 10px;
+.movedBal-p2 {
+  /* font-size: 35px;
+  font-weight: 600;
+  background: #333344;
+  width: 100%;
+  color: #35af3b !important;
+  border-radius: 0px 0px 10px 10px; */
+  margin: 0;
+  color: #fff;
+  text-align: center;
+  font-family: Poppins;
+  font-size: 1.8rem;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
 }
-.availBal
-{
-  font-size: 25px;
-  font-weight: normal;
-  color: #588dff;
+.availBal {
+  /* font-size: 25px; */
+  /* font-weight: normal;
+  color: #588dff; */
+  color: #AFAFBE;
+/* text-align: center;
+font-family: Poppins;
+font-size: 1.8rem;
+font-style: normal;
+font-weight: 700;
+line-height: normal; */
 }
-#grid
-{
-  align-items: flex-start;
+#grid {
+  align-items: center;
 }
-.warningText
-{
+.warningText {
   position: absolute;
-    top: 35px;
-    z-index: 9;
-    background: rgb(0 0 0 / 89%);
-    width: 100%;
-    left: 0;
-    color: #fff;
-    height: 90%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 14px;
+  top: 35px;
+  z-index: 9;
+  background: rgb(0 0 0 / 89%);
+  width: 100%;
+  left: 0;
+  color: #fff;
+  height: 90%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
 }
 
-.blinkAnim
-{
+.blinkAnim {
   -webkit-animation: glowing 1500ms infinite;
   -moz-animation: glowing 1500ms infinite;
   -o-animation: glowing 1500ms infinite;
   animation: glowing 1500ms infinite;
 }
-.blinkImg
-{
+.blinkImg {
   width: 18px;
   transform: translate(6px, 2px);
-  animation: blink .7s steps(2, start) infinite;
-  -webkit-animation: blink .7s steps(2, start) infinite;
+  animation: blink 0.7s steps(2, start) infinite;
+  -webkit-animation: blink 0.7s steps(2, start) infinite;
 }
 
-@keyframes blink 
-{
-  to 
-  { 
-      visibility: hidden; 
+@keyframes blink {
+  to {
+    visibility: hidden;
   }
 }
-@-webkit-keyframes blink 
-{
-  to 
-  { 
-      visibility: hidden; 
+@-webkit-keyframes blink {
+  to {
+    visibility: hidden;
   }
 }
 
-.bsc a, .bsc a:hover, .bsc a:visited, .bsc a:link, .bsc a:active {
+.bsc a,
+.bsc a:hover,
+.bsc a:visited,
+.bsc a:link,
+.bsc a:active {
   text-decoration: none;
 }
 
@@ -207,19 +249,16 @@ code {
     max-height: 120px;
     height: auto !important;
   }
-  .movedBal-p2{
+  .movedBal-p2 {
     font-size: 24px;
   }
-  .movedBal
-  {
+  .movedBal {
     margin: 30px auto;
   }
-  .availBal
-  {
+  .availBal {
     font-size: 18px;
   }
-  .title
-  {
+  .title {
     margin: 20px 0 0px;
   }
 }

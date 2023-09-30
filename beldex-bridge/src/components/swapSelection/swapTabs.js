@@ -54,7 +54,7 @@ export default function SwapTabs(props) {
     <div className={classes.root}>
       <AppBar position="static">
         <Tabs value={value} onChange={handleChange}>
-          <Tab label="BDX to wBDX" />
+          <Tab sx={{backgroundColor:'red'}} label="BDX to wBDX" />
           <Tab label="wBDX to BDX" />
         </Tabs>
       </AppBar>
