@@ -15,6 +15,7 @@ const styles = theme => ({
     flexDirection: 'column',
     wordBreak: 'break-word',
   },
+  
   instructions: {
     fontSize: '14px',
     textAlign: 'center',

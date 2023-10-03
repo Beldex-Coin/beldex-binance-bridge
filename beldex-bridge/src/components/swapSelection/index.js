@@ -1,13 +1,13 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { Grid, Typography, Link } from '@material-ui/core';
-import { withStyles } from '@material-ui/core/styles';
-import { Input, Button } from '@components';
-import { SWAP_TYPE, TYPE } from '@constants';
-import config from '@config';
-import styles from './styles';
-import { store, dispatcher, Actions, Events } from '@store';
-import Swaptabs from './swapTabs';
+import React, { Component } from "react";
+import PropTypes from "prop-types";
+import { Grid, Typography, Link } from "@material-ui/core";
+import { withStyles } from "@material-ui/core/styles";
+import { Input, Button } from "@components";
+import { SWAP_TYPE, TYPE } from "@constants";
+import config from "@config";
+import styles from "./styles";
+import { store, dispatcher, Actions, Events } from "@store";
+import Swaptabs from "./swapTabs";
 
 const walletCreationUrl = {
   [TYPE.BDX]: config.beldex.walletCreationUrl,
@@ -16,54 +16,60 @@ const walletCreationUrl = {
 
 class SwapSelection extends Component {
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
-      address: '',
+      address: "",
       amount: 0,
       addressError: false,
-      options: [{
-        value: SWAP_TYPE.BDX_TO_BBDX,
-        description: 'BDX to wBDX',
-      }, {
-        value: SWAP_TYPE.BBDX_TO_BDX,
-        description: 'wBDX to BDX',
-      }],
+      options: [
+        {
+          value: SWAP_TYPE.BDX_TO_BBDX,
+          description: "BDX to wBDX",
+        },
+        {
+          value: SWAP_TYPE.BBDX_TO_BDX,
+          description: "wBDX to BDX",
+        },
+      ],
       //loginOpen: props.totalSupply != props.movedBalance,
       totalSupply: props.totalSupply,
       movedBalance: props.movedBalance,
-      swapType: 'bdx_to_bbdx',
+      swapType: "bdx_to_bbdx",
       loginOpen: false,
-      amountError: false
+      amountError: false,
     };
   }
 
   componentDidMount = () => {
     store.on(Events.FETCHED_BALANCE, this.onBalUpdated);
-  }
+  };
 
   onBalUpdated = () => {
-    const balance = store.getStore('balance') || {};
+    const balance = store.getStore("balance") || {};
     if (balance && balance.length > 0) {
-      const bal = Number(parseFloat(balance[0].movedBalance).toFixed(2)).toLocaleString('en', {
-        minimumFractionDigits: 2
+      const bal = Number(
+        parseFloat(balance[0].movedBalance).toFixed(2)
+      ).toLocaleString("en", {
+        minimumFractionDigits: 2,
       });
-      const total = Number(parseFloat(balance[0].totalSupply).toFixed(2)).toLocaleString('en', {
-        minimumFractionDigits: 2
-      })
-      if (this.state.swapType === 'bdx_to_bbdx') {
+      const total = Number(
+        parseFloat(balance[0].totalSupply).toFixed(2)
+      ).toLocaleString("en", {
+        minimumFractionDigits: 2,
+      });
+      if (this.state.swapType === "bdx_to_bbdx") {
         if (total === bal) {
-          this.setState({ loginOpen: true })
+          this.setState({ loginOpen: true });
         }
-      }
-      else {
-        this.setState({ loginOpen: false })
+      } else {
+        this.setState({ loginOpen: false });
       }
       this.setState({
         totalSupply: total,
-        movedBalance: bal
-      })
+        movedBalance: bal,
+      });
     }
-  }
+  };
 
   onNext = async () => {
     const { address, swapType, amount } = this.state;
@@ -74,56 +80,71 @@ class SwapSelection extends Component {
     if (isValidAddress) {
       if (swapType === SWAP_TYPE.BBDX_TO_BDX) {
         onNext(address, amount);
-
       } else if (swapType === SWAP_TYPE.BDX_TO_BBDX) {
-        onNext(address, '');
+        onNext(address, "");
       }
     }
-  }
+  };
 
   onAddressChanged = (event) => {
     this.setState({ address: event.target.value });
-  }
+  };
 
   onAmountChanged = (event) => {
-    if ((this.props.info.fees && this.props.info.fees.bdx / 1e9) >= event.target.value) {
-      this.setState({ amountError: "Entered amount should be greater than the swap fee." })
-    }else{
-      this.setState({ amountError: '' })
+    if (
+      (this.props.info.fees && this.props.info.fees.bdx / 1e9) >=
+      event.target.value
+    ) {
+      this.setState({
+        amountError: "Entered amount should be greater than the swap fee.",
+      });
+    } else {
+      this.setState({ amountError: "" });
     }
     this.setState({ amount: event.target.value });
-  }
+  };
 
   onSwapTypeChanged = (value) => {
     this.props.onSwapTypeChanged(value);
     this.setState({
-      swapType: value
-    })
-    dispatcher.dispatch({
-      type: Actions.GET_BALANCE
+      swapType: value,
     });
-  }
+    dispatcher.dispatch({
+      type: Actions.GET_BALANCE,
+    });
+  };
 
   getAddressType = () => {
     const { swapType } = this.props;
     return swapType === SWAP_TYPE.BDX_TO_BBDX ? TYPE.BNB : TYPE.BDX;
-  }
+  };
   loginClose = () => {
-    this.setState({ loginOpen: false })
-  }
+    this.setState({ loginOpen: false });
+  };
   render() {
     const { loading, classes } = this.props;
     const { address, addressError, amount } = this.state;
     const addressType = this.getAddressType();
-    const inputLabel = addressType === TYPE.BDX ? 'BDX Address' : 'BNB Address';
-    const inputPlaceholder = addressType === TYPE.BDX ? 'bdx...' : 'wbdx...';
+    const inputLabel = addressType === TYPE.BDX ? "BDX Address" : "BNB Address";
+    const inputPlaceholder = addressType === TYPE.BDX ? "bdx..." : "wbdx...";
 
-    const url = walletCreationUrl['bnb'];
+    const url = walletCreationUrl["bnb"];
     return (
       <Grid item xs={12} className={classes.root}>
-
+        <div className="movedBal">
+          <p className="bal-title">
+            Total <span style={{ color: "rgba(0, 173, 7, 0.93)" }}>BDX</span>{" "}
+            moved to Binance smart chain
+          </p>
+          <p className="movedBal-p2">
+            {this.state.movedBalance} <span className="availBal">/ {this.state.totalSupply}</span>
+          </p>
+        </div>
         <Grid item xs={12} className={classes.swapTabs}>
-          <Swaptabs handleChange={(val) => this.onSwapTypeChanged(val)} connectToMetaMask={()=>this.props.connectToMetaMask()}/>
+          <Swaptabs
+            handleChange={(val) => this.onSwapTypeChanged(val)}
+            connectToMetaMask={() => this.props.connectToMetaMask()}
+          />
         </Grid>
 
         <Grid item xs={12}>
@@ -137,7 +158,6 @@ class SwapSelection extends Component {
             className={classes.belSelect}
           /> */}
         </Grid>
-       
 
         <Grid item xs={12}>
           <Input
@@ -150,7 +170,7 @@ class SwapSelection extends Component {
             onChange={this.onAddressChanged}
             disabled={loading}
           />
-          {addressType === 'bdx' &&
+          {addressType === "bdx" && (
             <>
               <Input
                 fullWidth
@@ -162,17 +182,17 @@ class SwapSelection extends Component {
                 disabled={loading}
                 error={this.state.amountError}
               />
-              <Typography style={{ color: 'red',fontSize:'12px' }}>
+              <Typography style={{ color: "red", fontSize: "12px" }}>
                 {this.state.amountError}
               </Typography>
             </>
-          }
-           <Typography className={classes.swapFee}>
-          Swap Fee : {this.props.info.fees && this.props.info.fees.bdx / 1e9} {" "} BDX
-        </Typography>
-          
+          )}
+          <Typography className={classes.swapFee}>
+            Swap Fee : {this.props.info.fees && this.props.info.fees.bdx / 1e9}{" "}
+            BDX
+          </Typography>
         </Grid>
-        <Grid item xs={12} align='right' className={classes.button}>
+        <Grid item xs={12} align="right" className={classes.button}>
           <Button
             fullWidth
             label="Next"
@@ -180,25 +200,48 @@ class SwapSelection extends Component {
             onClick={this.onNext}
           />
         </Grid>
-        <Typography style={{marginTop:'10px'}} className={classes.createAccount}>
-            <Link style={{ color: '#2FA6FF' }} href={url} target="_blank" rel="noreferrer">
-              View on bscscan            </Link>
-          </Typography>
+        <Typography
+          style={{ marginTop: "10px" }}
+          className={classes.createAccount}
+        >
+          <Link
+            style={{ color: "#2FA6FF" }}
+            href={url}
+            target="_blank"
+            rel="noreferrer"
+          >
+            View on bscscan{" "}
+          </Link>
+        </Typography>
         {/* <Link className={classes.belLink} href="BBDXBridgeTOS.html" target="_blank">Terms of Service</Link> */}
-        <Typography className={`contract-address ${classes.instructions}`}  style={{marginTop: '20px'}}>
-          wBDX Contract address :<br/><b>0x90bbdDbF3223363898065b9C736e2B86C655762b </b>
+        <Typography
+          className={`contract-address ${classes.wbdxAddressTitle}`}
+          style={{ marginTop: "20px" }}
+        >
+          wBDX Contract address :
+        </Typography>
+        <Typography className={classes.wbdxAddress}>
+          0x90bbdDbF3223363898065b9C736e2B86C655762b
         </Typography>
 
         {
-          this.state.loginOpen &&
-          <div className="warningText">
-            <p>The maximum BDX swap limit was reached.<br></br> You can buy BBDX from <a href="https://testnet.binance.org/en/trade/mini/175-0B3M_BNB" style={{ color: '#67d040', textAlign: 'center' }}>Binance dex.</a></p>
-          </div>
+          this.state.loginOpen && (
+            <div className="warningText">
+              <p>
+                The maximum BDX swap limit was reached.<br></br> You can buy
+                BBDX from{" "}
+                <a
+                  href="https://testnet.binance.org/en/trade/mini/175-0B3M_BNB"
+                  style={{ color: "#67d040", textAlign: "center" }}
+                >
+                  Binance dex.
+                </a>
+              </p>
+            </div>
+          )
           // <LoginPopup open={this.state.loginOpen} loginClose={this.loginClose} />
-
         }
-
-      </Grid >
+      </Grid>
     );
   }
 }

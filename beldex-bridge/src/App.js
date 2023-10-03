@@ -140,19 +140,23 @@ export default class App extends PureComponent {
                 </p>
               </Grid>
               <Grid item xs={12} md={7}>
-                <div className="movedBal">
+
+                {/* <div className="rightPane-wrapper"> */}
+                {/* <div className="movedBal">
                   <p className="bal-title">Total <span style={{color:'rgba(0, 173, 7, 0.93)'}}>BDX</span> moved to Binance smart chain</p>
                   <p className="movedBal-p2">
                     {bal} <span className="availBal">/ {total}</span>
                   </p>
-                </div>
+                </div> */}
                 <Swap
                   showMessage={this.showMessage}
                   movedBalance={bal}
                   totalSupply={total}
                 />
                 {this.renderSnackbar()}
+                {/* </div> */}
               </Grid>
+
             </Grid>
           </div>
         </div>

@@ -136,11 +136,22 @@ code {
 .contract-address b {
   word-break: break-all;
 }
-.d-flex-center{
+.d-flex-center {
   height: 100%;
 }
+
+.rightPane-wrapper {
+  /* width: 80%; */
+  width: 64%;
+  padding: 45px 56px;
+  margin-left: auto;
+  border-radius: 30px;
+  border: 0.5px solid #56566c;
+  background: #1c1c26;
+  box-shadow: 0px 6px 94px 0px rgba(0, 0, 0, 0.2);
+}
 .movedBal {
-  width: 66%;
+  /* width: 66%; */
   font-size: 15px;
   color: #585757;
   text-align: center;
@@ -153,6 +164,7 @@ code {
   border: 1px solid #393954;
   background: #1f1f2e;
   padding: 20px 0;
+  margin-bottom: 20px;
 }
 .movedBal .bal-title {
   /* color: #eee;
@@ -188,8 +200,8 @@ code {
   /* font-size: 25px; */
   /* font-weight: normal;
   color: #588dff; */
-  color: #AFAFBE;
-/* text-align: center;
+  color: #afafbe;
+  /* text-align: center;
 font-family: Poppins;
 font-size: 1.8rem;
 font-style: normal;

@@ -104,7 +104,7 @@ const theme =  {
         border: 0,
         backgroundColor: '#1C1C26',
         borderRadius: '10px',
-        paddingLeft: '6px'
+        // paddingLeft: '6px'
       }
     },
     MuiTab: {

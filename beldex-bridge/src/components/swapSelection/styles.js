@@ -2,15 +2,17 @@ import { common } from "@theme";
 
 const styles = (theme) => ({
   root: {
-    marginTop: "25px",
+    width:'100%',
+    marginTop: "20px",
     backgroundColor: "#1C1C26 !important",
     // padding: '1.5rem',
     // boxShadow: "0px 0px 30px rgb(36 36 36)",
     color: "#000",
     border: "1px solid #f00",
-    position: "relative",
+    // position: "relative",
     borderRadius: "10px !important",
-    paddingTop: "90px",
+   
+    // paddingTop: "90px",
     [theme.breakpoints.up("md")]: {
       maxWidth: "500px",
     },
@@ -47,7 +49,7 @@ const styles = (theme) => ({
     color: "#000",
   },
   swapTabs: {
-    position: "absolute",
+    // position: "absolute",
     width: "100%",
     left: "0px",
     top: "0px",
@@ -55,14 +57,33 @@ const styles = (theme) => ({
   },
   swapFee: {
     fontSize: "12px",
-    position: "absolute",
-    right: "15px",
+    // position: "absolute",
+    // right: "15px",
 
-    zIndex: "9",
+    // zIndex: "9",
+    textAlign: 'end',
     color: "#AFAFBE",
     fontFamily: "Poppins",
     fontStyle: "normal",
     fontWeight: 400,
+  },
+  wbdxAddressTitle:{
+    color: '#AFAFBE',
+    textAlign: 'center',
+    fontFamily: 'Poppins',
+    fontSize: '16px',
+    fontStyle: 'normal',
+    fontWeight: 300,
+    wordBreak:'break-all',
+  },
+  wbdxAddress:{
+    wordBreak:'break-all',
+    color: '#EBEBEB;',
+    textAlign: 'center',
+    fontFamily: 'Poppins',
+    fontSize: '16px',
+    fontStyle: 'normal',
+    fontWeight: 300,
   },
 });
 
