@@ -130,13 +130,15 @@ code {
   /* flex: 1; */
   /* padding: 8px; */
   width: 100%;
-  height: 85%;
+  height: 90%;
 }
 
 .contract-address b {
   word-break: break-all;
 }
-
+.d-flex-center{
+  height: 100%;
+}
 .movedBal {
   width: 66%;
   font-size: 15px;

@@ -18,7 +18,7 @@ const theme =  {
     MuiInputBase: {
       root: {
         fontSize: '13px',
-        background: '#4a4a63',
+        // background: '#4a4a63',
         border: '1px solid #4a4a63',
         color: '#fff',
         borderRadius: '8px !important',
@@ -102,7 +102,7 @@ const theme =  {
       colorPrimary:{
         boxShadow: 'none',
         border: 0,
-        backgroundColor: '#333344',
+        backgroundColor: '#1C1C26',
         borderRadius: '10px',
         paddingLeft: '6px'
       }

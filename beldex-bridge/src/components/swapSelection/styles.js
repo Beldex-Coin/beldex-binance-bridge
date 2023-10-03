@@ -1,64 +1,69 @@
-import { common } from '@theme';
+import { common } from "@theme";
 
-const styles = theme => ({
+const styles = (theme) => ({
   root: {
-    backgroundColor: '#292a33 !important',
-    padding: '1.5rem',
+    marginTop: "25px",
+    backgroundColor: "#1C1C26 !important",
+    // padding: '1.5rem',
     // boxShadow: "0px 0px 30px rgb(36 36 36)",
-    color: '#000',
-    border: '1px solid #f00',
-    position: 'relative',
-    borderRadius: '10px !important',
-    paddingTop: '90px',
-    [theme.breakpoints.up('md')]: {
-      maxWidth: '500px',
+    color: "#000",
+    border: "1px solid #f00",
+    position: "relative",
+    borderRadius: "10px !important",
+    paddingTop: "90px",
+    [theme.breakpoints.up("md")]: {
+      maxWidth: "500px",
     },
     ...common.section,
   },
   button: {
-    marginTop: '24px'
+    marginTop: "24px",
   },
   createAccount: {
-    fontSize: '0.8rem',
-    textDecoration: 'underline',
-    textAlign: 'center',
-    marginBottom: '0px',
-    cursor: 'pointer',
-    display: 'inline-block',
-    color: '#fff',
-    width: '100%',
+    fontSize: "0.8rem",
+    // textDecoration: "underline",
+    textAlign: "center",
+    marginBottom: "0px",
+    cursor: "pointer",
+    display: "inline-block",
+    color: "#fff",
+    width: "100%",
   },
   belLink: {
-    display: 'inline-block',
-    textAlign: 'center',
-    width: '100%',
-    marginTop: '20px',
+    display: "inline-block",
+    textAlign: "center",
+    width: "100%",
+    marginTop: "20px",
     color: "#000",
-    fontSize: '14px'
+    fontSize: "14px",
   },
   closeBtn: {
-    position: 'absolute',
-    top: '5px',
+    position: "absolute",
+    top: "5px",
     right: 0,
-    background: 'transparent !important'
+    background: "transparent !important",
   },
   belSelect: {
-    color: "#000"
+    color: "#000",
   },
   swapTabs: {
-    position: 'absolute',
-    width: '100%',
-    left: '0px',
-    top: '0px',
-    zIndex: '9',
+    position: "absolute",
+    width: "100%",
+    left: "0px",
+    top: "0px",
+    zIndex: "9",
   },
   swapFee: {
-    fontSize: '12px',
-    position: 'absolute',
-    right: '15px',
-    top: '60px',
-    zIndex: '9',
-  }
+    fontSize: "12px",
+    position: "absolute",
+    right: "15px",
+
+    zIndex: "9",
+    color: "#AFAFBE",
+    fontFamily: "Poppins",
+    fontStyle: "normal",
+    fontWeight: 400,
+  },
 });
 
 export default styles;

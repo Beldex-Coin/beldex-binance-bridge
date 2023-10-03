@@ -1,8 +1,12 @@
 const styles = theme => ({
   root: {
-    position: 'relative',
+    // position: 'relative',
+    // textAlign:'center',
+    width:'70%',
+    margin:'auto'
   },
   button: {
+
     minWidth: '100px',
     fontWeight: 600,
     border: 'none',
@@ -11,9 +15,10 @@ const styles = theme => ({
     letterSpacing: '0.03em',
     fontSize: '14px',
     backgroundColor: '#20c128',
-    color: '#000',
+    color: 'white',
     textTransform: 'capitalize',
-    borderRadius: '8px',
+    borderRadius: '40px',
+    marginTop:'20px',
     '&:hover': {
       backgroundColor: '#198c1e',
       color: '#fff',

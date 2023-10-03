@@ -9,6 +9,6 @@ export const flexCenter = {
 export const section = {
   borderRadius: '10px',
   backgroundColor: colors.belColorWhite,
-  padding: '1.5rem',
+  padding: '0',
   border: 'none'
 };

@@ -2,7 +2,7 @@ export default {
   beldxGreen: '#fff',
   beldexBlack90: '#0A0A0A',
   belBackground: "#fff",
-  belColorWhite: "#333344",
+  belColorWhite: "#1C1C26",
   beldexBlack80: '#fff',
   belBlack: '#fff',
   beldexBlack60: '#313131',

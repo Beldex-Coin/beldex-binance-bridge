@@ -137,9 +137,7 @@ class SwapSelection extends Component {
             className={classes.belSelect}
           /> */}
         </Grid>
-        <Typography className={classes.swapFee}>
-          Swap Fee : {this.props.info.fees && this.props.info.fees.bdx / 1e9} {" "} BDX
-        </Typography>
+       
 
         <Grid item xs={12}>
           <Input
@@ -169,10 +167,10 @@ class SwapSelection extends Component {
               </Typography>
             </>
           }
-          <Typography style={{marginTop:'10px'}} className={classes.createAccount}>
-            <Link style={{ color: '#40ce47' }} href={url} target="_blank" rel="noreferrer">
-              View on bscscan            </Link>
-          </Typography>
+           <Typography className={classes.swapFee}>
+          Swap Fee : {this.props.info.fees && this.props.info.fees.bdx / 1e9} {" "} BDX
+        </Typography>
+          
         </Grid>
         <Grid item xs={12} align='right' className={classes.button}>
           <Button
@@ -182,6 +180,10 @@ class SwapSelection extends Component {
             onClick={this.onNext}
           />
         </Grid>
+        <Typography style={{marginTop:'10px'}} className={classes.createAccount}>
+            <Link style={{ color: '#2FA6FF' }} href={url} target="_blank" rel="noreferrer">
+              View on bscscan            </Link>
+          </Typography>
         {/* <Link className={classes.belLink} href="BBDXBridgeTOS.html" target="_blank">Terms of Service</Link> */}
         <Typography className={`contract-address ${classes.instructions}`}  style={{marginTop: '20px'}}>
           wBDX Contract address :<br/><b>0x90bbdDbF3223363898065b9C736e2B86C655762b </b>
