@@ -131,6 +131,7 @@ class SwapSelection extends Component {
     const url = walletCreationUrl["bnb"];
     return (
       <Grid item xs={12} className={classes.root}>
+        
         <div className="movedBal">
           <p className="bal-title">
             Total <span style={{ color: "rgba(0, 173, 7, 0.93)" }}>BDX</span>{" "}

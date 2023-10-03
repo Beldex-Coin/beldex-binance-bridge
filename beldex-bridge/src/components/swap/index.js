@@ -430,29 +430,43 @@ class Swap extends Component {
     const { classes } = props;
     const { loading, swapType, info, showPopup, selectedWallet } = this.state;
     return (
-      <Grid item xs={12} className={classes.item}>
-        <div className="rightPane-wrapper">
-         
-          <SwapSelection
-            swapType={swapType}
-            info={info}
-            totalSupply={totalSupply}
-            movedBalance={movedBalance}
-            onSwapTypeChanged={(swapType) => this.swapTypeChanged(swapType)}
-            onNext={(address, amount) => {
-              this.setState({ address, amount });
-              // Wait for state to refresh correctly
-              setImmediate(() => this.onNext());
-            }}
-            loading={loading}
-            connectToMetaMask={() => this.connectToMetaMask()}
+      <Grid    className={classes.registerWrapper}>
+        <Grid xs={12} md={5}>
+          <div  className={classes.leftPane}>
+          <p className="appName">
+            <span className="beldexName">Beldex</span> Bridge
+          </p>
+          <p className="app-left-content">
+            Lorem ipsum dolor sit amet consectetur adipiscing elit Ut et massa
+            mi. Aliquam in hendrerit urna. Pellentesque sit amet sapien
+            fringilla, mattis ligula consectetur, ultrices mauris. Maecenas
+            vitae mattis tellus.
+          </p>
+          </div>
+        </Grid>
+        <Grid xs={12} md={7}>
+          <div className="rightPane-wrapper">
+            <SwapSelection
+              swapType={swapType}
+              info={info}
+              totalSupply={totalSupply}
+              movedBalance={movedBalance}
+              onSwapTypeChanged={(swapType) => this.swapTypeChanged(swapType)}
+              onNext={(address, amount) => {
+                this.setState({ address, amount });
+                // Wait for state to refresh correctly
+                setImmediate(() => this.onNext());
+              }}
+              loading={loading}
+              connectToMetaMask={() => this.connectToMetaMask()}
+            />
+          </div>
+          <Popup
+            selectedValue={selectedWallet}
+            open={showPopup}
+            onClose={this.handlePopupClose}
           />
-        </div>
-        <Popup
-          selectedValue={selectedWallet}
-          open={showPopup}
-          onClose={this.handlePopupClose}
-        />
+        </Grid>
       </Grid>
     );
   };

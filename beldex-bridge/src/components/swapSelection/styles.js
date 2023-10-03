@@ -85,6 +85,7 @@ const styles = (theme) => ({
     fontStyle: 'normal',
     fontWeight: 300,
   },
+  
 });
 
 export default styles;

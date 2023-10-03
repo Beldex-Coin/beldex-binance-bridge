@@ -66,6 +66,7 @@ code {
   color: #fff;
   font-size: 2rem;
   font-weight: 300;
+  margin-bottom: 0;
 }
 .beldexName {
   color: #3ec745;
@@ -130,7 +131,7 @@ code {
   /* flex: 1; */
   /* padding: 8px; */
   width: 100%;
-  height: 90%;
+  height: 100%;
 }
 
 .contract-address b {

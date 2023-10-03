@@ -38,6 +38,21 @@ const styles = theme => ({
       maxWidth: '800px',
       margin: 'auto',
     }
+  },
+  registerWrapper:{
+    width:'100%',
+    display:'flex',
+    justifyContent:'center',
+    alignItem:'center'
+
+  },
+  leftPane:{
+    width:'100%',
+    height:'100%',
+    display:'flex',
+    flexDirection:'column',
+    justifyContent:'center'
+
   }
 });
 

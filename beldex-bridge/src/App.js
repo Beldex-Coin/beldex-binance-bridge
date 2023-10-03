@@ -127,7 +127,7 @@ export default class App extends PureComponent {
             </p>
           </div> */}
           <div className="d-flex-center">
-            <Grid id="grid" container spacing={2}>
+            {/* <Grid id="grid" container spacing={2}>
               <Grid xs={12} md={5}>
                 <p className="appName">
                   <span className="beldexName">Beldex</span> Bridge
@@ -138,8 +138,8 @@ export default class App extends PureComponent {
                   sapien fringilla, mattis ligula consectetur, ultrices mauris.
                   Maecenas vitae mattis tellus.
                 </p>
-              </Grid>
-              <Grid item xs={12} md={7}>
+              </Grid>  */}
+              <Grid id="grid" container spacing={2} xs={12} >
 
                 {/* <div className="rightPane-wrapper"> */}
                 {/* <div className="movedBal">
@@ -157,7 +157,7 @@ export default class App extends PureComponent {
                 {/* </div> */}
               </Grid>
 
-            </Grid>
+            {/* </Grid> */}
           </div>
         </div>
       </MuiThemeProvider>
