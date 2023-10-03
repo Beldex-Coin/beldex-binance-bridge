@@ -2,7 +2,8 @@ import { common } from "@theme";
 
 const styles = (theme) => ({
   root: {
-    width:'100%',
+    width: "100%",
+    margin:'auto',
     marginTop: "20px",
     backgroundColor: "#1C1C26 !important",
     // padding: '1.5rem',
@@ -11,7 +12,7 @@ const styles = (theme) => ({
     border: "1px solid #f00",
     // position: "relative",
     borderRadius: "10px !important",
-   
+
     // paddingTop: "90px",
     [theme.breakpoints.up("md")]: {
       maxWidth: "500px",
@@ -20,6 +21,11 @@ const styles = (theme) => ({
   },
   button: {
     marginTop: "24px",
+    "& .Mui-disabled": {
+      borderRadius: "50px",
+      border: "1px solid #00AD07",
+      background: "#242433",
+    },
   },
   createAccount: {
     fontSize: "0.8rem",
@@ -61,31 +67,30 @@ const styles = (theme) => ({
     // right: "15px",
 
     // zIndex: "9",
-    textAlign: 'end',
+    textAlign: "end",
     color: "#AFAFBE",
     fontFamily: "Poppins",
     fontStyle: "normal",
     fontWeight: 400,
   },
-  wbdxAddressTitle:{
-    color: '#AFAFBE',
-    textAlign: 'center',
-    fontFamily: 'Poppins',
-    fontSize: '16px',
-    fontStyle: 'normal',
+  wbdxAddressTitle: {
+    color: "#AFAFBE",
+    textAlign: "center",
+    fontFamily: "Poppins",
+    fontSize: "16px",
+    fontStyle: "normal",
     fontWeight: 300,
-    wordBreak:'break-all',
+    wordBreak: "break-all",
   },
-  wbdxAddress:{
-    wordBreak:'break-all',
-    color: '#EBEBEB;',
-    textAlign: 'center',
-    fontFamily: 'Poppins',
-    fontSize: '16px',
-    fontStyle: 'normal',
+  wbdxAddress: {
+    wordBreak: "break-all",
+    color: "#EBEBEB;",
+    textAlign: "center",
+    fontFamily: "Poppins",
+    fontSize: "16px",
+    fontStyle: "normal",
     fontWeight: 300,
   },
-  
 });
 
 export default styles;

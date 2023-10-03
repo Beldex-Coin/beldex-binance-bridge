@@ -131,14 +131,14 @@ class SwapSelection extends Component {
     const url = walletCreationUrl["bnb"];
     return (
       <Grid item xs={12} className={classes.root}>
-        
         <div className="movedBal">
           <p className="bal-title">
             Total <span style={{ color: "rgba(0, 173, 7, 0.93)" }}>BDX</span>{" "}
             moved to Binance smart chain
           </p>
           <p className="movedBal-p2">
-            {this.state.movedBalance} <span className="availBal">/ {this.state.totalSupply}</span>
+            {this.state.movedBalance}{" "}
+            <span className="availBal">/ {this.state.totalSupply}</span>
           </p>
         </div>
         <Grid item xs={12} className={classes.swapTabs}>
@@ -198,6 +198,7 @@ class SwapSelection extends Component {
             fullWidth
             label="Next"
             loading={loading}
+            disabled={addressType === "bdx" ? !address && !amount : !address}
             onClick={this.onNext}
           />
         </Grid>
@@ -215,16 +216,20 @@ class SwapSelection extends Component {
           </Link>
         </Typography>
         {/* <Link className={classes.belLink} href="BBDXBridgeTOS.html" target="_blank">Terms of Service</Link> */}
-        <Typography
-          className={`contract-address ${classes.wbdxAddressTitle}`}
-          style={{ marginTop: "20px" }}
-        >
-          wBDX Contract address :
-        </Typography>
-        <Typography className={classes.wbdxAddress}>
-          0x90bbdDbF3223363898065b9C736e2B86C655762b
-        </Typography>
-
+        {addressType === "bdx" && (
+          <>
+            {" "}
+            <Typography
+              className={`contract-address ${classes.wbdxAddressTitle}`}
+              style={{ marginTop: "20px" }}
+            >
+              wBDX Contract address :
+            </Typography>
+            <Typography className={classes.wbdxAddress}>
+              0x90bbdDbF3223363898065b9C736e2B86C655762b
+            </Typography>
+          </>
+        )}
         {
           this.state.loginOpen && (
             <div className="warningText">
