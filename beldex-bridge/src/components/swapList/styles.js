@@ -21,7 +21,7 @@ const styles = theme => ({
     fontSize:'14px'
   },
   statusImg:{
-    width: '18px'
+    width: '15px'
   },
   time: {
     // fontSize: '1em',
@@ -42,7 +42,7 @@ const styles = theme => ({
   hashTitle: {
     color:'#AFAFBE',
     fontWeight: '600',
-    fontSize: '1em',
+    fontSize: '1.1em',
     marginRight: '4px',
     margin:'8px 0px 5px'
   },

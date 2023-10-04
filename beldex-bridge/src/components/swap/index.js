@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import Web3 from "web3";
 import { withStyles } from "@material-ui/core/styles";
-import { Grid, Typography, Box } from "@material-ui/core";
+import { Grid, Typography, Box,Link} from "@material-ui/core";
 import { Warning } from "@utils/error";
 import { store, dispatcher, Actions, Events } from "@store";
 import { SWAP_TYPE, TYPE } from "@constants";
@@ -377,7 +377,7 @@ class Swap extends Component {
     );
     const merged = [...unconfirmedSwaps, ...swaps];
     return (
-      <Grid item xs={12} md={6} className={classes.swapList}>
+      <Grid className={classes.swapList}>
         <Box display="flex" flexDirection="column" className={classes.section}>
           <Box
             display="flex"
@@ -430,17 +430,17 @@ class Swap extends Component {
     const { classes } = props;
     const { loading, swapType, info, showPopup, selectedWallet } = this.state;
     return (
-      <Grid    className={classes.registerWrapper}>
+      <Grid className={classes.registerWrapper}>
         <Grid xs={12} md={5}>
-          <div  className={classes.leftPane}>
-          <p className="appName">
-            <span className="beldexName">Beldex</span> Bridge
-          </p>
-          <p className="app-left-content">
-          The Beldex bridge connects the Beldex network with the BNB Smart Chain network.
-           Here you can swap BDX to wBDX and vice versa.
-          Explore trading and DeFi opportunities in the BNB Smart Chain with wrapped BDX. 
-          </p>
+          <div className={classes.leftPane}>
+            <p className="appName">
+              <span className="beldexName">Beldex</span> Bridge
+            </p>
+            <p className="app-left-content">
+              The Beldex bridge connects the Beldex network with the BNB Smart Chain network.
+              Here you can swap BDX to wBDX and vice versa.
+              Explore trading and DeFi opportunities in the BNB Smart Chain with wrapped BDX.
+            </p>
           </div>
         </Grid>
         <Grid xs={12} md={7}>
@@ -469,6 +469,11 @@ class Swap extends Component {
       </Grid>
     );
   };
+
+  goBack = () => {
+    window.location.reload()
+  }
+  
   renderInfo = () => {
     const { classes } = this.props;
     const {
@@ -482,22 +487,53 @@ class Swap extends Component {
     } = this.state;
     return (
       <React.Fragment>
-        <Grid item xs={12} md={6} className={classes.item}>
-          <SwapInfo
-            swapType={swapType}
-            swapInfo={swapInfo}
-            info={info}
-            selectedWallet={selectedWallet}
-            onRefresh={this.onRefresh}
-            onBack={this.resetState}
-            connectToMetaMask={() => this.connectToMetaMask()}
-            loading={loading}
-            walletConnected={
-              selectedWallet === "Binance" ? walletConnBin : walletConnMeta
-            }
-          />
+        <Grid className={classes.registerWrapperRow}>
+        <Typography>
+            <Link className={classes.link} onClick={this.goBack}>
+              &lt; Back
+            </Link>
+          </Typography>
+          <Grid>
+            <div className="movedBal">
+              <p className="bal-title">
+                Total <span style={{ color: "rgba(0, 173, 7, 0.93)" }}>BDX</span>{" "}
+                moved to Binance smart chain
+                <span className="movedBal-p2" style={{marginLeft:'10px'}}>
+                  {100}{" "}
+                  <span className="availBal">
+                    / {100}
+                  </span>
+                </span>
+              </p>
+              {/* <p >
+                <span >/ {100}</span>
+              </p> */}
+            </div>
+          </Grid>
+          <Grid container spacing={2} style={{
+            display: 'flex', flexDirection: 'row', alignContent: 'center', justifyContent: 'space-between'
+          }}>
+            <Grid item xs={12} md={6} className={classes.item}>
+              <SwapInfo
+                swapType={swapType}
+                swapInfo={swapInfo}
+                info={info}
+                selectedWallet={selectedWallet}
+                onRefresh={this.onRefresh}
+                onBack={this.resetState}
+                connectToMetaMask={() => this.connectToMetaMask()}
+                loading={loading}
+                walletConnected={
+                  selectedWallet === "Binance" ? walletConnBin : walletConnMeta
+                }
+              />
+            </Grid>
+            <Grid item xs={12} md={6} >
+              {this.renderTransactions()}
+            </Grid>
+          </Grid>
+
         </Grid>
-        {this.renderTransactions()}
       </React.Fragment>
     );
   };

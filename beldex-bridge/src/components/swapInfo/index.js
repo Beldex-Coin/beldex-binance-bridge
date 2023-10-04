@@ -188,20 +188,20 @@ class SwapInfo extends PureComponent {
     );
   }
 
-  goBack = () => {
-    window.location.reload()
-  }
+  // goBack = () => {
+  //   window.location.reload()
+  // }
 
   render() {
     const { classes, loading, onRefresh, walletConnected, swapType, selectedWallet } = this.props;
     return (
       <div className={classes.root}>
         <Grid item xs={12} align='left' className={classes.back}>
-          <Typography>
+          {/* <Typography>
             <Link className={classes.link} onClick={this.goBack}>
               &lt; Back
             </Link>
-          </Typography>
+          </Typography> */}
           {swapType !== SWAP_TYPE.BDX_TO_BBDX && (!walletConnected ? <Typography className={classes.walletConnErr}>
             wallet not connected. Please connect your wallet.
           </Typography> :

@@ -65,6 +65,20 @@ const styles = theme => ({
     alignItem: 'center'
 
   },
+  registerWrapperRow: {
+    width: '100%',
+    height: '100%',
+    display: 'flex',
+    flexDirection:'column',
+    justifyContent: 'center',
+    alignItem: 'center',
+    padding: '15px',
+    border: '0.5px #56566C solid',
+    backgroundColor: '#1C1C26',
+    borderRadius: '20px',
+    marginTop:'15px'
+
+  },
   leftPane: {
     width: '100%',
     height: '100%',
