@@ -7,17 +7,27 @@ const styles = theme => ({
   item: {
     padding: theme.spacing(1, 2),
     borderBottom: '0px solid #d4d4d4',
-    background: '#4a4a63',
+    background: '#282837',
     borderRadius: '10px'
   },
   pending: {
-    color: orange[500]
+    color: '#AFAFBE',
+    fontWeight:'600',
+    fontSize:'14px'
   },
   completed: {
-    color: '#338a14'
+    color: '#3EC745',
+    fontWeight:'600',
+    fontSize:'14px'
+  },
+  statusImg:{
+    width: '18px'
   },
   time: {
-    fontSize: '1em'
+    // fontSize: '1em',
+    color:'#AFAFBE',
+    fontWeight: '400',
+    fontSize:'14px'
   },
   timeSeperator: {
     margin: '0 4px'
@@ -25,18 +35,35 @@ const styles = theme => ({
   divider: {
     margin: '8px 0'
   },
-  hashTitle: {
-    fontWeight: '500',
-    fontSize: '1em',
-    marginRight: '4px'
+  hashBox:{
+   margin:'6px 0px', 
+   padding:'0px 6px'
   },
+  hashTitle: {
+    color:'#AFAFBE',
+    fontWeight: '600',
+    fontSize: '1em',
+    marginRight: '4px',
+    margin:'8px 0px 5px'
+  },
+  TxDetails:{
+    wordBreak:'break-word'
+  },
+  hashes:{width:'70%'},
   hash: {
-    fontStyle: 'italic',
-    overflowWrap: 'break-word'
+    // fontStyle: 'italic',
+    overflowWrap: 'break-word',
+    fontWeight:300
+  },
+  txnStatusHeader:{
+padding:'8px',
+border:'1px #393954 solid',
+borderRadius:'8px',
+backgroundColor:'#242433'
   },
   amount: {
     fontSize: '1.25em',
-    fontWeight: '500'
+    fontWeight: '600'
   },
   emptyTitle: {
     padding: theme.spacing(1, 0),

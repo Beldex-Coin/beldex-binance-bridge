@@ -351,7 +351,7 @@ class Swap extends Component {
     const fee = (fees && fees[receivingCurrency]) || 0;
     const displayTotal = Math.max(0, total - fee) / 1e9;
     return (
-      <Box display="flex" flexDirection="row" alignItems="center">
+      <Box display="flex" flexDirection="row" alignItems="center" className={classes.txHeader} >
         <Typography className={classes.statTitle}>Amount Due:</Typography>
         <Typography className={classes.statAmount}>
           {displayTotal} {currencySymbols[receivingCurrency]}
@@ -377,7 +377,7 @@ class Swap extends Component {
     );
     const merged = [...unconfirmedSwaps, ...swaps];
     return (
-      <Grid item xs={12} md={6}>
+      <Grid item xs={12} md={6} className={classes.swapList}>
         <Box display="flex" flexDirection="column" className={classes.section}>
           <Box
             display="flex"
@@ -390,7 +390,7 @@ class Swap extends Component {
             </Typography>
             {this.renderReceivingAmount()}
           </Box>
-          <Grid item xs={12}>
+          <Grid className={classes.sectionSwap} item xs={12}>
             <SwapList swaps={merged} />
           </Grid>
         </Box>
@@ -437,10 +437,9 @@ class Swap extends Component {
             <span className="beldexName">Beldex</span> Bridge
           </p>
           <p className="app-left-content">
-            Lorem ipsum dolor sit amet consectetur adipiscing elit Ut et massa
-            mi. Aliquam in hendrerit urna. Pellentesque sit amet sapien
-            fringilla, mattis ligula consectetur, ultrices mauris. Maecenas
-            vitae mattis tellus.
+          The Beldex bridge connects the Beldex network with the BNB Smart Chain network.
+           Here you can swap BDX to wBDX and vice versa.
+          Explore trading and DeFi opportunities in the BNB Smart Chain with wrapped BDX. 
           </p>
           </div>
         </Grid>

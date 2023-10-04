@@ -16,43 +16,68 @@ const styles = theme => ({
     justifyContent: 'space-between',
     alignItems: 'center'
   },
+  txHeader: {
+    backgroundColor: '#2E2E44',
+    borderRadius: '10px',
+    padding: '7px'
+  },
   statTitle: {
     marginRight: '4px',
-    fontSize: '0.84rem'
+    fontSize: '0.84rem',
+    color: '#AFAFBE',
+    fontWeight: '600',
   },
   statAmount: {
+    color: '#EBEBEB',
     fontWeight: '600',
     fontSize: '0.94rem'
   },
   transactionTitle: {
-    fontSize: '16px'
+    fontSize: '16px',
+    fontWeight: '600'
   },
-  hash:{
+  hash: {
     fontSize: '14px'
   },
   section: {
     ...common.section,
     height: '467px',
-    overflowX: 'hidden',
+    padding: '10px',
     [theme.breakpoints.up('md')]: {
       maxWidth: '800px',
       margin: 'auto',
     }
   },
-  registerWrapper:{
-    width:'100%',
-    display:'flex',
-    justifyContent:'center',
-    alignItem:'center'
+  sectionSwap: {
+    ...common.section,
+    height: '467px',
+    overflowX: 'hidden',
+    padding: '10px',
+    [theme.breakpoints.up('md')]: {
+      maxWidth: '800px',
+      margin: 'auto',
+    }
+  },
+  registerWrapper: {
+    width: '100%',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItem: 'center'
 
   },
-  leftPane:{
-    width:'100%',
-    height:'100%',
-    display:'flex',
-    flexDirection:'column',
-    justifyContent:'center'
-
+  leftPane: {
+    width: '100%',
+    height: '100%',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center'
+  },
+  swapList: {
+    borderRadius: '10px',
+    border: '1px #393954 solid'
+  },
+  scroll: {
+    overflowX: 'hidden',
   }
 });
 

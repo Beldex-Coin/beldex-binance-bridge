@@ -7,14 +7,15 @@ import { withStyles } from '@material-ui/core/styles';
 import config from '@config';
 import { SWAP_TYPE, TYPE } from '@constants';
 import styles from './styles';
-
+import Pending from './pending.svg'
+import Completed from './completed.svg';
 const hashUrls = {
   [TYPE.BDX]: config.beldex.txExplorerUrl,
   [TYPE.BNB]: config.binance.txExplorerUrl,
 };
 
 class SwapList extends Component {
-  renderHash = (type, txHash, transferTxHashes) => {
+  renderHash = (type, txHash, transferTxHashes, created) => {
     const { classes } = this.props;
 
     const hasTransferHashes = transferTxHashes.length > 0;
@@ -23,7 +24,7 @@ class SwapList extends Component {
     const hashType = hasTransferHashes ? transferHashType : depositHashType;
     const baseUrl = hashUrls[hashType];
 
-    const hashes = hasTransferHashes? transferTxHashes : [txHash];
+    const hashes = hasTransferHashes ? transferTxHashes : [txHash];
     const hashItems = hashes.map(hash => {
       const url = `${baseUrl}${hash}`;
       return (
@@ -35,20 +36,31 @@ class SwapList extends Component {
       );
     });
 
-    if(transferTxHashes.length === 0) {
+    if (transferTxHashes.length === 0) {
       return (
-        <Box>
+        <Box className={classes.hashBox}>
           <Typography className={classes.hashTitle}>Deposit Transaction Hash</Typography>
-          {hashItems[0]}
+          <Box display="flex" flexDirection="row" alignItems="center" justifyContent="space-between" className={classes.TxDetails}>
+            <Typography className={classes.hashes}>  {hashItems[0]}</Typography>
+            <Typography > {this.renderTime(created)}</Typography>
+          </Box>
         </Box>
       );
     }
 
     const swapTitle = transferTxHashes.length === 1 ? 'Swap Transaction Hash' : 'Swap Transaction Hashes';
+    console.log("swapTitle:", swapTitle, hashItems)
     return (
       <React.Fragment>
-        <Typography className={classes.hashTitle}>{swapTitle}</Typography>
-        {hashItems}
+        <Box className={classes.hashBox}>
+          <Typography className={classes.hashTitle}>{swapTitle}</Typography>
+          <Box display="flex" flexDirection="row" alignItems="center" justifyContent="space-between" className={classes.TxDetails}>
+            <Typography className={classes.hashes}>  {hashItems}</Typography>
+            <Typography > {this.renderTime(created)}</Typography>
+          </Box>
+        </Box>
+        {/* <Typography className={classes.hashTitle}>{swapTitle}</Typography>
+        {hashItems} */}
       </React.Fragment>
     );
   }
@@ -86,18 +98,18 @@ class SwapList extends Component {
     return (
       <Grid item xs={12} key={uuid}>
         <Box className={classes.item}>
-          <Box display="flex" flexDirection="row" alignItems="center" justifyContent="space-between">
+          <Box display="flex" flexDirection="row" alignItems="center" justifyContent="space-between" className={classes.txnStatusHeader}>
             <Typography className={classes.amount}>{displayAmount} {depositCurrency}</Typography>
-            <Box display="flex" flexDirection="row" alignItems="center">
-              <Typography className={isPending ? classes.pending : classes.completed}>
-                {status}
+            <Box display="flex" flexDirection="row" alignItems="center" justifyContent="center">
+              <Typography className={isPending ? classes.pending : classes.completed} style={{ padding: "0px 3px 0px" }}>{status}
               </Typography>
-              <Typography className={classes.timeSeperator}> • </Typography>
-              { this.renderTime(created) }
+              <img alt="" src={isPending ? Pending : Completed} className={classes.statusImg} />
+              {/* <Typography className={classes.timeSeperator}> • </Typography> */}
+              {/* { this.renderTime(created) } */}
             </Box>
           </Box>
-          <Divider variant="middle" className={classes.divider} />
-          { this.renderHash(type, txHash, transferTxHashes) }
+          {/* <Divider variant="middle" className={classes.divider} /> */}
+          {this.renderHash(type, txHash, transferTxHashes, created)}
         </Box>
       </Grid>
     );
@@ -120,7 +132,7 @@ class SwapList extends Component {
     const { classes } = this.props;
 
     return (
-      <Grid item xs={ 12 } className={classes.root}>
+      <Grid item xs={12} className={classes.root}>
         <Grid container direction="column" spacing={1}>
           {this.renderSwaps()}
         </Grid>
