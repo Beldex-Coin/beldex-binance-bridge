@@ -1,94 +1,166 @@
-import { red } from '@material-ui/core/colors';
-import { common } from '@theme';
+import { red } from "@material-ui/core/colors";
+import { common } from "@theme";
 
-const styles = theme => ({
+const styles = (theme) => ({
   root: {
-    [theme.breakpoints.up('md')]: {
-      maxWidth: '800px',
-      position: 'sticky',
+    [theme.breakpoints.up("md")]: {
+      maxWidth: "800px",
+      position: "sticky",
       top: 0,
     },
     ...common.section,
   },
   instructionContainer: {
-    ...common.flexCenter,
-    flexDirection: 'column',
-    wordBreak: 'break-word',
+    // ...common.flexCenter,
+    flexDirection: "column",
+    wordBreak: "break-word",
   },
-  
+
   instructions: {
-    fontSize: '14px',
-    textAlign: 'center',
-    marginBottom: '16px',
-    color: "#fff",
-    wordBreak: 'break-word'
+    color: "#EBEBEB",
+    fontFamily: "Poppins",
+    fontSize: "1rem",
+    fontStyle: "normal",
+    fontWeight: 300,
+    lineHeight: "22px",
+    wordBreak: "break-word",
+    marginTop: theme.spacing(1),
   },
   instructionBold: {
-    color: '#fff',
-    fontSize: '0.9rem',
-    fontWeight: '600',
-    textAlign: 'center',
-    marginBottom: '16px',
-    overflowWrap: 'break-word',
+    // color: '#fff',
+    fontFamily: "Poppins",
+    color: "#AFAFBE",
+    fontSize: "1.2rem",
+    fontWeight: "600",
+    // textAlign: 'left',
+    marginBottom: "5px",
+    overflowWrap: "break-word",
+  },
+  feeInfo: {
+    marginTop: theme.spacing(1),
+    color: "#AFAFBE",
+    textAlign: "center",
+    fontFamily: "Poppins",
+    fontSize: "18px",
+    fontStyle: "normal",
+    fontWeight: 400,
+  },
+  instructionWrapper: {
+    marginTop: theme.spacing(2),
+    padding: "20px",
+    borderRadius: "10px",
+    border: "1px solid #393954",
   },
   memoFrame: {
     marginBottom: theme.spacing(3),
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
   },
   memo: {
-    border: '1px solid',
-    borderColor: '#35af3b',
-    borderRadius: '3px',
-    backgroundColor: '#35af3b',
-    color: 'white',
-    padding: '1rem',
-    overflowWrap: 'break-word',
-    maxWidth: '100%',
-    textAlign: 'center'
+    border: "1px solid",
+    borderColor: "#35af3b",
+    borderRadius: "3px",
+    backgroundColor: "#35af3b",
+    color: "white",
+    padding: "1rem",
+    overflowWrap: "break-word",
+    maxWidth: "100%",
+    textAlign: "center",
   },
   warningText: {
     color: theme.palette.text.secondary,
     margin: theme.spacing(1, 0),
-    textAlign: 'center',
+    textAlign: "center",
   },
   link: {
-    cursor: 'pointer'
+    cursor: "pointer",
   },
   qr: {
     padding: theme.spacing(1),
-    backgroundColor: 'white',
+    backgroundColor: "white",
+    borderRadius: "16px",
   },
   qrContainer: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    marginBottom: theme.spacing(2),
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    background: "#1C1C26",
+    borderRadius: "16px",
+    // width: '271px',
+    padding: "20px",
+    margin: "auto",
+    marginBottom: theme.spacing(1),
+    marginTop: theme.spacing(1),
   },
   red: {
-    color: red[500]
+    color: red[500],
+  },
+  addressWrapper: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    padding: "20px",
   },
   greenBorder: {
-    borderWidth: 1,
-    borderColor: "transparent",
-    borderStyle: 'solid',
-    borderRadius: '4px',
-    border: 'none',
-    background: '#4a4a63',
-    padding: '10px'
+    width: "77%",
+    // borderRadius: '4px',
+    border: "none",
+    // background: '#4a4a63',
+    // padding: "10px",
+    color: "#EBEBEB",
+    fontFamily: "Poppins",
+    fontSize: "16px",
+    fontStyle: "normal",
+    fontWeight: 500,
   },
-  walletConnSucc:{
-    color: "#35af3b !important",
+  wbdxAddressTitle: {
+    color: "#AFAFBE",
     textAlign: "center",
-    marginBottom: "10px"
+    fontFamily: "Poppins",
+    fontSize: "1rem",
+    fontStyle: "normal",
+    fontWeight: 300,
+    wordBreak: "break-all",
   },
-  walletConnErr:{
+  // wbdxAddress: {
+  //   wordBreak: "break-all",
+  //   wbdxAddressTitle,
+  //   color: "#EBEBEB",
+  //   textAlign: "center",
+  //   fontFamily: "Poppins",
+  //   fontSize: "16px",
+  //   fontStyle: "normal",
+  //   fontWeight: 300,
+  // },
+  walletConWrapper: {
+    borderRadius: "12px",
+    background: "#282837",
+    width: "100%",
+    height: "70px",
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  walletConnSucc: {
+    // color: "#35af3b !important",
+    // textAlign: "center",
+    // marginBottom: "10px",
+    color: "#3EC745 !important",
+    textAlign: "center",
+    fontFamily: "Poppins",
+    fontSize: "22px",
+    fontStyle: "normal",
+    fontWeight: 600,
+  },
+  walletConnErr: {
     color: "red !important",
     textAlign: "center",
-    fontSize:'14px',
-    marginBottom: "10px"
-  }
+    fontSize: "14px",
+    marginBottom: "10px",
+  },
 });
 
 export default styles;

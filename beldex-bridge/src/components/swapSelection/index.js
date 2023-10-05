@@ -18,7 +18,9 @@ class SwapSelection extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      address: "0xd90A3ABEDc6CdaA0DAc658881167C86D8c714D97",
+      // address: "0xd90A3ABEDc6CdaA0DAc658881167C86D8c714D97",
+      address: "",
+
       amount: 0,
       addressError: false,
       options: [
@@ -42,7 +44,8 @@ class SwapSelection extends Component {
 
   componentDidMount = () => {
     store.on(Events.FETCHED_BALANCE, this.onBalUpdated);
-    this.onNext();
+    // this.onNext()
+
   };
 
   onBalUpdated = () => {
@@ -179,7 +182,7 @@ class SwapSelection extends Component {
                 label="Amount"
                 placeholder="Amount"
                 value={amount}
-                type="number"
+                type="text"
                 onChange={this.onAmountChanged}
                 disabled={loading}
                 error={this.state.amountError}
@@ -199,7 +202,7 @@ class SwapSelection extends Component {
             fullWidth
             label="Next"
             loading={loading}
-            disabled={addressType === "bdx" ? !address && !amount : !address}
+            disabled={addressType === "bdx" ? !address || !amount : !address}
             onClick={this.onNext}
           />
         </Grid>
