@@ -1,4 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700&display=swap");
+
 html {
   overflow-y: hidden;
 }
@@ -9,9 +10,11 @@ body {
   margin: 0;
   padding: 0;
 }
+
 body {
   touch-action: manipulation;
 }
+
 body {
   overflow-y: auto;
   font-family: "Poppins", sans-serif;
@@ -32,7 +35,8 @@ code {
   display: flex;
   flex-direction: column;
   min-width: 100px;
-  background: #000; /* Old browsers */
+  background: #000;
+  /* Old browsers */
 }
 
 #content {
@@ -68,6 +72,7 @@ code {
   font-weight: 300;
   margin-bottom: 0;
 }
+
 .beldexName {
   color: #3ec745;
   font-family: Poppins;
@@ -76,6 +81,7 @@ code {
   /* font-size: 1.8rem; */
   line-height: normal;
 }
+
 .app-left-content {
   color: #afafbe;
   font-family: Poppins;
@@ -83,6 +89,7 @@ code {
   font-style: normal;
   font-weight: 300;
 }
+
 .moving {
   position: absolute;
   bottom: 0;
@@ -100,11 +107,13 @@ code {
     transform: translateX(0px);
     opacity: 1;
   }
+
   100% {
     transform: translateX(100vw);
     opacity: 1;
   }
 }
+
 .backgroundImageLoaded {
   opacity: 1;
 }
@@ -137,6 +146,7 @@ code {
 .contract-address b {
   word-break: break-all;
 }
+
 .d-flex-center {
   width: 91%;
   height: 100%;
@@ -154,6 +164,7 @@ code {
   background: #1c1c26;
   box-shadow: 0px 6px 94px 0px rgba(0, 0, 0, 0.2);
 } */
+
 .movedBal {
   /* width: 66%; */
   font-size: 15px;
@@ -170,11 +181,15 @@ code {
   padding: 20px 0;
   margin-bottom: 20px;
 }
+
 .movedBal .bal-title {
   /* color: #eee;
   padding: 0px 10px;
   line-height: 40px;
   margin: 0; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
   margin: 0;
   color: #afafbe;
   text-align: center;
@@ -182,8 +197,8 @@ code {
   font-size: 16px;
   font-style: normal;
   font-weight: 600;
-  line-height: normal;
 }
+
 .movedBal-p2 {
   /* font-size: 35px;
   font-weight: 600;
@@ -195,11 +210,16 @@ code {
   color: #fff;
   text-align: center;
   font-family: Poppins;
-  font-size: 1.8rem;
+  font-size: 1.3rem;
   font-style: normal;
   font-weight: 700;
   line-height: normal;
 }
+.balance-span {
+  font-size: 1.7rem;
+
+}
+
 .availBal {
   /* font-size: 25px; */
   /* font-weight: normal;
@@ -212,9 +232,11 @@ font-style: normal;
 font-weight: 700;
 line-height: normal; */
 }
+
 #grid {
   align-items: center;
 }
+
 .warningText {
   position: absolute;
   top: 35px;
@@ -236,6 +258,7 @@ line-height: normal; */
   -o-animation: glowing 1500ms infinite;
   animation: glowing 1500ms infinite;
 }
+
 .blinkImg {
   width: 18px;
   transform: translate(6px, 2px);
@@ -248,6 +271,7 @@ line-height: normal; */
     visibility: hidden;
   }
 }
+
 @-webkit-keyframes blink {
   to {
     visibility: hidden;
@@ -267,15 +291,23 @@ line-height: normal; */
     max-height: 120px;
     height: auto !important;
   }
+
   .movedBal-p2 {
     font-size: 24px;
   }
-  .movedBal {
-    margin: 0px auto;
+
+  .movedBal-span {
+    font-size: 26px;
   }
+
+  .movedBal {
+    margin: 30px auto;
+  }
+
   .availBal {
     font-size: 18px;
   }
+
   .title {
     margin: 20px 20px 0px;
   }
@@ -296,6 +328,7 @@ line-height: normal; */
     /* margin-top: 80px; */
     margin-bottom: 0px;
   }
+
   #grid {
     padding: 16px 7.5em;
   }

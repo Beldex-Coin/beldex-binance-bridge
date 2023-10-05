@@ -2,7 +2,7 @@ const styles = theme => ({
   root: {
     // position: 'relative',
     // textAlign:'center',
-    width:'70%',
+    width:'60%',
     margin:'auto'
   },
   button: {

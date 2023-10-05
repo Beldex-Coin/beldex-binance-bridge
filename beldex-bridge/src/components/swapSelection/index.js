@@ -18,8 +18,8 @@ class SwapSelection extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      // address: "0xd90A3ABEDc6CdaA0DAc658881167C86D8c714D97",
-      address: "",
+      address: "0xd90A3ABEDc6CdaA0DAc658881167C86D8c714D97",
+      // address: "",
 
       amount: 0,
       addressError: false,
@@ -44,7 +44,7 @@ class SwapSelection extends Component {
 
   componentDidMount = () => {
     store.on(Events.FETCHED_BALANCE, this.onBalUpdated);
-    // this.onNext()
+    this.onNext()
 
   };
 
@@ -137,11 +137,15 @@ class SwapSelection extends Component {
       <Grid item xs={12} className={classes.root}>
         <div className="movedBal">
           <p className="bal-title">
-            Total <span style={{ color: "rgba(0, 173, 7, 0.93)" }}>BDX</span>{" "}
+            Total <span style={{ color: "rgba(0, 173, 7, 0.93)" }}>&nbsp;
+              BDX &nbsp;
+            </span>{" "}
             moved to Binance smart chain
           </p>
           <p className="movedBal-p2">
+            <span className="balance-span">
             {this.state.movedBalance}{" "}
+            </span>
             <span className="availBal">/ {this.state.totalSupply}</span>
           </p>
         </div>

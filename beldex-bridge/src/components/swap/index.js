@@ -2,13 +2,14 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import Web3 from "web3";
 import { withStyles } from "@material-ui/core/styles";
-import { Grid, Typography, Box,Link} from "@material-ui/core";
+import { Grid, Typography, Box, Link } from "@material-ui/core";
 import { Warning } from "@utils/error";
 import { store, dispatcher, Actions, Events } from "@store";
 import { SWAP_TYPE, TYPE } from "@constants";
 import { SwapSelection, SwapInfo, SwapList, Popup } from "@components";
 import styles from "./styles";
 import matrixAbi from "../../matrixAbi";
+import Back from "./back.svg";
 const currencySymbols = {
   [TYPE.BDX]: "BDX",
   [TYPE.BNB]: "wBDX",
@@ -29,6 +30,7 @@ class Swap extends Component {
     unconfirmed: [],
     walletConnBin: false,
     walletConnMeta: false,
+    SwapSelection:''
   };
   componentWillMount() {
     this.onInfoUpdated();
@@ -473,8 +475,8 @@ class Swap extends Component {
   goBack = () => {
     window.location.reload()
   }
-  
-  renderInfo = () => {
+
+  renderInfo = (movedBalance,totalSupply) => {
     const { classes } = this.props;
     const {
       loading,
@@ -484,24 +486,28 @@ class Swap extends Component {
       walletConnMeta,
       walletConnBin,
       selectedWallet,
+      SwapSelection
     } = this.state;
     return (
       <React.Fragment>
-        <Box  className={classes.registerWrapperRow}>
-        <Typography>
-            <Link className={classes.link} onClick={this.goBack}>
-              &lt; Back
+        <Grid className={classes.dashBoard}>
+          <Typography>
+            <Link className={classes.backBox} onClick={this.goBack}>
+              <img alt="" src={Back} className={classes.backImg} />
+              <Typography className={classes.backTxt}>Back</Typography>
             </Link>
           </Typography>
           <Grid>
-            <div className="movedBal" style={{marginTop:'20px'}}>
+            <div className="movedBal" style={{ marginTop: '20px' }}>
               <p className="bal-title">
-                Total <span style={{ color: "rgba(0, 173, 7, 0.93)" }}>BDX</span>{" "}
+                Total <span style={{ color: "rgba(0, 173, 7, 0.93)" }}>&nbsp;BDX&nbsp;</span>{" "}
                 moved to Binance smart chain
-                <span className="movedBal-p2" style={{marginLeft:'10px'}}>
-                  {100}{" "}
+                <span className="movedBal-p2" style={{ marginLeft: '10px' }}>
+                  <span className="balance-span">
+                  {movedBalance}{" "}
+                  </span>
                   <span className="availBal">
-                    / {100}
+                    / {totalSupply}
                   </span>
                 </span>
               </p>
@@ -512,9 +518,9 @@ class Swap extends Component {
           </Grid>
           <Grid container spacing={2} style={{
             display: 'flex', flexDirection: 'row', alignContent: 'center', justifyContent: 'space-between',
-            
+
           }}>
-            <Grid item xs={12} md={6} className={classes.item} style={{marginTop:'20px'}}>
+            <Grid item xs={12} md={6} className={classes.item} style={{ marginTop: '20px' }}>
               <SwapInfo
                 swapType={swapType}
                 swapInfo={swapInfo}
@@ -529,12 +535,11 @@ class Swap extends Component {
                 }
               />
             </Grid>
-            <Grid item xs={12} md={6} style={{marginTop:'20px'}}>
+            <Grid item xs={12} md={6} style={{ marginTop: '20px' }}>
               {this.renderTransactions()}
             </Grid>
           </Grid>
-
-        </Box>
+        </Grid>
       </React.Fragment>
     );
   };
@@ -545,7 +550,7 @@ class Swap extends Component {
       <Grid container className={classes.root} spacing={2}>
         {page === 0 &&
           this.renderSelection(this.props, totalSupply, movedBalance)}
-        {page === 1 && this.renderInfo()}
+        {page === 1 && this.renderInfo(movedBalance,totalSupply)}
       </Grid>
     );
   }

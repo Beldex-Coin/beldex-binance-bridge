@@ -51,6 +51,8 @@ const styles = theme => ({
   sectionSwap: {
     ...common.section,
     height: '467px',
+    // display:'flex',
+    // alignItems:'center',
     overflowX: 'hidden',
     padding: '10px',
     [theme.breakpoints.up('md')]: {
@@ -59,7 +61,7 @@ const styles = theme => ({
     }
   },
   registerWrapper: {
-   
+
     // width: '100%',
     // display: 'flex',
     // justifyContent: 'center',
@@ -70,21 +72,52 @@ const styles = theme => ({
     // [theme.breakpoints.down('sm')]: {
     //   flexWrap: "wrap",
     // }
+  },
+  backBox: {
+    display: 'flex',
+    alignItems: 'center',
+    fontSize: '0.90rem',
+    marginBottom: '10px'
 
   },
-
-  registerWrapperRow: {
+  backImg: {
+    width: '15px',
+    marginRight: '5px'
+  },
+  backTxt: {
+    fontWeight: '500'
+  },
+  balanceBox: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  dashBoard: {
     width: '100%',
     height: '100%',
     display: 'flex',
-    flexDirection:'column',
+    flexDirection: 'column',
     justifyContent: 'center',
     alignItem: 'center',
-    padding: '15px',
+    padding: '22px',
     border: '0.5px #56566C solid',
     backgroundColor: '#1C1C26',
     borderRadius: '20px',
-    marginTop:'15px'
+    marginTop: '15px'
+
+  },
+  dashBoard: {
+    width: '100%',
+    height: '100%',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItem: 'center',
+    padding: '22px',
+    border: '0.5px #56566C solid',
+    backgroundColor: '#1C1C26',
+    borderRadius: '20px',
+    marginTop: '15px'
 
   },
   leftPane: {
@@ -93,13 +126,13 @@ const styles = theme => ({
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
-    padding:'20px'
+    padding: '20px'
     // [theme.breakpoints.between('xs', 'sm')]: {
     //   width:'95%',
     //   margin:'auto'
     // },
   },
-  rightPaneWrapper:{
+  rightPaneWrapper: {
     width: "78%",
     padding: "45px 56px",
     marginLeft: "auto",
@@ -108,8 +141,8 @@ const styles = theme => ({
     background: "#1c1c26",
     boxShadow: "0px 6px 94px 0px rgba(0, 0, 0, 0.2)",
     [theme.breakpoints.between('xs', 'sm')]: {
-      width:'91%',
-      margin:'auto',
+      width: '91%',
+      margin: 'auto',
       padding: "10px",
     },
   },

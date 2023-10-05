@@ -9,6 +9,7 @@ import { SWAP_TYPE, TYPE } from '@constants';
 import styles from './styles';
 import Pending from './pending.svg'
 import Completed from './completed.svg';
+import EmptyTransaction from './no_transaction.svg';
 const hashUrls = {
   [TYPE.BDX]: config.beldex.txExplorerUrl,
   [TYPE.BNB]: config.binance.txExplorerUrl,
@@ -119,8 +120,11 @@ class SwapList extends Component {
     const { classes, swaps } = this.props;
     if (!swaps || swaps.length === 0) {
       return (
-        <Box className={classes.item}>
-          <Typography className={classes.emptyTitle}>No Transactions Found</Typography>
+        <Box style={{backgroundColor:"blue"}}>
+          <Box style={{backgroundColor:'red'}}>
+            <img alt="" src={EmptyTransaction} />
+            <Typography className={classes.emptyTitle}>No Transactions yet!</Typography>
+          </Box>
         </Box>
       );
     }
@@ -133,7 +137,7 @@ class SwapList extends Component {
 
     return (
       <Grid item xs={12} className={classes.root}>
-        <Grid container direction="column" spacing={1}>
+        <Grid container direction="column" spacing={1} >
           {this.renderSwaps()}
         </Grid>
       </Grid>

@@ -192,7 +192,7 @@ class SwapInfo extends PureComponent {
           </Typography>
         )}
         <Box className={classes.instructionWrapper}>
-          <Typography style={{ fontWeight: 600, fontSize: "1.4rem" }}>
+          <Typography style={{ fontWeight: 600, fontSize: "1.1rem" }}>
             Note{" "}
           </Typography>
           {swapType === SWAP_TYPE.BDX_TO_BBDX && (
