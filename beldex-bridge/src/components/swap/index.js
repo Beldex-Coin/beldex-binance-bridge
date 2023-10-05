@@ -430,7 +430,7 @@ class Swap extends Component {
     const { classes } = props;
     const { loading, swapType, info, showPopup, selectedWallet } = this.state;
     return (
-      <Grid className={classes.registerWrapper}>
+      <Grid container className={classes.registerWrapper}>
         <Grid xs={12} md={5}>
           <div className={classes.leftPane}>
             <p className="appName">
@@ -444,7 +444,7 @@ class Swap extends Component {
           </div>
         </Grid>
         <Grid xs={12} md={7}>
-          <div className="rightPane-wrapper">
+          <div className={classes.rightPaneWrapper}>
             <SwapSelection
               swapType={swapType}
               info={info}
@@ -487,14 +487,14 @@ class Swap extends Component {
     } = this.state;
     return (
       <React.Fragment>
-        <Grid className={classes.registerWrapperRow}>
+        <Box  className={classes.registerWrapperRow}>
         <Typography>
             <Link className={classes.link} onClick={this.goBack}>
               &lt; Back
             </Link>
           </Typography>
           <Grid>
-            <div className="movedBal">
+            <div className="movedBal" style={{marginTop:'20px'}}>
               <p className="bal-title">
                 Total <span style={{ color: "rgba(0, 173, 7, 0.93)" }}>BDX</span>{" "}
                 moved to Binance smart chain
@@ -511,9 +511,10 @@ class Swap extends Component {
             </div>
           </Grid>
           <Grid container spacing={2} style={{
-            display: 'flex', flexDirection: 'row', alignContent: 'center', justifyContent: 'space-between'
+            display: 'flex', flexDirection: 'row', alignContent: 'center', justifyContent: 'space-between',
+            
           }}>
-            <Grid item xs={12} md={6} className={classes.item}>
+            <Grid item xs={12} md={6} className={classes.item} style={{marginTop:'20px'}}>
               <SwapInfo
                 swapType={swapType}
                 swapInfo={swapInfo}
@@ -528,12 +529,12 @@ class Swap extends Component {
                 }
               />
             </Grid>
-            <Grid item xs={12} md={6} >
+            <Grid item xs={12} md={6} style={{marginTop:'20px'}}>
               {this.renderTransactions()}
             </Grid>
           </Grid>
 
-        </Grid>
+        </Box>
       </React.Fragment>
     );
   };

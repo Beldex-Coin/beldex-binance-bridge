@@ -41,7 +41,7 @@ code {
   align-items: center;
   flex-direction: column;
   z-index: 1;
-  overflow: auto;
+  /* overflow: auto; */
 }
 
 #background {
@@ -110,7 +110,7 @@ code {
 }
 
 .title {
-  margin: 20px 0 20px;
+  margin: 20px;
   /* position: relative; */
 }
 
@@ -138,11 +138,14 @@ code {
   word-break: break-all;
 }
 .d-flex-center {
+  width: 91%;
   height: 100%;
+  display: flex;
+  align-items: center;
 }
 
-.rightPane-wrapper {
-  /* width: 80%; */
+/* .rightPane-wrapper {
+ 
   width: 78%;
   padding: 45px 56px;
   margin-left: auto;
@@ -150,7 +153,7 @@ code {
   border: 0.5px solid #56566c;
   background: #1c1c26;
   box-shadow: 0px 6px 94px 0px rgba(0, 0, 0, 0.2);
-}
+} */
 .movedBal {
   /* width: 66%; */
   font-size: 15px;
@@ -268,13 +271,13 @@ line-height: normal; */
     font-size: 24px;
   }
   .movedBal {
-    margin: 30px auto;
+    margin: 0px auto;
   }
   .availBal {
     font-size: 18px;
   }
   .title {
-    margin: 20px 0 0px;
+    margin: 20px 20px 0px;
   }
 }
 

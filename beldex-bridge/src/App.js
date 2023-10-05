@@ -84,7 +84,7 @@ export default class App extends PureComponent {
         justifyContent="flexStart"
         alignSelf="baseline"
       >
-        <LazyLoad height={"60px"} className="titleContainer">
+        <LazyLoad height={"60px"} className="titleContainer" >
           <ImageLoader
             className="titleImage"
             loadedClassName="titleImageLoaded"
@@ -139,7 +139,7 @@ export default class App extends PureComponent {
                   Maecenas vitae mattis tellus.
                 </p>
               </Grid>  */}
-              <Grid id="grid" container spacing={2} xs={12} >
+              {/* <Grid id="grid" container  xs={12} > */}
 
                 {/* <div className="rightPane-wrapper"> */}
                 {/* <div className="movedBal">
@@ -155,7 +155,7 @@ export default class App extends PureComponent {
                 />
                 {this.renderSnackbar()}
                 {/* </div> */}
-              </Grid>
+              {/* </Grid> */}
 
             {/* </Grid> */}
           </div>

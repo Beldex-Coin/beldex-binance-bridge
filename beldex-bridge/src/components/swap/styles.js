@@ -59,12 +59,20 @@ const styles = theme => ({
     }
   },
   registerWrapper: {
-    width: '100%',
-    display: 'flex',
-    justifyContent: 'center',
-    alignItem: 'center'
+   
+    // width: '100%',
+    // display: 'flex',
+    // justifyContent: 'center',
+    // alignItem: 'center',
+    // [theme.breakpoints.between('xs', 'sm')]: {
+    //   flexWrap: "wrap",
+    // },
+    // [theme.breakpoints.down('sm')]: {
+    //   flexWrap: "wrap",
+    // }
 
   },
+
   registerWrapperRow: {
     width: '100%',
     height: '100%',
@@ -80,11 +88,30 @@ const styles = theme => ({
 
   },
   leftPane: {
-    width: '100%',
+    // width: '70%',
     height: '100%',
     display: 'flex',
     flexDirection: 'column',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    padding:'20px'
+    // [theme.breakpoints.between('xs', 'sm')]: {
+    //   width:'95%',
+    //   margin:'auto'
+    // },
+  },
+  rightPaneWrapper:{
+    width: "78%",
+    padding: "45px 56px",
+    marginLeft: "auto",
+    borderRadius: "30px",
+    border: "0.5px solid #56566c",
+    background: "#1c1c26",
+    boxShadow: "0px 6px 94px 0px rgba(0, 0, 0, 0.2)",
+    [theme.breakpoints.between('xs', 'sm')]: {
+      width:'91%',
+      margin:'auto',
+      padding: "10px",
+    },
   },
   swapList: {
     borderRadius: '10px',

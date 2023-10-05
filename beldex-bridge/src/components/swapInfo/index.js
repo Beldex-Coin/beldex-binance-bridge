@@ -257,14 +257,15 @@ class SwapInfo extends PureComponent {
     return (
       <div className={classes.root}>
         <Grid item xs={12} align="left" className={classes.back}>
-          <Typography>
+          {/* <Typography>
             <Link className={classes.link} onClick={this.goBack}>
               &lt; Back
             </Link>
-          </Typography>
+          </Typography> */}
 
           {swapType !== SWAP_TYPE.BDX_TO_BBDX && (
             <Box className={classes.walletConWrapper}>
+              
               {!walletConnected ? (
                 <Typography className={classes.walletConnErr}>
                   wallet not connected. Please connect your wallet.
