@@ -56,7 +56,26 @@ code {
   bottom: 0;
   background-color: #21212d;
 }
+/* width */
+::-webkit-scrollbar {
+  width: 5px;
+}
 
+/* Track */
+::-webkit-scrollbar-track {
+  border-radius: 12px;
+  background: #2e2e44;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  border-radius: 12px;
+  background: #47475b;
+}
+
+Handle on hover ::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
 .backgroundImage {
   object-fit: cover;
   width: 100%;
@@ -217,7 +236,6 @@ code {
 }
 .balance-span {
   font-size: 1.7rem;
-
 }
 
 .availBal {

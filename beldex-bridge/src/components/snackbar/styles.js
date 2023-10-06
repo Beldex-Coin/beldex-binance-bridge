@@ -1,7 +1,7 @@
-import { amber, green } from '@material-ui/core/colors';
-import { colors } from '@theme';
+import { amber, green } from "@material-ui/core/colors";
+import { colors } from "@theme";
 
-const styles = theme => ({
+const styles = (theme) => ({
   success: {
     backgroundColor: green[600],
   },
@@ -20,18 +20,29 @@ const styles = theme => ({
   iconVariant: {
     opacity: 0.9,
     marginRight: theme.spacing(1),
-    marginTop: '0px',
+    marginTop: "0px",
+  },
+  closeIcon: {
+    position: "relative",
+    top: "-22px",
+    right: "-31px",
+    // backgroundColor: "#282837",
+    borderRadius: "20px",
+    border: "2px solid white",
+    width: "26px",
+    height: "26px",
+    display: "flex",
   },
   message: {
-    display: 'flex',
-    alignItems: 'center'
+    display: "flex",
+    alignItems: "center",
   },
   primaryText: {
     color: theme.palette.text.primary,
   },
   blackText: {
     color: colors.belBlack,
-  }
+  },
 });
 
 export default styles;

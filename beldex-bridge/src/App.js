@@ -55,6 +55,8 @@ export default class App extends PureComponent {
       <Snackbar
         message={snackbar.message}
         open={snackbar.open}
+        // open={true}
+
         onClose={this.closeMessage}
         variant={snackbar.variant}
       />
