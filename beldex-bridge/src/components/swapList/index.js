@@ -120,8 +120,8 @@ class SwapList extends Component {
     const { classes, swaps } = this.props;
     if (!swaps || swaps.length === 0) {
       return (
-        <Box style={{backgroundColor:"blue"}}>
-          <Box style={{backgroundColor:'red'}}>
+        <Box >
+          <Box style={{width: "190px", textAlign: "center", marginTop: "70px"}}>
             <img alt="" src={EmptyTransaction} />
             <Typography className={classes.emptyTitle}>No Transactions yet!</Typography>
           </Box>
@@ -137,7 +137,7 @@ class SwapList extends Component {
 
     return (
       <Grid item xs={12} className={classes.root}>
-        <Grid container direction="column" spacing={1} >
+        <Grid container direction="column" spacing={1} xs={12}>
           {this.renderSwaps()}
         </Grid>
       </Grid>

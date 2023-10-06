@@ -10,6 +10,7 @@ import { SwapSelection, SwapInfo, SwapList, Popup } from "@components";
 import styles from "./styles";
 import matrixAbi from "../../matrixAbi";
 import Back from "./back.svg";
+
 const currencySymbols = {
   [TYPE.BDX]: "BDX",
   [TYPE.BNB]: "wBDX",
@@ -111,10 +112,64 @@ class Swap extends Component {
     setImmediate(() => this.getSwaps());
   };
   connectToMetaMask = async () => {
+    const provider = window.ethereum;
+    const binanceTestChainId = "0x38";
     this.web3Obj = new Web3(window.ethereum);
+    // let provider=new Web3(window.ethereum)
     try {
       window.ethereum.enable();
+      console.log('this.web3Obj ::',this.web3Obj)
       if (this.web3Obj) {
+        console.log('chainId ::1',)
+        // web3..then(console.log);
+        const chainId = await window.ethereum.request({
+          method: 'eth_chainId',
+        });
+        console.log('chainId 2::',chainId)
+
+        if (chainId === binanceTestChainId) {
+          console.log("Bravo!, you are on the correct network");
+        } else {
+          console.log("oulalal, switch to the correct network");
+          try {
+            await provider.request({
+              method: "wallet_switchEthereumChain",
+              params: [{ chainId: binanceTestChainId }],
+            });
+            console.log(
+              "You have succefully switched to Binance network"
+            );
+          } catch (switchError) {
+            // This error code indicates that the chain has not been added to MetaMask.
+            if (switchError.code === -32602) {
+              console.log(
+                "This network is not available in your metamask, please add it"
+              );
+              try {
+                await provider.request({
+                  method: "wallet_addEthereumChain",
+                  params: [
+                    {
+                      chainId: "56",
+                      chainName: "Smart Chain",
+                      rpcUrls: [
+                        " https://bsc-dataseed.binance.org/",
+                      ],
+                      blockExplorerUrls: ["https://bscscan.com"],
+                      nativeCurrency: {
+                        symbol: "BNB", // 2-6 characters long
+                        decimals: 18,
+                      },
+                    },
+                  ],
+                });
+              } catch (addError) {
+                // handle "add" error
+                console.log(addError);
+              }
+            }
+          }
+        }
         let address = setInterval(() => {
           this.web3Obj.eth.getCoinbase((err, res) => {
             if (res) {

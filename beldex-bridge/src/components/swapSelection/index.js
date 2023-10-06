@@ -18,8 +18,8 @@ class SwapSelection extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      address: "0xd90A3ABEDc6CdaA0DAc658881167C86D8c714D97",
-      // address: "",
+      // address: "0xd90A3ABEDc6CdaA0DAc658881167C86D8c714D97",
+      address: "",
 
       amount: 0,
       addressError: false,
@@ -44,7 +44,7 @@ class SwapSelection extends Component {
 
   componentDidMount = () => {
     store.on(Events.FETCHED_BALANCE, this.onBalUpdated);
-    this.onNext()
+    // this.onNext()
 
   };
 
