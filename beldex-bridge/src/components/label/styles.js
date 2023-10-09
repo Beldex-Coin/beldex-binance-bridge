@@ -7,6 +7,9 @@ const styles = (theme) => ({
     fontFamily:'poppins',
     fontSize: '1rem',
     fontWeight: 400,
+    [theme.breakpoints.down("sm")]: {
+     fontSize:'0.7rem'
+    },
   },
 });
 

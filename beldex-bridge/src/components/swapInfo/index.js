@@ -147,7 +147,7 @@ class SwapInfo extends PureComponent {
             <Box id="depositAddress" className={classes.greenBorder}>
               {depositAddress}
             </Box>
-            <Box>
+            <Box display={'flex'} justifyContent={'center'} alignContent={'center'} >
               <Tooltip title="Copy Address" placement="left">
                 <IconButton
                   onClick={() => this.onCopy("depositAddress")}
@@ -192,7 +192,7 @@ class SwapInfo extends PureComponent {
           </Typography>
         )}
         <Box className={classes.instructionWrapper}>
-          <Typography style={{ fontWeight: 600, fontSize: "1.1rem" }}>
+          <Typography className={classes.noteTitle} >
             Note{" "}
           </Typography>
           {swapType === SWAP_TYPE.BDX_TO_BBDX && (

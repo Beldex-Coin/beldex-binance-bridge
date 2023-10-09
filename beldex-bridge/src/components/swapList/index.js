@@ -121,7 +121,7 @@ class SwapList extends Component {
     if (!swaps || swaps.length === 0) {
       return (
         <Box >
-          <Box style={{width: "190px", textAlign: "center", marginTop: "70px"}}>
+          <Box className={classes.emptyTxnWrapper}>
             <img alt="" src={EmptyTransaction} />
             <Typography className={classes.emptyTitle}>No Transactions yet!</Typography>
           </Box>

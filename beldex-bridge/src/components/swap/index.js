@@ -31,7 +31,7 @@ class Swap extends Component {
     unconfirmed: [],
     walletConnBin: false,
     walletConnMeta: false,
-    SwapSelection:''
+    SwapSelection: "",
   };
   componentWillMount() {
     this.onInfoUpdated();
@@ -118,14 +118,14 @@ class Swap extends Component {
     // let provider=new Web3(window.ethereum)
     try {
       window.ethereum.enable();
-      console.log('this.web3Obj ::',this.web3Obj)
+      console.log("this.web3Obj ::", this.web3Obj);
       if (this.web3Obj) {
-        console.log('chainId ::1',)
+        console.log("chainId ::1");
         // web3..then(console.log);
         const chainId = await window.ethereum.request({
-          method: 'eth_chainId',
+          method: "eth_chainId",
         });
-        console.log('chainId 2::',chainId)
+        console.log("chainId 2::", chainId);
 
         if (chainId === binanceTestChainId) {
           console.log("Bravo!, you are on the correct network");
@@ -136,9 +136,7 @@ class Swap extends Component {
               method: "wallet_switchEthereumChain",
               params: [{ chainId: binanceTestChainId }],
             });
-            console.log(
-              "You have succefully switched to Binance network"
-            );
+            console.log("You have succefully switched to Binance network");
           } catch (switchError) {
             // This error code indicates that the chain has not been added to MetaMask.
             if (switchError.code === -32602) {
@@ -152,9 +150,7 @@ class Swap extends Component {
                     {
                       chainId: "56",
                       chainName: "Smart Chain",
-                      rpcUrls: [
-                        " https://bsc-dataseed.binance.org/",
-                      ],
+                      rpcUrls: [" https://bsc-dataseed.binance.org/"],
                       blockExplorerUrls: ["https://bscscan.com"],
                       nativeCurrency: {
                         symbol: "BNB", // 2-6 characters long
@@ -408,7 +404,12 @@ class Swap extends Component {
     const fee = (fees && fees[receivingCurrency]) || 0;
     const displayTotal = Math.max(0, total - fee) / 1e9;
     return (
-      <Box display="flex" flexDirection="row" alignItems="center" className={classes.txHeader} >
+      <Box
+        display="flex"
+        flexDirection="row"
+        alignItems="center"
+        className={classes.txHeader}
+      >
         <Typography className={classes.statTitle}>Amount Due:</Typography>
         <Typography className={classes.statAmount}>
           {displayTotal} {currencySymbols[receivingCurrency]}
@@ -494,9 +495,10 @@ class Swap extends Component {
               <span className="beldexName">Beldex</span> Bridge
             </p>
             <p className="app-left-content">
-              The Beldex bridge connects the Beldex network with the BNB Smart Chain network.
-              Here you can swap BDX to wBDX and vice versa.
-              Explore trading and DeFi opportunities in the BNB Smart Chain with wrapped BDX.
+              The Beldex bridge connects the Beldex network with the BNB Smart
+              Chain network. Here you can swap BDX to wBDX and vice versa.
+              Explore trading and DeFi opportunities in the BNB Smart Chain with
+              wrapped BDX.
             </p>
           </div>
         </Grid>
@@ -528,10 +530,10 @@ class Swap extends Component {
   };
 
   goBack = () => {
-    window.location.reload()
-  }
+    window.location.reload();
+  };
 
-  renderInfo = (movedBalance,totalSupply) => {
+  renderInfo = (movedBalance, totalSupply) => {
     const { classes } = this.props;
     const {
       loading,
@@ -541,7 +543,7 @@ class Swap extends Component {
       walletConnMeta,
       walletConnBin,
       selectedWallet,
-      SwapSelection
+      SwapSelection,
     } = this.state;
     return (
       <React.Fragment>
@@ -553,29 +555,39 @@ class Swap extends Component {
             </Link>
           </Typography>
           <Grid>
-            <div className="movedBal" style={{ marginTop: '20px' }}>
+            <div className="movedBal" >
               <p className="bal-title">
-                Total <span style={{ color: "rgba(0, 173, 7, 0.93)" }}>&nbsp;BDX&nbsp;</span>{" "}
+                Total{" "}
+                <span style={{ color: "rgba(0, 173, 7, 0.93)" }}>
+                  &nbsp;BDX&nbsp;
+                </span>{" "}
                 moved to Binance smart chain
-                <span className="movedBal-p2" style={{ marginLeft: '10px' }}>
-                  <span className="balance-span">
-                  {movedBalance}{" "}
-                  </span>
-                  <span className="availBal">
-                    / {totalSupply}
-                  </span>
-                </span>
               </p>
-              {/* <p >
-                <span >/ {100}</span>
-              </p> */}
+              <p className="movedBal-p2">
+                {/* <span className="movedBal-p2" style={{ marginLeft: "10px" }}> */}
+                  <span className="balance-span">{movedBalance} </span>
+                  <span className="availBal">/ {totalSupply}</span>
+                {/* </span> */}
+              </p>
             </div>
           </Grid>
-          <Grid container spacing={2} style={{
-            display: 'flex', flexDirection: 'row', alignContent: 'center', justifyContent: 'space-between',
-
-          }}>
-            <Grid item xs={12} md={6} className={classes.item} style={{ marginTop: '20px' }}>
+          <Grid
+            container
+            spacing={2}
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              alignContent: "center",
+              justifyContent: "space-between",
+            }}
+          >
+            <Grid
+              item
+              xs={12}
+              md={6}
+              className={classes.item}
+              // style={{ marginTop: "20px" }}
+            >
               <SwapInfo
                 swapType={swapType}
                 swapInfo={swapInfo}
@@ -590,7 +602,7 @@ class Swap extends Component {
                 }
               />
             </Grid>
-            <Grid item xs={12} md={6} style={{ marginTop: '20px' }}>
+            <Grid item xs={12} md={6} style={{ marginTop: "20px" }}>
               {this.renderTransactions()}
             </Grid>
           </Grid>
@@ -605,7 +617,8 @@ class Swap extends Component {
       <Grid container className={classes.root} spacing={2}>
         {page === 0 &&
           this.renderSelection(this.props, totalSupply, movedBalance)}
-        {page === 1 && this.renderInfo(movedBalance,totalSupply)}
+        {page === 1 && this.renderInfo(movedBalance, totalSupply)}
+        <div className={classes.bottomSpacing}></div>
       </Grid>
     );
   }

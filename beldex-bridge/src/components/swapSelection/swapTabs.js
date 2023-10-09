@@ -20,27 +20,34 @@ TabContainer.propTypes = {
 
 const useStyles = makeStyles((theme) => ({
   root: {
+    display:'flex',
     flexGrow: 1,
     backgroundColor: "#1C1C26",
     borderRadius: "10px",
+    maxWidth:'unset',
   },
   tabsWrapper: {
+    display:'flex',
+    flexGrow: 1,
     borderRadius: "18px",
     border: "1px solid #393954",
     background: "#1F1F2E",
-    padding: '5px',
-
-    "& .MuiTabs-flexContainer": {
-      justifyContent: 'space-between',
-    },
-
+    padding:'5px',
+    maxWidth:'unset',
+    
     "& .MuiTab-textColorInherit": {
       background: "#1F1F2E",
-      width: "49%",
+      width: "50%",
       height: "45px",
       fontWeight: 500,
-      margin: '0px',
-      fontSize: '1rem'
+      margin:'0px',
+      fontSize:'1rem',
+      maxWidth:'unset',
+      // margin:'5px',
+      // fontSize:'1rem',
+      [theme.breakpoints.down("sm")]: {
+        fontSize:'0.7rem',
+      },
     },
     "& .Mui-selected": {
       borderRadius: "12px",

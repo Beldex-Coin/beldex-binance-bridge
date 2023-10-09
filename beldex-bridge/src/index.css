@@ -198,7 +198,8 @@ Handle on hover ::-webkit-scrollbar-thumb:hover {
   border: 1px solid #393954;
   background: #1f1f2e;
   padding: 20px 0;
-  margin-bottom: 13px;
+  margin-top: 20px;
+  margin-bottom: 20px;
 }
 
 .movedBal .bal-title {
@@ -206,9 +207,9 @@ Handle on hover ::-webkit-scrollbar-thumb:hover {
   padding: 0px 10px;
   line-height: 40px;
   margin: 0; */
-  display: flex;
+  /* display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: center; */
   margin: 0;
   color: #afafbe;
   text-align: center;
@@ -305,6 +306,18 @@ line-height: normal; */
 }
 
 @media (max-width: 600px) {
+  .appName
+  {
+    font-size: 2rem;
+    margin-top: 0;
+  }
+  .app-left-content
+  {
+    font-size: 0.5rem;
+  }
+  .movedBal .bal-title{
+    font-size: 0.7rem;
+  }
   .titleContainer {
     max-height: 120px;
     height: auto !important;
@@ -319,11 +332,15 @@ line-height: normal; */
   }
 
   .movedBal {
-    margin: 30px auto;
+    margin: 10px auto;
+    /* margin-bottom: 20px; */
+  }
+  .balance-span{
+    font-size: 1.2rem;
   }
 
   .availBal {
-    font-size: 18px;
+    font-size: 1rem;
   }
 
   .title {

@@ -25,6 +25,10 @@ const styles = (theme) => ({
     lineHeight: "22px",
     wordBreak: "break-word",
     marginTop: theme.spacing(1),
+    [theme.breakpoints.down("sm")]: {
+      fontSize: "0.7rem",
+    }
+    
   },
   instructionBold: {
     // color: '#fff',
@@ -35,6 +39,9 @@ const styles = (theme) => ({
     // textAlign: 'left',
     marginBottom: "5px",
     overflowWrap: "break-word",
+    [theme.breakpoints.down("sm")]: {
+      fontSize: "0.7rem",
+    },
   },
   feeInfo: {
     marginTop: theme.spacing(1),
@@ -44,12 +51,22 @@ const styles = (theme) => ({
     fontSize: "16px",
     fontStyle: "normal",
     fontWeight: 400,
+    [theme.breakpoints.down("sm")]: {
+      fontSize: "0.6rem",
+    },
   },
   instructionWrapper: {
     marginTop: theme.spacing(2),
     padding: "20px",
     borderRadius: "10px",
     border: "1px solid #393954",
+  },
+  noteTitle: {
+    fontWeight: 600,
+    fontSize: "1.1rem",
+    [theme.breakpoints.down("sm")]: {
+      fontSize: "0.8rem",
+    },
   },
   memoFrame: {
     marginBottom: theme.spacing(3),
@@ -114,6 +131,10 @@ const styles = (theme) => ({
     fontSize: "14px",
     fontStyle: "normal",
     fontWeight: 500,
+    [theme.breakpoints.down("sm")]: {
+      fontSize: "0.7rem",
+      width: "90%",
+    },
   },
   wbdxAddressTitle: {
     color: "#AFAFBE",
@@ -143,6 +164,9 @@ const styles = (theme) => ({
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
+    [theme.breakpoints.down("sm")]: {
+      height: "45px",
+    },
   },
   walletConnSucc: {
     // color: "#35af3b !important",
@@ -154,6 +178,9 @@ const styles = (theme) => ({
     fontSize: "20px",
     fontStyle: "normal",
     fontWeight: 600,
+    [theme.breakpoints.down("sm")]: {
+      fontSize: "0.9rem",
+    },
   },
   walletConnErr: {
     color: "red !important",

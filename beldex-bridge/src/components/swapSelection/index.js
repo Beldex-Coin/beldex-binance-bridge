@@ -228,7 +228,7 @@ class SwapSelection extends Component {
             View on bscscan{" "}
           </Link>
         </Typography>
-        <Typography style={{ marginTop: this.state.swapType == 'bdx_to_bbdx' ? '153px' : '' }}></Typography>
+        {/* <Typography style={{ marginTop: this.state.swapType == 'bdx_to_bbdx' ? '153px' : '' }}></Typography> */}
         {/* <Link className={classes.belLink} href="BBDXBridgeTOS.html" target="_blank">Terms of Service</Link> */}
         {addressType === "bdx" && (
           <>
