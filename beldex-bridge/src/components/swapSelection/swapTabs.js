@@ -28,23 +28,27 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: "18px",
     border: "1px solid #393954",
     background: "#1F1F2E",
-    padding:'5px',
-    
+    padding: '5px',
+
+    "& .MuiTabs-flexContainer": {
+      justifyContent: 'space-between',
+    },
+
     "& .MuiTab-textColorInherit": {
       background: "#1F1F2E",
       width: "49%",
       height: "45px",
       fontWeight: 500,
-      margin:'0px',
-      fontSize:'1rem'
+      margin: '0px',
+      fontSize: '1rem'
     },
     "& .Mui-selected": {
       borderRadius: "12px",
       background: "#282837",
-      opacity:1
+      opacity: 1
     },
   },
-  greenDots:{
+  greenDots: {
     display: 'inline-block',
     width: '10px',
     height: '10px',
@@ -85,8 +89,8 @@ export default function SwapTabs(props) {
           onChange={handleChange}
           className={classes.tabsWrapper}
         >
-          <Tab label={<span> {value === 0 &&<span className={classes.greenDots}></span>} BDX to wBDX</span>} />
-          <Tab label={<span> {value === 1 &&<span className={classes.greenDots}></span>} wBDX to BDX</span>}/>
+          <Tab label={<span> {value === 0 && <span className={classes.greenDots}></span>} BDX to wBDX</span>} />
+          <Tab label={<span> {value === 1 && <span className={classes.greenDots}></span>} wBDX to BDX</span>} />
         </Tabs>
       </AppBar>
       {/* {value === 0 && <TabContainer>BDX to wBDX</TabContainer>}

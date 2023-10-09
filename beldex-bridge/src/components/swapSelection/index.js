@@ -109,6 +109,11 @@ class SwapSelection extends Component {
   };
 
   onSwapTypeChanged = (value) => {
+    console.log("valuee:", value)
+    if (this.state.swapType !== value) {
+      this.state.address = '';
+      this.state.amount = 0;
+    }
     this.props.onSwapTypeChanged(value);
     this.setState({
       swapType: value,

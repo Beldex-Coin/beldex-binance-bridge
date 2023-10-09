@@ -33,6 +33,9 @@ const styles = (theme) => ({
     padding: '10px 20px',
     fontWeight: 600,
     fontSize: '1.1rem',
+    '&:hover': {
+      backgroundColor: '#282837'
+    }
   }
 });
 

@@ -57,7 +57,7 @@ function Popup(props) {
       <DialogTitle className={classes.title} id="simple-dialog-title">
         Choose Wallet account{" "}
         <Button
-        onClick={handleClose}
+          onClick={handleClose}
           style={{
             marginLeft: "55px",
             padding: 0,
@@ -70,7 +70,6 @@ function Popup(props) {
       <List className={classes.root}>
         {wallets.map((wallet) => (
           <ListItem
-            button
             onClick={() => handleListItemClick(wallet.text)}
             key={wallet.text}
           >
