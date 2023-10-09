@@ -4,7 +4,7 @@ const styles = (theme) => ({
   root: {
     width: "100%",
     margin:'auto',
-    marginTop: "20px",
+    // marginTop: "20px",
     backgroundColor: "#1C1C26 !important",
     // padding: '1.5rem',
     // boxShadow: "0px 0px 30px rgb(36 36 36)",
@@ -15,12 +15,12 @@ const styles = (theme) => ({
 
     // paddingTop: "90px",
     [theme.breakpoints.up("md")]: {
-      maxWidth: "500px",
+      // maxWidth: "500px",
     },
     ...common.section,
   },
   button: {
-    marginTop: "24px",
+    // marginTop: "24px",
     "& .Mui-disabled": {
       borderRadius: "50px",
       border: "1px solid #00AD07",
@@ -62,6 +62,7 @@ const styles = (theme) => ({
     zIndex: "9",
   },
   swapFee: {
+    marginTop:'5px',
     fontSize: "12px",
     // position: "absolute",
     // right: "15px",

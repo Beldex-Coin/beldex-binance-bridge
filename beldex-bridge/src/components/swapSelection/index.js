@@ -144,7 +144,7 @@ class SwapSelection extends Component {
           </p>
           <p className="movedBal-p2">
             <span className="balance-span">
-            {this.state.movedBalance}{" "}
+              {this.state.movedBalance}{" "}
             </span>
             <span className="availBal">/ {this.state.totalSupply}</span>
           </p>
@@ -223,13 +223,14 @@ class SwapSelection extends Component {
             View on bscscan{" "}
           </Link>
         </Typography>
+        <Typography style={{ marginTop: this.state.swapType == 'bdx_to_bbdx' ? '153px' : '' }}></Typography>
         {/* <Link className={classes.belLink} href="BBDXBridgeTOS.html" target="_blank">Terms of Service</Link> */}
         {addressType === "bdx" && (
           <>
             {" "}
             <Typography
               className={`contract-address ${classes.wbdxAddressTitle}`}
-              style={{ marginTop: "20px" }}
+              style={{ marginTop: "10px" }}
             >
               wBDX Contract address :
             </Typography>

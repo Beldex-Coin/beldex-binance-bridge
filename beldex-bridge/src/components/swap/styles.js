@@ -77,7 +77,7 @@ const styles = theme => ({
     display: 'flex',
     alignItems: 'center',
     fontSize: '0.90rem',
-    marginBottom: '10px'
+    // marginBottom: '10px'
 
   },
   backImg: {
@@ -134,7 +134,7 @@ const styles = theme => ({
   },
   rightPaneWrapper: {
     width: "78%",
-    padding: "45px 56px",
+    padding: "25px 20px",
     marginLeft: "auto",
     borderRadius: "30px",
     border: "0.5px solid #56566c",

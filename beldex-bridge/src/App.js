@@ -80,7 +80,7 @@ export default class App extends PureComponent {
 
   renderTitleImage = () => {
     return (
-      <Box
+      <Box style={{width:'100%',margin:'30px'}}
         display="flex"
         className="title"
         justifyContent="flexStart"

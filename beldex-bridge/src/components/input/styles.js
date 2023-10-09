@@ -4,7 +4,7 @@ const styles = theme => ({
     minWidth: '100px',
     display: 'inline-block',
     marginTop: '12px',
-    marginBottom: '12px'
+    // marginBottom: '12px'
   }
 });
 

@@ -35,7 +35,7 @@ const useStyles = makeStyles((theme) => ({
       width: "49%",
       height: "45px",
       fontWeight: 500,
-      margin:'5px',
+      margin:'0px',
       fontSize:'1rem'
     },
     "& .Mui-selected": {
