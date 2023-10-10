@@ -7,6 +7,7 @@ import { store, dispatcher, Actions, Events } from "@store";
 import { Snackbar, Swap, ImageLoader } from "@components";
 import theme from "@theme";
 
+
 export default class App extends PureComponent {
   state = {
     snackbar: {
@@ -16,8 +17,9 @@ export default class App extends PureComponent {
       balance: "",
     },
   };
-
+  
   componentDidMount = () => {
+    console.log("innerWidth:",window.innerWidth);
     store.on(Events.FETCHED_BALANCE, this.onBalUpdated);
   };
 

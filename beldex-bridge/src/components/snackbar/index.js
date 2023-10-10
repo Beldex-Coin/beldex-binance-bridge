@@ -5,11 +5,14 @@ import { Snackbar, IconButton } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 import {
   Close as CloseIcon,
-  Error as ErrorIcon,
+  // Error as ErrorIcon,
   Info as InfoIcon,
-  Warning as WarningIcon,
-  CheckCircle as CheckCircleIcon
+  // Warning as WarningIcon,
+  // CheckCircle as CheckCircleIcon
 } from '@material-ui/icons';
+import ErrorIcon  from './Error.svg'
+import CheckCircleIcon from './Success.svg'
+import WarningIcon from './Warning.svg' 
 import styles from './styles';
 
 // Got this from https://material-ui.com/components/snackbars/#snackbars
@@ -51,7 +54,8 @@ function StyledSnackbar(props) {
       }}
       message={
         <span id="message-id" className={clsx(classes.message, classes[text])}>
-          <Icon className={clsx(classes.icon, classes.iconVariant)} />
+          {/* <Icon  /> */}
+          <img alt="" src={Icon} className={clsx(classes.icon, classes.iconVariant)} />
           {message && capitalize(message.toString())}
         </span>
       }
