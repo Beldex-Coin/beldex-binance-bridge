@@ -18,13 +18,20 @@ import { SWAP_TYPE } from "@constants";
 import styles from "./styles";
 import important from "./warning.png";
 import QrCodeIcon from "../../assets/icons/QrCode.svg";
+import { Snackbar} from "@components";
 
 class SwapInfo extends PureComponent {
   state = {
     showQR: false,
     qrSize: 120,
+    snackbar: {
+      message: null,
+      variant: "success",
+      open: false,
+      balance: "",
+    },
   };
-
+  
   onCopy = (id) => {
     var elm = document.getElementById(id);
     let range;
@@ -44,6 +51,7 @@ class SwapInfo extends PureComponent {
       selection.addRange(range);
       document.execCommand("Copy");
     }
+    this.showMessage("Address Copied !",'success')
   };
 
   componentDidMount() {
@@ -68,7 +76,36 @@ class SwapInfo extends PureComponent {
   toggleQR = () => {
     this.setState({ showQR: !this.state.showQR });
   };
+  showMessage = (message, variant) => {
+    const snackbar = {
+      message,
+      variant: variant || "error",
+      open: true,
+    };
+    this.setState({ snackbar });
+  };
 
+  closeMessage = (event, reason) => {
+    if (reason === "clickaway") return;
+    const snackbar = {
+      ...this.state.snackbar,
+      open: false,
+    };
+    this.setState({ snackbar });
+  };
+  renderSnackbar = () => {
+    const { snackbar } = this.state;
+    return (
+      <Snackbar
+        message={snackbar.message}
+        open={snackbar.open}
+        // open={true}
+
+        onClose={this.closeMessage}
+        variant={snackbar.variant}
+      />
+    );
+  };
   renderQR = () => {
     const { showQR, qrSize } = this.state;
     const { classes, swapInfo } = this.props;
@@ -171,6 +208,7 @@ class SwapInfo extends PureComponent {
         </Typography>
         {/* {this.renderQR()} */}
         {this.renderMemo()}
+        {this.renderSnackbar()}
       </React.Fragment>
     );
   };

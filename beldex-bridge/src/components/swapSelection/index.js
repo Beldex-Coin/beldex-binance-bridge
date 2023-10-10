@@ -91,9 +91,13 @@ class SwapSelection extends Component {
   };
 
   onAddressChanged = (event) => {
-    this.setState({ address: event.target.value });
-  };
+ 
+    const newValue = event.target.value.replace(/[^A-Za-z0-9]/g, '');
+      this.setState({ address:newValue});
 
+  
+  };
+  
   onAmountChanged = (event) => {
     if (
       (this.props.info.fees && this.props.info.fees.bdx / 1e9) >=
@@ -105,7 +109,18 @@ class SwapSelection extends Component {
     } else {
       this.setState({ amountError: "" });
     }
-    this.setState({ amount: event.target.value });
+    const value = event.target.value
+    // Use a regular expression to allow numbers, including integers and floats
+    const newValue = value.replace(/[^0-9.]/g, '');
+
+    // Ensure that there's only one decimal point
+    const decimalCount = newValue.split('.').length - 1;
+    if (decimalCount > 1) {
+      return;
+    }
+    // .replace(/[^0-9]/g, '');
+
+    this.setState({ amount:newValue});
   };
 
   onSwapTypeChanged = (value) => {
@@ -183,6 +198,8 @@ class SwapSelection extends Component {
             type="text"
             onChange={this.onAddressChanged}
             disabled={loading}
+             
+            
           />
           {addressType === "bdx" && (
             <>

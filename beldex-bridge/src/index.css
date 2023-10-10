@@ -89,6 +89,7 @@ Handle on hover ::-webkit-scrollbar-thumb:hover {
   color: #fff;
   font-size: 4rem;
   font-weight: 400;
+  margin-top: 0;
   margin-bottom: 0;
 }
 
@@ -138,7 +139,10 @@ Handle on hover ::-webkit-scrollbar-thumb:hover {
 }
 
 .title {
+  /* margin: 20px; */
+  width: 60%;
   margin: 20px;
+  height: 60px;
   /* position: relative; */
 }
 
@@ -306,16 +310,14 @@ line-height: normal; */
 }
 
 @media (max-width: 600px) {
-  .appName
-  {
+  .appName {
     font-size: 2rem;
     margin-top: 0;
   }
-  .app-left-content
-  {
+  .app-left-content {
     font-size: 0.5rem;
   }
-  .movedBal .bal-title{
+  .movedBal .bal-title {
     font-size: 0.7rem;
   }
   .titleContainer {
@@ -335,7 +337,7 @@ line-height: normal; */
     margin: 10px auto;
     /* margin-bottom: 20px; */
   }
-  .balance-span{
+  .balance-span {
     font-size: 1.2rem;
   }
 
@@ -344,12 +346,16 @@ line-height: normal; */
   }
 
   .title {
-    margin: 20px 20px 0px;
+    height: 104px;
+    margin: 20px;
   }
+  
 }
 
 @media (min-width: 600px) {
   .title {
+    /* height:100px; */
+
     /* margin-top: 60px; */
   }
 
@@ -358,10 +364,11 @@ line-height: normal; */
   }
 }
 
+
 @media (min-width: 1280px) {
   .title {
     /* margin-top: 80px; */
-    margin-bottom: 0px;
+    /* margin-bottom: 20px; */
   }
 
   #grid {
