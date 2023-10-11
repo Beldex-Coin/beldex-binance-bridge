@@ -32,7 +32,7 @@ const styles = (theme) => ({
     // textDecoration: "underline",
     textAlign: "center",
     marginBottom: "0px",
-    cursor: "pointer",
+    // cursor: "pointer",
     display: "inline-block",
     color: "#fff",
     width: "100%",

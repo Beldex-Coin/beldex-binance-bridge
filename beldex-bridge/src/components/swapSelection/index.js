@@ -232,19 +232,7 @@ class SwapSelection extends Component {
             onClick={this.onNext}
           />
         </Grid>
-        <Typography
-          style={{ marginTop: "10px" }}
-          className={classes.createAccount}
-        >
-          <Link
-            style={{ color: "#2FA6FF" }}
-            href={url}
-            target="_blank"
-            rel="noreferrer"
-          >
-            View on bscscan{" "}
-          </Link>
-        </Typography>
+       
         {/* <Typography style={{ marginTop: this.state.swapType == 'bdx_to_bbdx' ? '153px' : '' }}></Typography> */}
         {/* <Link className={classes.belLink} href="BBDXBridgeTOS.html" target="_blank">Terms of Service</Link> */}
         {addressType === "bdx" && (
@@ -261,6 +249,19 @@ class SwapSelection extends Component {
             </Typography>
           </>
         )}
+         <Typography
+          style={{ marginTop: "10px" }}
+          className={classes.createAccount}
+        >
+          <Link
+            style={{ color: "#2FA6FF" }}
+            href={url}
+            target="_blank"
+            rel="noreferrer"
+          >
+            View on bscscan{" "}
+          </Link>
+        </Typography>
         {
           this.state.loginOpen && (
             <div className="warningText">

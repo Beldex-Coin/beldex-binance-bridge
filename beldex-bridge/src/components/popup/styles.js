@@ -10,8 +10,10 @@ const styles = (theme) => ({
     color: "white",
     width: "380px",
     textAlign: "center",
+    padding: '25px 24px 4px',
     [theme.breakpoints.down("sm")]: {
-      width: "323px",
+      width: '279px',
+    
     },
     "& .MuiTypography-h6": {
       fontSize: "1.3rem !important",
@@ -30,6 +32,7 @@ const styles = (theme) => ({
     padding: "10px 20px",
     fontWeight: 600,
     fontSize: '1.1rem',
+    cursor:'pointer',
     '&:hover': {
       backgroundColor: '#282837'
     }

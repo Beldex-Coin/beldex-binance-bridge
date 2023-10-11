@@ -436,12 +436,13 @@ class Swap extends Component {
     const merged = [...unconfirmedSwaps, ...swaps];
     return (
       <Grid className={classes.swapList}>
-        <Box display="flex" flexDirection="column" className={classes.section}>
+        <Box display="flex" flexDirection="column" className={classes.section } style={{paddingTop:'0'}}>
           <Box
             display="flex"
             flexDirection="row"
             justifyContent="space-between"
             alignItems="center"
+            style={{height: '71px'}}
           >
             <Typography className={classes.transactionTitle}>
               Transactions

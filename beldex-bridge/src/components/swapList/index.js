@@ -43,7 +43,7 @@ class SwapList extends Component {
           <Typography className={classes.hashTitle}>Deposit Transaction Hash</Typography>
           <Box display="flex" flexDirection="row" alignItems="center" justifyContent="space-between" className={classes.TxDetails}>
             <Typography className={classes.hashes}>  {hashItems[0]}</Typography>
-            <Typography > {this.renderTime(created)}</Typography>
+            <Typography  style={{textAlign:'right'}}> {this.renderTime(created)}</Typography>
           </Box>
         </Box>
       );
@@ -57,7 +57,7 @@ class SwapList extends Component {
           <Typography className={classes.hashTitle}>{swapTitle}</Typography>
           <Box display="flex" flexDirection="row" alignItems="center" justifyContent="space-between" className={classes.TxDetails}>
             <Typography className={classes.hashes}>  {hashItems}</Typography>
-            <Typography > {this.renderTime(created)}</Typography>
+            <Typography style={{textAlign:'right'}}> {this.renderTime(created)}</Typography>
           </Box>
         </Box>
         {/* <Typography className={classes.hashTitle}>{swapTitle}</Typography>

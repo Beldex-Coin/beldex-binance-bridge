@@ -77,6 +77,10 @@ const styles = (theme) => ({
       maxWidth: "800px",
       margin: "auto",
     },
+    
+    [theme.breakpoints.down("sm")]: {
+      padding:0
+    },
   },
   registerWrapper: {
     // width: '100%',
@@ -95,6 +99,7 @@ const styles = (theme) => ({
     alignItems: "center",
     fontSize: "0.90rem",
     marginBottom: "10px",
+    cursor:'pointer'
   },
   backImg: {
     width: "15px",
