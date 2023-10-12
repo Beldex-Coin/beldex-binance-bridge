@@ -202,8 +202,8 @@ Handle on hover ::-webkit-scrollbar-thumb:hover {
   border: 1px solid #393954;
   background: #1f1f2e;
   padding: 20px 0;
-  margin-top: 20px;
-  margin-bottom: 20px;
+  /* margin-top: 20px;
+  margin-bottom: 20px; */
 }
 
 .movedBal .bal-title {

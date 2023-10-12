@@ -72,6 +72,7 @@ class Swap extends Component {
     this.setState({ loading: false });
   };
   transactionsInfo = (transaction) => {
+    console.log("transaction info:")
     this.props.showMessage("Transaction success.", "success");
   };
   onUnconfirmedTransactionsFetched = (transactions) => {
@@ -549,11 +550,11 @@ class Swap extends Component {
     return (
       <React.Fragment>
         <Grid className={classes.dashBoard}>
-          <Typography>
-            <Link className={classes.backBox} onClick={this.goBack}>
+          <Typography style={{ cursor: "pointer" }} className={classes.backBox} onClick={this.goBack}>
+            {/* <Link > */}
               <img alt="" src={Back} className={classes.backImg} />
               <Typography className={classes.backTxt}>Back</Typography>
-            </Link>
+            {/* </Link> */}
           </Typography>
           <Grid>
             <div className="movedBal" >
@@ -566,8 +567,8 @@ class Swap extends Component {
               </p>
               <p className="movedBal-p2">
                 {/* <span className="movedBal-p2" style={{ marginLeft: "10px" }}> */}
-                  <span className="balance-span">{movedBalance} </span>
-                  <span className="availBal">/ {totalSupply}</span>
+                <span className="balance-span">{movedBalance} </span>
+                <span className="availBal">/ {totalSupply}</span>
                 {/* </span> */}
               </p>
             </div>
@@ -587,7 +588,7 @@ class Swap extends Component {
               xs={12}
               md={6}
               className={classes.item}
-              // style={{ marginTop: "20px" }}
+            // style={{ marginTop: "20px" }}
             >
               <SwapInfo
                 swapType={swapType}

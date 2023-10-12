@@ -99,14 +99,16 @@ const styles = (theme) => ({
     alignItems: "center",
     fontSize: "0.90rem",
     marginBottom: "10px",
-    cursor:'pointer'
+    cursor:'pointer',
+    width:'60px'
   },
   backImg: {
-    width: "15px",
+    width: "17px",
     marginRight: "5px",
   },
   backTxt: {
     fontWeight: "500",
+    fontSize: "1.1rem",
   },
   balanceBox: {
     display: "flex",

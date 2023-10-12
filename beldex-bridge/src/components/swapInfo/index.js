@@ -51,7 +51,7 @@ class SwapInfo extends PureComponent {
       selection.addRange(range);
       document.execCommand("Copy");
     }
-    this.showMessage("Address Copied !",'success')
+    this.showMessage("Address Copied to clipboard",'success')
   };
 
   componentDidMount() {
@@ -245,7 +245,7 @@ class SwapInfo extends PureComponent {
 
           <Typography className={classes.instructions}>
             If you run into any trouble, or your swap request has not gone
-            through, please contact @Beldexadmin on telegram.
+            through, please contact <Typography component={"span"} style={{color:"#3EC745"}}>@Beldexadmin</Typography> on telegram.
           </Typography>
         </Box>
       </Box>
