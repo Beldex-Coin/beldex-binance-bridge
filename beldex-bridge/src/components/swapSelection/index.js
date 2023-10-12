@@ -250,11 +250,11 @@ class SwapSelection extends Component {
           </>
         )}
          <Typography
-          style={{ marginTop: "10px" }}
+          style={{ marginTop: "20px" }}
           className={classes.createAccount}
         >
           <Link
-            style={{ color: "#2FA6FF" }}
+            style={{ color: "#2FA6FF",textDecoration:'underline' }}
             href={url}
             target="_blank"
             rel="noreferrer"

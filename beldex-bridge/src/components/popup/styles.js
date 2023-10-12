@@ -23,6 +23,18 @@ const styles = (theme) => ({
       },
     },
   },
+  closeBtn:{
+    padding: 0,
+    minWidth: 0,
+    position: "relative",
+    top: '-20px',
+    right: '-42px',
+    [theme.breakpoints.down("sm")]: {
+      top: "-13px",
+      right: "-13px",
+    },
+   
+  },
   wallet: {
     display: "flex",
     alignItems: "center",

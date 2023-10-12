@@ -74,8 +74,10 @@ const styles = (theme) => ({
     overflowX: "hidden",
     padding: "10px",
     [theme.breakpoints.up("md")]: {
-      maxWidth: "800px",
-      margin: "auto",
+      // maxWidth: "800px",
+      // margin: "auto",
+      maxWidth:'unset',
+      margin: "unset",
     },
     
     [theme.breakpoints.down("sm")]: {
@@ -109,6 +111,9 @@ const styles = (theme) => ({
   backTxt: {
     fontWeight: "500",
     fontSize: "1.1rem",
+    '&:hover':{
+      opacity:'0.8'
+    }
   },
   balanceBox: {
     display: "flex",

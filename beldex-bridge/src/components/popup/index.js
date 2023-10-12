@@ -58,14 +58,7 @@ function Popup(props) {
         Choose Wallet account{" "}
         <Button
           onClick={handleClose}
-          style={{
-            // marginLeft: "55px",
-            padding: 0,
-            minWidth: 0,
-            position: "relative",
-            top: "-13px",
-            right: "-13px",
-          }}
+         className={classes.closeBtn}
         >
           <CloseIcon />
         </Button>
