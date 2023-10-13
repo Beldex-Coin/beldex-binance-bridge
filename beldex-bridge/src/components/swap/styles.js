@@ -102,18 +102,25 @@ const styles = (theme) => ({
     fontSize: "0.90rem",
     marginBottom: "10px",
     cursor:'pointer',
-    width:'60px'
+    width:'60px',
+    '&:hover':{
+      opacity:'0.8'
+    }
+
   },
   backImg: {
     width: "17px",
     marginRight: "5px",
+    // '&:hover':{
+    //   opacity:'0.8'
+    // }
   },
   backTxt: {
     fontWeight: "500",
     fontSize: "1.1rem",
-    '&:hover':{
-      opacity:'0.8'
-    }
+    // '&:hover':{
+    //   opacity:'0.8'
+    // }
   },
   balanceBox: {
     display: "flex",

@@ -91,6 +91,7 @@ const styles = (theme) => ({
   emptyTxnWrapper: {
     width: "190px",
     textAlign: "center",
+    margin:'auto',
     marginTop: "70px",
     [theme.breakpoints.down("sm")]: {
       width: "unset",

@@ -72,7 +72,7 @@ class Swap extends Component {
     this.setState({ loading: false });
   };
   transactionsInfo = (transaction) => {
-    console.log("transaction info:")
+    console.log("transaction info:");
     this.props.showMessage("Transaction success.", "success");
   };
   onUnconfirmedTransactionsFetched = (transactions) => {
@@ -291,20 +291,36 @@ class Swap extends Component {
   //   }
   // }
   onNext = async () => {
-    const { page, walletAddress } = this.state;
-    if (this.web3Obj && walletAddress) {
+    const { page, walletAddress,swapType } = this.state;
+    console.log("onNext 1::", page, walletAddress, 'type ::',swapType);
+    if (this.web3Obj && walletAddress && swapType !=='bdx_to_bbdx') {
+      console.log("onNext 2::", this.web3Obj);
+
       let gasPri = await this.web3Obj.eth.getGasPrice();
       let estimate = await this.web3Obj.eth.estimateGas({
         from: walletAddress,
       });
       // let bnbUsdPrice = await axios.get(`https://api.coingecko.com/api/v3/simple/price?ids=binancecoin&vs_currencies=usd`);
       // console.log("USDT-Value:", (this.web3Obj.utils.fromWei(gasPri, 'ether') * estimate) * bnbUsdPrice.data.binancecoin.usd)
+      console.log("onNext 3::", gasPri, estimate);
+
       this.web3Obj.eth.getBalance(walletAddress).then((data) => {
         const walletBalance = data / 1e18;
+        console.log("onNext 4::", walletBalance);
+        console.log(
+          "onNext 5 fee::",
+          this.web3Obj.utils.fromWei(gasPri, "ether") * estimate
+        );
+
         if (
           walletBalance >
           this.web3Obj.utils.fromWei(gasPri, "ether") * estimate
         ) {
+          console.log(
+            "onNext 6 fee::",
+            this.web3Obj.utils.fromWei(gasPri, "ether") * estimate
+          );
+
           // we can mention here minimum balance.
           switch (page) {
             case 0:
@@ -317,6 +333,8 @@ class Swap extends Component {
           }
         } else {
           const errMsg = `Insufficient gas fee in your Binance wallet.`;
+          console.log("onNext 7 fee::", errMsg);
+
           this.props.showMessage(errMsg, "error");
         }
       });
@@ -437,13 +455,18 @@ class Swap extends Component {
     const merged = [...unconfirmedSwaps, ...swaps];
     return (
       <Grid className={classes.swapList}>
-        <Box display="flex" flexDirection="column" className={classes.section } style={{paddingTop:'0'}}>
+        <Box
+          display="flex"
+          flexDirection="column"
+          className={classes.section}
+          style={{ paddingTop: "0" }}
+        >
           <Box
             display="flex"
             flexDirection="row"
             justifyContent="space-between"
             alignItems="center"
-            style={{height: '71px'}}
+            style={{ height: "71px" }}
           >
             <Typography className={classes.transactionTitle}>
               Transactions
@@ -550,14 +573,18 @@ class Swap extends Component {
     return (
       <React.Fragment>
         <Grid className={classes.dashBoard}>
-          <Typography style={{ cursor: "pointer" }} className={classes.backBox} onClick={this.goBack}>
+          <Typography
+            style={{ cursor: "pointer" }}
+            className={classes.backBox}
+            onClick={this.goBack}
+          >
             {/* <Link > */}
-              <img alt="" src={Back} className={classes.backImg} />
-              <Typography className={classes.backTxt}>Back</Typography>
+            <img alt="" src={Back} className={classes.backImg} />
+            <Typography className={classes.backTxt}>Back</Typography>
             {/* </Link> */}
           </Typography>
           <Grid>
-            <div className="movedBal" >
+            <div className="movedBal">
               <p className="bal-title">
                 Total{" "}
                 <span style={{ color: "rgba(0, 173, 7, 0.93)" }}>
@@ -588,7 +615,7 @@ class Swap extends Component {
               xs={12}
               md={6}
               className={classes.item}
-            // style={{ marginTop: "20px" }}
+              // style={{ marginTop: "20px" }}
             >
               <SwapInfo
                 swapType={swapType}
