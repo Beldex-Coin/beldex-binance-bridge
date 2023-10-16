@@ -10,6 +10,7 @@ import { SwapSelection, SwapInfo, SwapList, Popup } from "@components";
 import styles from "./styles";
 import matrixAbi from "../../matrixAbi";
 import Back from "./back.svg";
+// import ArrowCircleLeftIcon from '@material-ui/icons/ArrowCircleLeftIcon';
 
 const currencySymbols = {
   [TYPE.BDX]: "BDX",
@@ -291,9 +292,9 @@ class Swap extends Component {
   //   }
   // }
   onNext = async () => {
-    const { page, walletAddress,swapType } = this.state;
-    console.log("onNext 1::", page, walletAddress, 'type ::',swapType);
-    if (this.web3Obj && walletAddress && swapType !=='bdx_to_bbdx') {
+    const { page, walletAddress, swapType } = this.state;
+    console.log("onNext 1::", page, walletAddress, "type ::", swapType);
+    if (this.web3Obj && walletAddress && swapType !== "bdx_to_bbdx") {
       console.log("onNext 2::", this.web3Obj);
 
       let gasPri = await this.web3Obj.eth.getGasPrice();
@@ -332,7 +333,7 @@ class Swap extends Component {
             default:
           }
         } else {
-          const errMsg = `Insufficient gas fee in your Binance wallet.`;
+          const errMsg = `Insufficient gas fee in your wallet.`;
           console.log("onNext 7 fee::", errMsg);
 
           this.props.showMessage(errMsg, "error");
@@ -579,7 +580,21 @@ class Swap extends Component {
             onClick={this.goBack}
           >
             {/* <Link > */}
-            <img alt="" src={Back} className={classes.backImg} />
+            {/* <img alt="" src={Back} className={classes.backImg} /> */}
+            {/* <ArrowCircleLeftIcon /> */}
+            <svg
+              width="20"
+              height="20"
+              className={classes.backImg}
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M12 0.333344C5.55641 0.333344 0.333374 5.55638 0.333374 12C0.333374 18.4436 5.55641 23.6667 12 23.6667C18.4437 23.6667 23.6667 18.4436 23.6667 12C23.6667 5.55638 18.4437 0.333344 12 0.333344ZM16.6667 13.1667H10.1498L12 15.0169C12.455 15.4719 12.455 16.2117 12 16.6667C11.5451 17.1216 10.8053 17.1216 10.3503 16.6667L6.5085 12.8249C6.05239 12.3688 6.05239 11.6301 6.5085 11.1751L10.3503 7.33334C10.8053 6.87837 11.5451 6.87837 12 7.33334C12.455 7.78831 12.455 8.52811 12 8.98308L10.1498 10.8333H16.6667C17.3108 10.8333 17.8334 11.3559 17.8334 12C17.8334 12.6441 17.3108 13.1667 16.6667 13.1667Z"
+                // fill="#AFAFBE"
+              />
+            </svg>
+
             <Typography className={classes.backTxt}>Back</Typography>
             {/* </Link> */}
           </Typography>

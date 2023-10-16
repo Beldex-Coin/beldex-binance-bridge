@@ -102,18 +102,26 @@ const styles = (theme) => ({
     fontSize: "0.90rem",
     marginBottom: "10px",
     cursor:'pointer',
-    width:'60px',
-    '&:hover':{
-      opacity:'0.8'
-    }
-
-  },
-  backImg: {
-    width: "17px",
-    marginRight: "5px",
+    width:'76px',
     // '&:hover':{
     //   opacity:'0.8'
     // }
+    // '& svg':{
+    //   '&:hover':{
+    //     fill:'#fff',
+    //     color:'#fff'
+    //   }
+    // }
+
+  },
+  backImg: {
+    // width: "17px",
+    fill:"#AFAFBE",
+    marginRight: "5px",
+    '&:hover':{
+      fill:'#fff',
+      color:'#fff'
+    }
   },
   backTxt: {
     fontWeight: "500",
@@ -134,7 +142,8 @@ const styles = (theme) => ({
     flexDirection: "column",
     justifyContent: "center",
     alignItem: "center",
-    padding: "22px",
+    // padding: "22px",
+    padding: '15px 22px',
     border: "0.5px #56566C solid",
     backgroundColor: "#1C1C26",
     borderRadius: "20px",
@@ -171,7 +180,8 @@ const styles = (theme) => ({
     // },
   },
   rightPaneWrapper: {
-    width: "78%",
+    width: "70%",
+    height: '615px',
     padding: "25px 20px",
     marginLeft: "auto",
     borderRadius: "30px",
@@ -180,6 +190,7 @@ const styles = (theme) => ({
     boxShadow: "0px 6px 94px 0px rgba(0, 0, 0, 0.2)",
     [theme.breakpoints.between("xs", "sm")]: {
       width: "91%",
+      height: 'unset',
       margin: "auto",
       padding: "10px",
     },

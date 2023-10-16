@@ -89,7 +89,7 @@ export default class App extends PureComponent {
         alignSelf="baseline"
         
       >
-        <LazyLoad height={"60px"} className="titleContainer" >
+        <LazyLoad className="titleContainer" >
           <ImageLoader
             className="titleImage"
             loadedClassName="titleImageLoaded"

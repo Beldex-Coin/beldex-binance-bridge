@@ -323,7 +323,8 @@ line-height: normal; */
   }
   .titleContainer {
     max-height: 120px;
-    height: auto !important;
+    height: 60px;
+    /* height: auto !important; */
   }
 
   .movedBal-p2 {

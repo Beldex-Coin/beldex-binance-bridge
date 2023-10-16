@@ -228,7 +228,8 @@ class SwapSelection extends Component {
             fullWidth
             label="Next"
             loading={loading}
-            disabled={addressType === "bdx" ? !address || !amount : !address}
+            disabled={addressType === "bdx" ? !address ||  (this.props.info.fees && this.props.info.fees.bdx / 1e9) >=
+            amount || amount==='.' : !address}
             onClick={this.onNext}
           />
         </Grid>
