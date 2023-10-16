@@ -59,7 +59,7 @@ const styles = (theme) => ({
   },
   section: {
     ...common.section,
-    height: "467px",
+    height: "447px",
     padding: "10px",
     [theme.breakpoints.up("md")]: {
       maxWidth: "800px",
@@ -68,7 +68,7 @@ const styles = (theme) => ({
   },
   sectionSwap: {
     ...common.section,
-    height: "467px",
+    height: "447px",
     // display:'flex',
     // alignItems:'center',
     overflowX: "hidden",
@@ -138,7 +138,7 @@ const styles = (theme) => ({
     border: "0.5px #56566C solid",
     backgroundColor: "#1C1C26",
     borderRadius: "20px",
-    marginTop: "15px",
+    // marginTop: "15px",
     [theme.breakpoints.down("sm")]: {
       border: "unset",
       padding: "unset",
