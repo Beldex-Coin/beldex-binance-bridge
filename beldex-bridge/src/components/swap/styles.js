@@ -11,8 +11,12 @@ const styles = (theme) => ({
     flexDirection: "column",
     alignItems: "center",
     marginTop: "20px",
+    overflow: "auto",
+    height: "448px",
     [theme.breakpoints.down("sm")]: {
       marginTop: "10px",
+      overflow: "unset",
+      height: "unset",
     },
   },
   itemColumn: {

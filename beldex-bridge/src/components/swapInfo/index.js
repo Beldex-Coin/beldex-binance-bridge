@@ -33,24 +33,25 @@ class SwapInfo extends PureComponent {
   };
   
   onCopy = (id) => {
-    var elm = document.getElementById(id);
-    let range;
-    // for Internet Explorer
+    // var elm = document.getElementById(id);
+    // let range;
+    // // for Internet Explorer
 
-    if (document.body.createTextRange) {
-      range = document.body.createTextRange();
-      range.moveToElementText(elm);
-      range.select();
-      document.execCommand("Copy");
-    } else if (window.getSelection) {
-      // other browsers
-      var selection = window.getSelection();
-      range = document.createRange();
-      range.selectNodeContents(elm);
-      selection.removeAllRanges();
-      selection.addRange(range);
-      document.execCommand("Copy");
-    }
+    // if (document.body.createTextRange) {
+    //   range = document.body.createTextRange();
+    //   range.moveToElementText(elm);
+    //   range.select();
+    //   document.execCommand("Copy");
+    // } else if (window.getSelection) {
+    //   // other browsers
+    //   var selection = window.getSelection();
+    //   range = document.createRange();
+    //   range.selectNodeContents(elm);
+    //   selection.removeAllRanges();
+    //   selection.addRange(range);
+    //   document.execCommand("Copy");
+    // }
+    navigator.clipboard.writeText(id)
     this.showMessage("Address Copied to clipboard",'success')
   };
 
@@ -187,7 +188,9 @@ class SwapInfo extends PureComponent {
             <Box display={'flex'} justifyContent={'center'} alignContent={'center'} >
               <Tooltip title="Copy Address" placement="left">
                 <IconButton
-                  onClick={() => this.onCopy("depositAddress")}
+                  // onClick={() => this.onCopy("depositAddress")}
+                  onClick={() => this.onCopy(depositAddress)}
+
                   aria-label="Copy Address"
                 >
                   <img alt="" src={CopyIcon} />

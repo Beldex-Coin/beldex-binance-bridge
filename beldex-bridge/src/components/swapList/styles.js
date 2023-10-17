@@ -9,8 +9,10 @@ const styles = (theme) => ({
     borderBottom: "0px solid #d4d4d4",
     background: "#282837",
     borderRadius: "10px",
+   
     [theme.breakpoints.down("sm")]: {
       padding: theme.spacing(1, 1),
+      
     },
   },
   pending: {
@@ -91,7 +93,7 @@ const styles = (theme) => ({
   emptyTxnWrapper: {
     width: "190px",
     textAlign: "center",
-    margin:'auto',
+    margin: "auto",
     marginTop: "70px",
     [theme.breakpoints.down("sm")]: {
       width: "unset",
