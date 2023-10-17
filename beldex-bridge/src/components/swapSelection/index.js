@@ -8,6 +8,7 @@ import config from "@config";
 import styles from "./styles";
 import { store, dispatcher, Actions, Events } from "@store";
 import Swaptabs from "./swapTabs";
+import {  withTranslation  } from 'react-i18next';
 
 const walletCreationUrl = {
   [TYPE.BDX]: config.beldex.walletCreationUrl,
@@ -146,10 +147,11 @@ class SwapSelection extends Component {
     this.setState({ loginOpen: false });
   };
   render() {
+    const { t } = this.props;
     const { loading, classes } = this.props;
     const { address, addressError, amount } = this.state;
     const addressType = this.getAddressType();
-    const inputLabel = addressType === TYPE.BDX ? "BDX Address" : "BNB Address";
+    const inputLabel = addressType === TYPE.BDX ? t("bdxAddress") : t("bnbAddress");
     const inputPlaceholder = addressType === TYPE.BDX ? "bdx..." : "wbdx...";
 
     const url = walletCreationUrl["bnb"];
@@ -157,10 +159,10 @@ class SwapSelection extends Component {
       <Grid item xs={12} className={classes.root}>
         <div className="movedBal">
           <p className="bal-title">
-            Total <span style={{ color: "rgba(0, 173, 7, 0.93)" }}>&nbsp;
+           {t('total')}  <span style={{ color: "rgba(0, 173, 7, 0.93)" }}>&nbsp;
               BDX &nbsp;
             </span>{" "}
-            moved to Binance smart chain
+          {t("moved_binance")}
           </p>
           <p className="movedBal-p2">
             <span className="balance-span">
@@ -177,7 +179,7 @@ class SwapSelection extends Component {
         </Grid>
 
         <Grid item xs={12}>
-          {/* <Select
+          {/* <Select 
             fullWidth
             label="Swap Type"
             options={options}
@@ -205,8 +207,8 @@ class SwapSelection extends Component {
             <>
               <Input
                 fullWidth
-                label="Amount"
-                placeholder="Amount"
+                label={t('amount')}
+                placeholder={t('amount')}
                 value={amount}
                 type="text"
                 onChange={this.onAmountChanged}
@@ -219,8 +221,9 @@ class SwapSelection extends Component {
             </>
           )}
           <Typography className={classes.swapFee}>
-            Swap Fee : {this.props.info.fees && this.props.info.fees.bdx / 1e9}{" "}
-            BDX
+          {t('swapFee',{amount:this.props.info.fees && this.props.info.fees.bdx / 1e9})} 
+           
+          
           </Typography>
         </Grid>
         <Grid item xs={12} align="right" className={classes.button}>
@@ -243,7 +246,7 @@ class SwapSelection extends Component {
               className={`contract-address ${classes.wbdxAddressTitle}`}
               style={{ marginTop: "10px" }}
             >
-              wBDX Contract address :
+              {t('con_address')} :
             </Typography>
             <Typography className={classes.wbdxAddress}>
               0x90bbdDbF3223363898065b9C736e2B86C655762b
@@ -260,20 +263,19 @@ class SwapSelection extends Component {
             target="_blank"
             rel="noreferrer"
           >
-            View on bscscan{" "}
+            {t('viewBscscan')}
           </Link>
         </Typography>
         {
           this.state.loginOpen && (
             <div className="warningText">
               <p>
-                The maximum BDX swap limit was reached.<br></br> You can buy
-                BBDX from{" "}
+                {t('maximumLimitReached')}<br></br>{t('buyBBDX')}
                 <a
                   href="https://testnet.binance.org/en/trade/mini/175-0B3M_BNB"
                   style={{ color: "#67d040", textAlign: "center" }}
                 >
-                  Binance dex.
+                  {t('binanceDex')}
                 </a>
               </p>
             </div>
@@ -293,4 +295,4 @@ SwapSelection.propTypes = {
   loading: PropTypes.bool,
 };
 
-export default withStyles(styles)(SwapSelection);
+export default  withStyles(styles)(withTranslation()(SwapSelection));

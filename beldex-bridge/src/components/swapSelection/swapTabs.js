@@ -5,6 +5,7 @@ import AppBar from "@material-ui/core/AppBar";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import Typography from "@material-ui/core/Typography";
+import { useTranslation } from 'react-i18next';
 
 function TabContainer(props) {
   return (
@@ -66,6 +67,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function SwapTabs(props) {
+  const { t } = useTranslation();
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
 
@@ -97,8 +99,8 @@ export default function SwapTabs(props) {
           onChange={handleChange}
           className={classes.tabsWrapper}
         >
-          <Tab label={<span> {value === 0 && <span className={classes.greenDots}></span>} BDX to wBDX</span>} />
-          <Tab label={<span> {value === 1 && <span className={classes.greenDots}></span>} wBDX to BDX</span>} />
+          <Tab label={<span> {value === 0 && <span className={classes.greenDots}></span>} {t('bdxTowBDX')}</span>} />
+          <Tab label={<span> {value === 1 && <span className={classes.greenDots}></span>} {t('wBDXToBDX')}</span>} />
         </Tabs>
       </AppBar>
       {/* {value === 0 && <TabContainer>BDX to wBDX</TabContainer>}

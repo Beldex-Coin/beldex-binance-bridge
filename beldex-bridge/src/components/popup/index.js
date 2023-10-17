@@ -12,11 +12,12 @@ import binance from "./binance.png";
 import metamask from "./metamask.png";
 import styles from "./styles";
 import CloseIcon from "@material-ui/icons/Close";
-
+import { useTranslation } from 'react-i18next';
 // let wallets = [{text:'Binance', img: binance}, {text:'Metamask', img: metamask}];
 
 function Popup(props) {
   const { onClose, selectedValue, open, classes } = props;
+  const { t } = useTranslation();
 
   const [wallets, setWallet] = useState([
     { text: "Binance", img: binance },
@@ -55,7 +56,7 @@ function Popup(props) {
       open={open}
     >
       <DialogTitle className={classes.title} id="simple-dialog-title">
-        Choose Wallet account{" "}
+        {t('chooseWallet')}
         <Button
           onClick={handleClose}
          className={classes.closeBtn}

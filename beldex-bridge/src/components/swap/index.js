@@ -10,6 +10,8 @@ import { SwapSelection, SwapInfo, SwapList, Popup } from "@components";
 import styles from "./styles";
 import matrixAbi from "../../matrixAbi";
 import Back from "./back.svg";
+import {  withTranslation  } from 'react-i18next';
+
 // import ArrowCircleLeftIcon from '@material-ui/icons/ArrowCircleLeftIcon';
 
 const currencySymbols = {
@@ -408,7 +410,8 @@ class Swap extends Component {
     this.setState({ loading: true });
   };
   renderReceivingAmount = () => {
-    const { classes } = this.props;
+    
+    const { classes,t  } = this.props;
     const { swapType, swaps, info } = this.state;
     if (!swaps) return null;
     const receivingCurrency =
@@ -430,7 +433,7 @@ class Swap extends Component {
         alignItems="center"
         className={classes.txHeader}
       >
-        <Typography className={classes.statTitle}>Amount Due:</Typography>
+        <Typography className={classes.statTitle}>{t('amountDue')}:</Typography>
         <Typography className={classes.statAmount}>
           {displayTotal} {currencySymbols[receivingCurrency]}
         </Typography>
@@ -438,7 +441,7 @@ class Swap extends Component {
     );
   };
   renderTransactions = () => {
-    const { classes } = this.props;
+    const { classes,t } = this.props;
     const { swaps, unconfirmed, swapType } = this.state;
     const unconfirmedTxs =
       swapType === SWAP_TYPE.BDX_TO_BBDX ? unconfirmed : [];
@@ -470,7 +473,7 @@ class Swap extends Component {
             style={{ height: "71px" }}
           >
             <Typography className={classes.transactionTitle}>
-              Transactions
+              {t('transactions')}
             </Typography>
             {this.renderReceivingAmount()}
           </Box>
@@ -511,7 +514,7 @@ class Swap extends Component {
     );
   };
   renderSelection = (props, totalSupply, movedBalance) => {
-    const { classes } = props;
+    const { classes,t } = props;
     const { loading, swapType, info, showPopup, selectedWallet } = this.state;
     return (
       <Grid container className={classes.registerWrapper}>
@@ -521,10 +524,7 @@ class Swap extends Component {
               <span className="beldexName">Beldex</span> Bridge
             </p>
             <p className="app-left-content">
-              The Beldex bridge connects the Beldex network with the BNB Smart
-              Chain network. Here you can swap BDX to wBDX and vice versa.
-              Explore trading and DeFi opportunities in the BNB Smart Chain with
-              wrapped BDX.
+            { t('beldexBridgeInfo')}
             </p>
           </div>
         </Grid>
@@ -560,7 +560,7 @@ class Swap extends Component {
   };
 
   renderInfo = (movedBalance, totalSupply) => {
-    const { classes } = this.props;
+    const { classes,t } = this.props;
     const {
       loading,
       swapType,
@@ -601,11 +601,11 @@ class Swap extends Component {
           <Grid>
             <div className="movedBal">
               <p className="bal-title">
-                Total{" "}
+                {t('total')}
                 <span style={{ color: "rgba(0, 173, 7, 0.93)" }}>
                   &nbsp;BDX&nbsp;
                 </span>{" "}
-                moved to Binance smart chain
+               {t('moved_binance')}
               </p>
               <p className="movedBal-p2">
                 {/* <span className="movedBal-p2" style={{ marginLeft: "10px" }}> */}
@@ -671,4 +671,4 @@ Swap.propTypes = {
   classes: PropTypes.object.isRequired,
   showMessage: PropTypes.func.isRequired,
 };
-export default withStyles(styles)(Swap);
+export default withStyles(styles) (withTranslation()(Swap));

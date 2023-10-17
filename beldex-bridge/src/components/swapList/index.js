@@ -10,6 +10,7 @@ import styles from './styles';
 import Pending from './pending.svg'
 import Completed from './completed.svg';
 import EmptyTransaction from './no_transaction.svg';
+import {  withTranslation  } from 'react-i18next';
 const hashUrls = {
   [TYPE.BDX]: config.beldex.txExplorerUrl,
   [TYPE.BNB]: config.binance.txExplorerUrl,
@@ -17,7 +18,7 @@ const hashUrls = {
 
 class SwapList extends Component {
   renderHash = (type, txHash, transferTxHashes, created) => {
-    const { classes } = this.props;
+    const { classes,t } = this.props;
 
     const hasTransferHashes = transferTxHashes.length > 0;
     const depositHashType = type === SWAP_TYPE.BDX_TO_BBDX ? TYPE.BDX : TYPE.BNB;
@@ -40,7 +41,7 @@ class SwapList extends Component {
     if (transferTxHashes.length === 0) {
       return (
         <Box className={classes.hashBox}>
-          <Typography className={classes.hashTitle}>Deposit Transaction Hash</Typography>
+          <Typography className={classes.hashTitle}>{t('depositTransactionHash')}</Typography>
           <Box display="flex" flexDirection="row" alignItems="center" justifyContent="space-between" className={classes.TxDetails}>
             <Typography className={classes.hashes}>  {hashItems[0]}</Typography>
             <Typography  style={{textAlign:'right'}}> {this.renderTime(created)}</Typography>
@@ -49,7 +50,7 @@ class SwapList extends Component {
       );
     }
 
-    const swapTitle = transferTxHashes.length === 1 ? 'Swap Transaction Hash' : 'Swap Transaction Hashes';
+    const swapTitle = transferTxHashes.length === 1 ? t('swapTransactionHash') :t('swapTransactionHashes');
     console.log("swapTitle:", swapTitle, hashItems)
     return (
       <React.Fragment>
@@ -85,7 +86,7 @@ class SwapList extends Component {
   }
 
   renderSwapItem = ({ uuid, type, amount, txHash, transferTxHashes, created, unconfirmed }) => {
-    const { classes } = this.props;
+    const { classes,t } = this.props;
 
     const isPending = transferTxHashes && transferTxHashes.length === 0;
     const depositCurrency = type === SWAP_TYPE.BDX_TO_BBDX ? 'BDX' : 'wBDX';
@@ -93,7 +94,7 @@ class SwapList extends Component {
 
     let status = 'Completed';
     if (isPending) {
-      status = unconfirmed ? 'Waiting for Confirmations' : 'Pending';
+      status = unconfirmed ? t('waitingForConfirmations') : t('pending');
     }
 
     return (
@@ -117,13 +118,13 @@ class SwapList extends Component {
   }
 
   renderSwaps = () => {
-    const { classes, swaps } = this.props;
+    const { classes, swaps,t } = this.props;
     if (!swaps || swaps.length === 0) {
       return (
         <Box >
           <Box className={classes.emptyTxnWrapper}>
             <img alt="" src={EmptyTransaction} />
-            <Typography className={classes.emptyTitle}>No Transactions yet!</Typography>
+            <Typography className={classes.emptyTitle}>{t('noTransactions')}</Typography>
           </Box>
         </Box>
       );
@@ -150,4 +151,4 @@ SwapList.propTypes = {
   swaps: PropTypes.array
 };
 
-export default withStyles(styles)(SwapList);
+export default withStyles(styles)(withTranslation()(SwapList));

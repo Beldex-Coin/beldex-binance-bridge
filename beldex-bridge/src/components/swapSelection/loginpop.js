@@ -9,6 +9,7 @@ import Slide from '@material-ui/core/Slide';
 import styles from './styles';
 import { withStyles } from '@material-ui/core/styles';
 import closeIcon from './close.svg'
+import { useTranslation } from 'react-i18next';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -16,6 +17,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 
 function LoginPopup(props) {
   const { classes } = props;
+  const { t } = useTranslation();
   return (
     <div>
       {/* <Button variant="outlined" color="primary" onClick={handleClickOpen}>
@@ -33,8 +35,7 @@ function LoginPopup(props) {
         <DialogTitle id="alert-dialog-slide-title">{"Use Google's location service?"}</DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-slide-description">
-            Let Google help apps determine location. This means sending anonymous location data to
-            Google, even when no apps are running.
+            {t('googleLocationInfo')}
           </DialogContentText>
         </DialogContent>
         <DialogActions>

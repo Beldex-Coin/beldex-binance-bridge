@@ -19,6 +19,7 @@ import styles from "./styles";
 import important from "./warning.png";
 import QrCodeIcon from "../../assets/icons/QrCode.svg";
 import { Snackbar} from "@components";
+import {  withTranslation  } from 'react-i18next';
 
 class SwapInfo extends PureComponent {
   state = {
@@ -131,14 +132,14 @@ class SwapInfo extends PureComponent {
   renderMemo = () => {
     const {
       classes,
-      swapInfo: { memo },
+      swapInfo: { memo },t
     } = this.props;
     if (!memo) return null;
 
     return (
       <Box className={classes.memoFrame}>
         <Typography className={classes.warningText} style={{ color: "#000" }}>
-          PLEASE READ CAREFULLY
+          {t("readCarfully")}
         </Typography>
         {/* <Typography id='memo' className={classes.memo}>
           {memo}
@@ -155,8 +156,7 @@ class SwapInfo extends PureComponent {
         <Typography
           className={`blinkAnim ${clsx(classes.warningText, classes.red)}`}
         >
-          Please send <b>wBDX</b> only to the address mentioned above, the
-          amount sent to any other address will be lost.
+          {t('amountSentWarning')}
           <img alt="" src={important} className="blinkImg" />
         </Typography>
       </Box>
@@ -164,7 +164,7 @@ class SwapInfo extends PureComponent {
   };
 
   renderDepositInstructions = () => {
-    const { swapType, classes, swapInfo } = this.props;
+    const { swapType, classes, swapInfo,t } = this.props;
 
     const { depositAddress } = swapInfo;
     const depositCurrency = swapType === SWAP_TYPE.BDX_TO_BBDX ? "BDX" : "wBDX";
@@ -172,7 +172,8 @@ class SwapInfo extends PureComponent {
     return (
       <React.Fragment>
         <Typography className={classes.instructionBold}>
-          Transfer your {depositCurrency} to
+          {/* Transfer your {depositCurrency} to */}
+          {t('transferDepositCurrency',{depositCurrency:depositCurrency})}
         </Typography>
         {/* <Typography className={classes.instructions}>
           to
@@ -217,7 +218,7 @@ class SwapInfo extends PureComponent {
   };
 
   renderInstructions = () => {
-    const { swapType, classes, info } = this.props;
+    const { swapType, classes, info,t } = this.props;
 
     const beldexFee = (info && info.fees && info.fees.bdx / 1e9) || 0;
 
@@ -227,28 +228,24 @@ class SwapInfo extends PureComponent {
 
         {swapType === SWAP_TYPE.BBDX_TO_BDX && (
           <Typography className={classes.feeInfo}>
-            There will be a processing fee of{" "}
-            <span style={{ color: "#3EC745" }}>{beldexFee}</span> BDX which will
-            be charged.
+           {t('processingFee')}
+            <span style={{ color: "#3EC745" }}>{beldexFee}</span> {t('bdxCharged')}
           </Typography>
         )}
         <Box className={classes.instructionWrapper}>
           <Typography className={classes.noteTitle} >
-            Note{" "}
+            {t('note')}
           </Typography>
           {swapType === SWAP_TYPE.BDX_TO_BBDX && (
             <>
               <Typography className={classes.instructions}>
-                You will have to wait for the transaction to be checkpointed
-                before you're added to our processing queue, this usually takes
-                8 blocks.
+                {t('transactionInstructions')}
               </Typography>
             </>
           )}
 
           <Typography className={classes.instructions}>
-            If you run into any trouble, or your swap request has not gone
-            through, please contact <Typography component={"span"} style={{color:"#3EC745"}}>@Beldexadmin</Typography> on telegram.
+           {t('swapRequest')}<Typography component={"span"} style={{color:"#3EC745"}}>@Beldexadmin</Typography> on telegram.
           </Typography>
         </Box>
       </Box>
@@ -256,7 +253,7 @@ class SwapInfo extends PureComponent {
   };
 
   renderReceivingAmount = () => {
-    const { classes, swapType, swapInfo } = this.props;
+    const { classes, swapType, swapInfo,t } = this.props;
     if (!swapInfo || !swapInfo.swaps || swapInfo.swaps.length === 0)
       return null;
 
@@ -274,7 +271,7 @@ class SwapInfo extends PureComponent {
 
     return (
       <Grid item xs={12} align="right" className={classes.stats}>
-        <Typography className={classes.statTitle}>Pending Amount:</Typography>
+        <Typography className={classes.statTitle}>{t('pendingAmount')}:</Typography>
         <Typography className={classes.statAmount}>
           {displayTotal} {receivingCurrency}
         </Typography>
@@ -293,7 +290,7 @@ class SwapInfo extends PureComponent {
       onRefresh,
       walletConnected,
       swapType,
-      selectedWallet,
+      selectedWallet,t
     } = this.props;
     return (
       <div className={classes.root}>
@@ -309,11 +306,11 @@ class SwapInfo extends PureComponent {
               
               {!walletConnected ? (
                 <Typography className={classes.walletConnErr}>
-                  wallet not connected. Please connect your wallet.
+                  {t('connectYourWallet')}
                 </Typography>
               ) : (
                 <Typography className={classes.walletConnSucc}>
-                  {selectedWallet} Wallet Connected
+                  {selectedWallet} {t('walletConnected')}
                 </Typography>
               )}
             </Box>
@@ -334,7 +331,7 @@ class SwapInfo extends PureComponent {
           className={`contract-address ${classes.wbdxAddressTitle}`}
           style={{ marginTop: "20px" }}
         >
-          wBDX Contract address
+          {t('con_address')}
         </Typography>
         <Typography
           className={classes.wbdxAddressTitle}
@@ -357,4 +354,4 @@ SwapInfo.propTypes = {
   loading: PropTypes.bool,
 };
 
-export default withStyles(styles)(SwapInfo);
+export default withStyles(styles)(withTranslation()(SwapInfo));
