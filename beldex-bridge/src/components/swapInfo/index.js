@@ -3,23 +3,16 @@ import PropTypes from "prop-types";
 import clsx from "clsx";
 import QRCode from "qrcode.react";
 import AnimateHeight from "react-animate-height";
-import {
-  Grid,
-  Typography,
-  IconButton,
-  Link,
-  Tooltip,
-  Box,
-} from "@material-ui/core";
+import { Grid, Typography, IconButton, Tooltip, Box } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
 import CopyIcon from "../../assets/icons/CopyIcon.svg";
-import { Button, QRIcon } from "@components";
+import { Button,} from "@components";
 import { SWAP_TYPE } from "@constants";
 import styles from "./styles";
 import important from "./warning.png";
 import QrCodeIcon from "../../assets/icons/QrCode.svg";
-import { Snackbar} from "@components";
-import {  withTranslation  } from 'react-i18next';
+import { Snackbar } from "@components";
+import { withTranslation } from "react-i18next";
 
 class SwapInfo extends PureComponent {
   state = {
@@ -32,28 +25,10 @@ class SwapInfo extends PureComponent {
       balance: "",
     },
   };
-  
-  onCopy = (id) => {
-    // var elm = document.getElementById(id);
-    // let range;
-    // // for Internet Explorer
 
-    // if (document.body.createTextRange) {
-    //   range = document.body.createTextRange();
-    //   range.moveToElementText(elm);
-    //   range.select();
-    //   document.execCommand("Copy");
-    // } else if (window.getSelection) {
-    //   // other browsers
-    //   var selection = window.getSelection();
-    //   range = document.createRange();
-    //   range.selectNodeContents(elm);
-    //   selection.removeAllRanges();
-    //   selection.addRange(range);
-    //   document.execCommand("Copy");
-    // }
-    navigator.clipboard.writeText(id)
-    this.showMessage("Address Copied to clipboard",'success')
+  onCopy = (id) => {
+    navigator.clipboard.writeText(id);
+    this.showMessage(this.props.t("addressCopiedSuccess"), "success");
   };
 
   componentDidMount() {
@@ -101,8 +76,6 @@ class SwapInfo extends PureComponent {
       <Snackbar
         message={snackbar.message}
         open={snackbar.open}
-        // open={true}
-
         onClose={this.closeMessage}
         variant={snackbar.variant}
       />
@@ -132,7 +105,8 @@ class SwapInfo extends PureComponent {
   renderMemo = () => {
     const {
       classes,
-      swapInfo: { memo },t
+      swapInfo: { memo },
+      t,
     } = this.props;
     if (!memo) return null;
 
@@ -141,22 +115,10 @@ class SwapInfo extends PureComponent {
         <Typography className={classes.warningText} style={{ color: "#000" }}>
           {t("readCarfully")}
         </Typography>
-        {/* <Typography id='memo' className={classes.memo}>
-          {memo}
-        </Typography> */}
-        {/* <Tooltip title="Copy Memo" placement="right">
-          <IconButton onClick={() => this.onCopy('memo')} aria-label="Copy Memo">
-            <CopyIcon style={{ fontSize: '20px' }} />
-          </IconButton>
-        </Tooltip> */}
-        {/* <Typography className={classes.instructionBold}>
-          When creating the transaction, please paste the string above into the <b>Memo</b> field. <br />
-          Ensure that this is the only thing that you put in the field.
-        </Typography> */}
         <Typography
           className={`blinkAnim ${clsx(classes.warningText, classes.red)}`}
         >
-          {t('amountSentWarning')}
+          {t("amountSentWarning")}
           <img alt="" src={important} className="blinkImg" />
         </Typography>
       </Box>
@@ -164,7 +126,7 @@ class SwapInfo extends PureComponent {
   };
 
   renderDepositInstructions = () => {
-    const { swapType, classes, swapInfo,t } = this.props;
+    const { swapType, classes, swapInfo, t } = this.props;
 
     const { depositAddress } = swapInfo;
     const depositCurrency = swapType === SWAP_TYPE.BDX_TO_BBDX ? "BDX" : "wBDX";
@@ -172,12 +134,8 @@ class SwapInfo extends PureComponent {
     return (
       <React.Fragment>
         <Typography className={classes.instructionBold}>
-          {/* Transfer your {depositCurrency} to */}
-          {t('transferDepositCurrency',{depositCurrency:depositCurrency})}
+          {t("transferDepositCurrency", { depositCurrency: depositCurrency })}
         </Typography>
-        {/* <Typography className={classes.instructions}>
-          to
-        </Typography> */}
         <Typography
           component={"div"}
           style={{ borderRadius: "12px", background: "#282837" }}
@@ -186,31 +144,28 @@ class SwapInfo extends PureComponent {
             <Box id="depositAddress" className={classes.greenBorder}>
               {depositAddress}
             </Box>
-            <Box display={'flex'} justifyContent={'center'} alignContent={'center'} >
+            <Box
+              display={"flex"}
+              justifyContent={"center"}
+              alignContent={"center"}
+            >
               <Tooltip title="Copy Address" placement="left">
                 <IconButton
-                  // onClick={() => this.onCopy("depositAddress")}
                   onClick={() => this.onCopy(depositAddress)}
-
                   aria-label="Copy Address"
                 >
                   <img alt="" src={CopyIcon} />
-
-                  {/* <CopyIcon style={{ fontSize: '20px' }} /> */}
                 </IconButton>
               </Tooltip>
               <Tooltip title="Toggle QR" placement="right">
                 <IconButton onClick={this.toggleQR} aria-label="Toggle QR">
                   <img alt="" src={QrCodeIcon} />
-
-                  {/* <QRIcon style={{ filter: "invert(0)", fontSize: "18px" }} /> */}
                 </IconButton>
               </Tooltip>
             </Box>
           </Typography>
           {this.renderQR()}
         </Typography>
-        {/* {this.renderQR()} */}
         {this.renderMemo()}
         {this.renderSnackbar()}
       </React.Fragment>
@@ -218,34 +173,35 @@ class SwapInfo extends PureComponent {
   };
 
   renderInstructions = () => {
-    const { swapType, classes, info,t } = this.props;
-
+    const { swapType, classes, info, t } = this.props;
     const beldexFee = (info && info.fees && info.fees.bdx / 1e9) || 0;
-
     return (
       <Box className={classes.instructionContainer}>
         {swapType === SWAP_TYPE.BDX_TO_BBDX && this.renderDepositInstructions()}
 
         {swapType === SWAP_TYPE.BBDX_TO_BDX && (
           <Typography className={classes.feeInfo}>
-           {t('processingFee')}
-            <span style={{ color: "#3EC745" }}>{beldexFee}</span> {t('bdxCharged')}
+            {t("processingFee")}
+            <span style={{ color: "#3EC745" }}>{beldexFee}</span>{" "}
+            {t("bdxCharged")}
           </Typography>
         )}
         <Box className={classes.instructionWrapper}>
-          <Typography className={classes.noteTitle} >
-            {t('note')}
-          </Typography>
+          <Typography className={classes.noteTitle}>{t("note")}</Typography>
           {swapType === SWAP_TYPE.BDX_TO_BBDX && (
             <>
               <Typography className={classes.instructions}>
-                {t('transactionInstructions')}
+                {t("transactionInstructions")}
               </Typography>
             </>
           )}
 
           <Typography className={classes.instructions}>
-           {t('swapRequest')}<Typography component={"span"} style={{color:"#3EC745"}}>@Beldexadmin</Typography> on telegram.
+            {t("swapRequest")}
+            <Typography component={"span"} style={{ color: "#3EC745" }}>
+              @Beldexadmin
+            </Typography>{" "}
+            on telegram.
           </Typography>
         </Box>
       </Box>
@@ -253,7 +209,7 @@ class SwapInfo extends PureComponent {
   };
 
   renderReceivingAmount = () => {
-    const { classes, swapType, swapInfo,t } = this.props;
+    const { classes, swapType, swapInfo, t } = this.props;
     if (!swapInfo || !swapInfo.swaps || swapInfo.swaps.length === 0)
       return null;
 
@@ -271,17 +227,15 @@ class SwapInfo extends PureComponent {
 
     return (
       <Grid item xs={12} align="right" className={classes.stats}>
-        <Typography className={classes.statTitle}>{t('pendingAmount')}:</Typography>
+        <Typography className={classes.statTitle}>
+          {t("pendingAmount")}:
+        </Typography>
         <Typography className={classes.statAmount}>
           {displayTotal} {receivingCurrency}
         </Typography>
       </Grid>
     );
   };
-
-  // goBack = () => {
-  //   window.location.reload()
-  // }
 
   render() {
     const {
@@ -290,27 +244,22 @@ class SwapInfo extends PureComponent {
       onRefresh,
       walletConnected,
       swapType,
-      selectedWallet,t
+      selectedWallet,
+      t,
     } = this.props;
     return (
       <div className={classes.root}>
         <Grid item xs={12} align="left" className={classes.back}>
-          {/* <Typography>
-            <Link className={classes.link} onClick={this.goBack}>
-              &lt; Back
-            </Link>
-          </Typography> */}
 
           {swapType !== SWAP_TYPE.BDX_TO_BBDX && (
             <Box className={classes.walletConWrapper}>
-              
               {!walletConnected ? (
                 <Typography className={classes.walletConnErr}>
-                  {t('connectYourWallet')}
+                  {t("connectYourWallet")}
                 </Typography>
               ) : (
                 <Typography className={classes.walletConnSucc}>
-                  {selectedWallet} {t('walletConnected')}
+                  {selectedWallet} {t("walletConnected")}
                 </Typography>
               )}
             </Box>
@@ -325,13 +274,12 @@ class SwapInfo extends PureComponent {
             onClick={onRefresh}
           />
         </Grid>
-        {/* <Link href="BBDXBridgeTOS.html" target="_blank" style={{ textAlign: 'center', margin: '10px auto 0', display: 'inherit', fontSize: '14px' }}>Terms of Service</Link> */}
 
         <Typography
           className={`contract-address ${classes.wbdxAddressTitle}`}
           style={{ marginTop: "20px" }}
         >
-          {t('con_address')}
+          {t("con_address")}
         </Typography>
         <Typography
           className={classes.wbdxAddressTitle}

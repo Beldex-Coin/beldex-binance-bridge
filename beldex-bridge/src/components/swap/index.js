@@ -2,17 +2,14 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import Web3 from "web3";
 import { withStyles } from "@material-ui/core/styles";
-import { Grid, Typography, Box, Link } from "@material-ui/core";
+import { Grid, Typography, Box,  } from "@material-ui/core";
 import { Warning } from "@utils/error";
 import { store, dispatcher, Actions, Events } from "@store";
 import { SWAP_TYPE, TYPE } from "@constants";
 import { SwapSelection, SwapInfo, SwapList, Popup } from "@components";
 import styles from "./styles";
 import matrixAbi from "../../matrixAbi";
-import Back from "./back.svg";
-import {  withTranslation  } from 'react-i18next';
-
-// import ArrowCircleLeftIcon from '@material-ui/icons/ArrowCircleLeftIcon';
+import { withTranslation } from "react-i18next";
 
 const currencySymbols = {
   [TYPE.BDX]: "BDX",
@@ -75,8 +72,7 @@ class Swap extends Component {
     this.setState({ loading: false });
   };
   transactionsInfo = (transaction) => {
-    console.log("transaction info:");
-    this.props.showMessage("Transaction success.", "success");
+    this.props.showMessage(this.props.t("transactionSuccess"), "success");
   };
   onUnconfirmedTransactionsFetched = (transactions) => {
     this.setState({ unconfirmed: transactions });
@@ -91,18 +87,17 @@ class Swap extends Component {
         const result = await this.contract.methods
           .balanceOf(walletAddress)
           .call();
-        // const balance = this.web3Obj.utils.fromWei(result?.toString());
         const balance = result / 1e9;
         if (swapType === SWAP_TYPE.BBDX_TO_BDX && walletAddress) {
           if (parseFloat(amount) > parseFloat(balance)) {
             this.props.showMessage(
-              `Entered WBDX amount is exceeding the balance.`,
+              this.props.t("exceedingBalanceWarning"),
               "error"
             );
           } else if (parseFloat(amount) > 0) {
             this.makeTransaction();
           } else {
-            this.props.showMessage(`Amount should be greater than 0`, "error");
+            this.props.showMessage(this.props.t('greaterThanZeroError'), "error");
           }
         } else {
           this.props.showMessage(
@@ -119,34 +114,23 @@ class Swap extends Component {
     const provider = window.ethereum;
     const binanceTestChainId = "0x38";
     this.web3Obj = new Web3(window.ethereum);
-    // let provider=new Web3(window.ethereum)
     try {
       window.ethereum.enable();
-      console.log("this.web3Obj ::", this.web3Obj);
       if (this.web3Obj) {
-        console.log("chainId ::1");
-        // web3..then(console.log);
         const chainId = await window.ethereum.request({
           method: "eth_chainId",
         });
-        console.log("chainId 2::", chainId);
-
         if (chainId === binanceTestChainId) {
           console.log("Bravo!, you are on the correct network");
         } else {
-          console.log("oulalal, switch to the correct network");
           try {
             await provider.request({
               method: "wallet_switchEthereumChain",
               params: [{ chainId: binanceTestChainId }],
             });
-            console.log("You have succefully switched to Binance network");
           } catch (switchError) {
             // This error code indicates that the chain has not been added to MetaMask.
             if (switchError.code === -32602) {
-              console.log(
-                "This network is not available in your metamask, please add it"
-              );
               try {
                 await provider.request({
                   method: "wallet_addEthereumChain",
@@ -222,7 +206,6 @@ class Swap extends Component {
   };
   makeTransaction = () => {
     const { amount, walletAddress, swapInfo } = this.state;
-    // let amountToWei = this.web3Obj.utils.toHex(amount);
     let amountToWei = amount * 1e9;
     const options = {
       from: walletAddress,
@@ -233,7 +216,6 @@ class Swap extends Component {
           this.web3Obj.utils.toHex(amountToWei)
         )
         .encodeABI(),
-      // data: this.contract.methods.transfer('0xBfBf227B5dFF318cfF17713C1ECDfF917157cceC', this.web3Obj.utils.toHex(amountToWei)).encodeABI(),
       value: 0x0,
     };
     this.web3Obj.eth
@@ -262,7 +244,7 @@ class Swap extends Component {
           },
         });
         if (error?.code === 4001) {
-          this.props.showMessage("User denied transaction signature.", "error");
+          this.props.showMessage(this.props.t("transactionSignatureError"), "error");
         } else {
           this.props.showMessage(error, "error");
         }
@@ -272,8 +254,8 @@ class Swap extends Component {
     this.setState({ loading: false });
     const message =
       transactions.length === 1
-        ? "Added 1 new swap"
-        : `Added ${transactions.length} new swaps`;
+        ? this.props.t('newSwapSuccess',{count:1})
+        :this.props.t('newSwapSuccess',{count:transactions.length});
     this.props.showMessage(message, "success");
     setImmediate(() => this.getUnconfirmedTransactions());
     setImmediate(() => this.getSwaps());
@@ -281,49 +263,19 @@ class Swap extends Component {
   onInfoUpdated = () => {
     this.setState({ info: store.getStore("info") || {} });
   };
-  // onNext = async () => {
-  //   const { page } = this.state;
-  //   switch (page) {
-  //     case 0:
-  //       this.swapToken();
-  //       break;
-  //     case 1:
-  //       this.finalizeSwap();
-  //       break;
-  //     default:
-  //   }
-  // }
   onNext = async () => {
     const { page, walletAddress, swapType } = this.state;
-    console.log("onNext 1::", page, walletAddress, "type ::", swapType);
     if (this.web3Obj && walletAddress && swapType !== "bdx_to_bbdx") {
-      console.log("onNext 2::", this.web3Obj);
-
       let gasPri = await this.web3Obj.eth.getGasPrice();
       let estimate = await this.web3Obj.eth.estimateGas({
         from: walletAddress,
       });
-      // let bnbUsdPrice = await axios.get(`https://api.coingecko.com/api/v3/simple/price?ids=binancecoin&vs_currencies=usd`);
-      // console.log("USDT-Value:", (this.web3Obj.utils.fromWei(gasPri, 'ether') * estimate) * bnbUsdPrice.data.binancecoin.usd)
-      console.log("onNext 3::", gasPri, estimate);
-
       this.web3Obj.eth.getBalance(walletAddress).then((data) => {
         const walletBalance = data / 1e18;
-        console.log("onNext 4::", walletBalance);
-        console.log(
-          "onNext 5 fee::",
-          this.web3Obj.utils.fromWei(gasPri, "ether") * estimate
-        );
-
         if (
           walletBalance >
           this.web3Obj.utils.fromWei(gasPri, "ether") * estimate
         ) {
-          console.log(
-            "onNext 6 fee::",
-            this.web3Obj.utils.fromWei(gasPri, "ether") * estimate
-          );
-
           // we can mention here minimum balance.
           switch (page) {
             case 0:
@@ -335,16 +287,14 @@ class Swap extends Component {
             default:
           }
         } else {
-          const errMsg = `Insufficient gas fee in your wallet.`;
-          console.log("onNext 7 fee::", errMsg);
-
+          const errMsg =this.props.t('InsufficientGasFeeError');
           this.props.showMessage(errMsg, "error");
         }
       });
     } else {
       const { swapType } = this.state;
       if (swapType !== SWAP_TYPE.BDX_TO_BBDX) {
-        this.props.showMessage("Please connect the available wallet.", "error");
+        this.props.showMessage(this.props.t('connectAvailableWalletError'), "error");
         this.setState({ showPopup: !this.state.showPopup });
       } else {
         this.swapToken();
@@ -410,8 +360,7 @@ class Swap extends Component {
     this.setState({ loading: true });
   };
   renderReceivingAmount = () => {
-    
-    const { classes,t  } = this.props;
+    const { classes, t } = this.props;
     const { swapType, swaps, info } = this.state;
     if (!swaps) return null;
     const receivingCurrency =
@@ -433,7 +382,7 @@ class Swap extends Component {
         alignItems="center"
         className={classes.txHeader}
       >
-        <Typography className={classes.statTitle}>{t('amountDue')}:</Typography>
+        <Typography className={classes.statTitle}>{t("amountDue")}:</Typography>
         <Typography className={classes.statAmount}>
           {displayTotal} {currencySymbols[receivingCurrency]}
         </Typography>
@@ -441,7 +390,7 @@ class Swap extends Component {
     );
   };
   renderTransactions = () => {
-    const { classes,t } = this.props;
+    const { classes, t } = this.props;
     const { swaps, unconfirmed, swapType } = this.state;
     const unconfirmedTxs =
       swapType === SWAP_TYPE.BDX_TO_BBDX ? unconfirmed : [];
@@ -473,7 +422,7 @@ class Swap extends Component {
             style={{ height: "71px" }}
           >
             <Typography className={classes.transactionTitle}>
-              {t('transactions')}
+              {t("transactions")}
             </Typography>
             {this.renderReceivingAmount()}
           </Box>
@@ -489,7 +438,6 @@ class Swap extends Component {
     this.setState({ swapType }, async () => {
       if (swapType === SWAP_TYPE.BBDX_TO_BDX) {
         if (walletAddress === "" && window.innerWidth > 720) {
-          // this.connectToMetaMask();
           this.setState({ showPopup: !this.state.showPopup });
         }
       }
@@ -514,7 +462,7 @@ class Swap extends Component {
     );
   };
   renderSelection = (props, totalSupply, movedBalance) => {
-    const { classes,t } = props;
+    const { classes, t } = props;
     const { loading, swapType, info, showPopup, selectedWallet } = this.state;
     return (
       <Grid container className={classes.registerWrapper}>
@@ -523,9 +471,7 @@ class Swap extends Component {
             <p className="appName">
               <span className="beldexName">Beldex</span> Bridge
             </p>
-            <p className="app-left-content">
-            { t('beldexBridgeInfo')}
-            </p>
+            <p className="app-left-content">{t("beldexBridgeInfo")}</p>
           </div>
         </Grid>
         <Grid xs={12} md={7}>
@@ -560,7 +506,7 @@ class Swap extends Component {
   };
 
   renderInfo = (movedBalance, totalSupply) => {
-    const { classes,t } = this.props;
+    const { classes, t } = this.props;
     const {
       loading,
       swapType,
@@ -569,7 +515,6 @@ class Swap extends Component {
       walletConnMeta,
       walletConnBin,
       selectedWallet,
-      SwapSelection,
     } = this.state;
     return (
       <React.Fragment>
@@ -579,9 +524,6 @@ class Swap extends Component {
             className={classes.backBox}
             onClick={this.goBack}
           >
-            {/* <Link > */}
-            {/* <img alt="" src={Back} className={classes.backImg} /> */}
-            {/* <ArrowCircleLeftIcon /> */}
             <svg
               width="20"
               height="20"
@@ -591,46 +533,37 @@ class Swap extends Component {
             >
               <path
                 d="M12 0.333344C5.55641 0.333344 0.333374 5.55638 0.333374 12C0.333374 18.4436 5.55641 23.6667 12 23.6667C18.4437 23.6667 23.6667 18.4436 23.6667 12C23.6667 5.55638 18.4437 0.333344 12 0.333344ZM16.6667 13.1667H10.1498L12 15.0169C12.455 15.4719 12.455 16.2117 12 16.6667C11.5451 17.1216 10.8053 17.1216 10.3503 16.6667L6.5085 12.8249C6.05239 12.3688 6.05239 11.6301 6.5085 11.1751L10.3503 7.33334C10.8053 6.87837 11.5451 6.87837 12 7.33334C12.455 7.78831 12.455 8.52811 12 8.98308L10.1498 10.8333H16.6667C17.3108 10.8333 17.8334 11.3559 17.8334 12C17.8334 12.6441 17.3108 13.1667 16.6667 13.1667Z"
-                // fill="#AFAFBE"
+
               />
             </svg>
 
             <Typography className={classes.backTxt}>Back</Typography>
-            {/* </Link> */}
           </Typography>
           <Grid>
             <div className="movedBal">
               <p className="bal-title">
-                {t('total')}
+                {t("total")}
                 <span style={{ color: "rgba(0, 173, 7, 0.93)" }}>
                   &nbsp;BDX&nbsp;
                 </span>{" "}
-               {t('moved_binance')}
+                {t("moved_binance")}
               </p>
               <p className="movedBal-p2">
-                {/* <span className="movedBal-p2" style={{ marginLeft: "10px" }}> */}
                 <span className="balance-span">{movedBalance} </span>
                 <span className="availBal">/ {totalSupply}</span>
-                {/* </span> */}
               </p>
             </div>
           </Grid>
           <Grid
             container
             spacing={2}
-            style={{
-              display: "flex",
-              flexDirection: "row",
-              alignContent: "center",
-              justifyContent: "space-between",
-            }}
+            className={classes.dFlexSpacebw}
           >
             <Grid
               item
               xs={12}
               md={6}
               className={classes.item}
-              // style={{ marginTop: "20px" }}
             >
               <SwapInfo
                 swapType={swapType}
@@ -671,4 +604,4 @@ Swap.propTypes = {
   classes: PropTypes.object.isRequired,
   showMessage: PropTypes.func.isRequired,
 };
-export default withStyles(styles) (withTranslation()(Swap));
+export default withStyles(styles)(withTranslation()(Swap));

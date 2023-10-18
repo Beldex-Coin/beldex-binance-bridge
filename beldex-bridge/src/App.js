@@ -2,12 +2,10 @@ import React, { PureComponent } from "react";
 import LazyLoad from "react-lazy-load";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import { createMuiTheme, MuiThemeProvider } from "@material-ui/core/styles";
-import { Grid, Box, Typography } from "@material-ui/core";
+import {  Box,} from "@material-ui/core";
 import { store, dispatcher, Actions, Events } from "@store";
 import { Snackbar, Swap, ImageLoader } from "@components";
 import theme from "@theme";
-
-
 export default class App extends PureComponent {
   state = {
     snackbar: {
@@ -19,7 +17,6 @@ export default class App extends PureComponent {
   };
   
   componentDidMount = () => {
-    console.log("innerWidth:",window.innerWidth);
     store.on(Events.FETCHED_BALANCE, this.onBalUpdated);
   };
 
@@ -57,8 +54,6 @@ export default class App extends PureComponent {
       <Snackbar
         message={snackbar.message}
         open={snackbar.open}
-        // open={true}
-
         onClose={this.closeMessage}
         variant={snackbar.variant}
       />
@@ -86,8 +81,7 @@ export default class App extends PureComponent {
         display="flex"
         className="title"
         justifyContent="flexStart"
-        alignSelf="baseline"
-        
+        alignSelf="baseline"      
       >
         <LazyLoad className="titleContainer" >
           <ImageLoader
@@ -97,9 +91,6 @@ export default class App extends PureComponent {
             alt="Logo"
           />
         </LazyLoad>
-        {/* <div className="moving">
-
-        </div> */}
       </Box>
     );
   };
@@ -125,44 +116,13 @@ export default class App extends PureComponent {
         {this.renderBackgroundImage()}
         <div id="content">
           {this.renderTitleImage()}
-          {/* <div className="movedBal">
-            <p>Total bdx moved to Binance smart chain</p>
-            <p className="movedBal-p2">
-              {bal} <span className="availBal">/ {total}</span>
-            </p>
-          </div> */}
           <div className="d-flex-center">
-            {/* <Grid id="grid" container spacing={2}>
-              <Grid xs={12} md={5}>
-                <p className="appName">
-                  <span className="beldexName">Beldex</span> Bridge
-                </p>
-                <p className="app-left-content">
-                  Lorem ipsum dolor sit amet consectetur adipiscing elit Ut et
-                  massa mi. Aliquam in hendrerit urna. Pellentesque sit amet
-                  sapien fringilla, mattis ligula consectetur, ultrices mauris.
-                  Maecenas vitae mattis tellus.
-                </p>
-              </Grid>  */}
-              {/* <Grid id="grid" container  xs={12} > */}
-
-                {/* <div className="rightPane-wrapper"> */}
-                {/* <div className="movedBal">
-                  <p className="bal-title">Total <span style={{color:'rgba(0, 173, 7, 0.93)'}}>BDX</span> moved to Binance smart chain</p>
-                  <p className="movedBal-p2">
-                    {bal} <span className="availBal">/ {total}</span>
-                  </p>
-                </div> */}
                 <Swap
                   showMessage={this.showMessage}
                   movedBalance={bal}
                   totalSupply={total}
                 />
                 {this.renderSnackbar()}
-                {/* </div> */}
-              {/* </Grid> */}
-
-            {/* </Grid> */}
           </div>
         </div>
       </MuiThemeProvider>

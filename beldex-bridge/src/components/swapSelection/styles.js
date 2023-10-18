@@ -3,24 +3,14 @@ import { common } from "@theme";
 const styles = (theme) => ({
   root: {
     width: "100%",
-    margin:'auto',
-    // marginTop: "20px",
+    margin: "auto",
     backgroundColor: "#1C1C26 !important",
-    // padding: '1.5rem',
-    // boxShadow: "0px 0px 30px rgb(36 36 36)",
     color: "#000",
     border: "1px solid #f00",
-    // position: "relative",
     borderRadius: "10px !important",
-
-    // paddingTop: "90px",
-    [theme.breakpoints.up("md")]: {
-      // maxWidth: "500px",
-    },
     ...common.section,
   },
   button: {
-    // marginTop: "24px",
     "& .Mui-disabled": {
       borderRadius: "50px",
       border: "1px solid #00AD07",
@@ -29,10 +19,8 @@ const styles = (theme) => ({
   },
   createAccount: {
     fontSize: "0.8rem",
-    // textDecoration: "underline",
     textAlign: "center",
     marginBottom: "0px",
-    // cursor: "pointer",
     display: "inline-block",
     color: "#fff",
     width: "100%",
@@ -45,6 +33,10 @@ const styles = (theme) => ({
     color: "#000",
     fontSize: "14px",
   },
+  viewLink: {
+    color: "#2FA6FF",
+    textDecoration: "underline",
+  },
   closeBtn: {
     position: "absolute",
     top: "5px",
@@ -55,24 +47,23 @@ const styles = (theme) => ({
     color: "#000",
   },
   swapTabs: {
-    // position: "absolute",
     width: "100%",
     left: "0px",
     top: "0px",
     zIndex: "9",
   },
   swapFee: {
-    marginTop:'5px',
+    marginTop: "5px",
     fontSize: "12px",
-    // position: "absolute",
-    // right: "15px",
-
-    // zIndex: "9",
     textAlign: "end",
     color: "#AFAFBE",
     fontFamily: "Poppins",
     fontStyle: "normal",
     fontWeight: 400,
+  },
+  amountError: {
+    color: "red",
+    fontSize: "12px",
   },
   wbdxAddressTitle: {
     color: "#AFAFBE",

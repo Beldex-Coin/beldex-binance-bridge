@@ -20,9 +20,6 @@ function LoginPopup(props) {
   const { t } = useTranslation();
   return (
     <div>
-      {/* <Button variant="outlined" color="primary" onClick={handleClickOpen}>
-        Slide in alert dialog
-      </Button> */}
       <Dialog
         open={true}
         TransitionComponent={Transition}

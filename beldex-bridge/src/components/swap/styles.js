@@ -73,13 +73,9 @@ const styles = (theme) => ({
   sectionSwap: {
     ...common.section,
     height: "447px",
-    // display:'flex',
-    // alignItems:'center',
     overflowX: "hidden",
     padding: "10px",
     [theme.breakpoints.up("md")]: {
-      // maxWidth: "800px",
-      // margin: "auto",
       maxWidth:'unset',
       margin: "unset",
     },
@@ -88,18 +84,7 @@ const styles = (theme) => ({
       padding:0
     },
   },
-  registerWrapper: {
-    // width: '100%',
-    // display: 'flex',
-    // justifyContent: 'center',
-    // alignItem: 'center',
-    // [theme.breakpoints.between('xs', 'sm')]: {
-    //   flexWrap: "wrap",
-    // },
-    // [theme.breakpoints.down('sm')]: {
-    //   flexWrap: "wrap",
-    // }
-  },
+ 
   backBox: {
     display: "flex",
     alignItems: "center",
@@ -107,19 +92,8 @@ const styles = (theme) => ({
     marginBottom: "10px",
     cursor:'pointer',
     width:'76px',
-    // '&:hover':{
-    //   opacity:'0.8'
-    // }
-    // '& svg':{
-    //   '&:hover':{
-    //     fill:'#fff',
-    //     color:'#fff'
-    //   }
-    // }
-
   },
   backImg: {
-    // width: "17px",
     fill:"#AFAFBE",
     marginRight: "5px",
     '&:hover':{
@@ -130,9 +104,6 @@ const styles = (theme) => ({
   backTxt: {
     fontWeight: "500",
     fontSize: "1.1rem",
-    // '&:hover':{
-    //   opacity:'0.8'
-    // }
   },
   balanceBox: {
     display: "flex",
@@ -146,42 +117,22 @@ const styles = (theme) => ({
     flexDirection: "column",
     justifyContent: "center",
     alignItem: "center",
-    // padding: "22px",
     padding: '15px 22px',
     border: "0.5px #56566C solid",
     backgroundColor: "#1C1C26",
     borderRadius: "20px",
-    // marginTop: "15px",
     [theme.breakpoints.down("sm")]: {
       border: "unset",
       padding: "unset",
       paddingTop: "15px",
     },
   },
-  // dashBoard: {
-  //   width: "100%",
-  //   height: "100%",
-  //   display: "flex",
-  //   flexDirection: "column",
-  //   justifyContent: "center",
-  //   alignItem: "center",
-  //   padding: "22px",
-  //   border: "0.5px #56566C solid",
-  //   backgroundColor: "#1C1C26",
-  //   borderRadius: "20px",
-  //   marginTop: "15px",
-  // },
   leftPane: {
-    // width: '70%',
     height: "100%",
     display: "flex",
     flexDirection: "column",
     justifyContent: "center",
     padding: "20px",
-    // [theme.breakpoints.between('xs', 'sm')]: {
-    //   width:'95%',
-    //   margin:'auto'
-    // },
   },
   rightPaneWrapper: {
     width: "70%",
@@ -212,6 +163,12 @@ const styles = (theme) => ({
       width: "100%",
     },
   },
+  dFlexSpacebw:{
+    display: "flex",
+    flexDirection: "row",
+    alignContent: "center",
+    justifyContent: "space-between",
+  }
 });
 
 export default styles;

@@ -54,7 +54,6 @@ function StyledSnackbar(props) {
       }}
       message={
         <span id="message-id" className={clsx(classes.message, classes[text])}>
-          {/* <Icon  /> */}
           <img alt="" src={Icon} className={clsx(classes.icon, classes.iconVariant)} />
           {message && capitalize(message.toString())}
         </span>

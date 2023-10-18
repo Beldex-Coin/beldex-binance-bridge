@@ -1,4 +1,3 @@
-import { orange } from "@material-ui/core/colors";
 
 const styles = (theme) => ({
   root: {
@@ -38,7 +37,6 @@ const styles = (theme) => ({
     },
   },
   time: {
-    // fontSize: '1em',
     color: "#AFAFBE",
     fontWeight: "400",
     fontSize: "14px",
@@ -74,7 +72,6 @@ const styles = (theme) => ({
   },
   hashes: { width: "70%" },
   hash: {
-    // fontStyle: 'italic',
     overflowWrap: "break-word",
     fontWeight: 300,
     "& .MuiTypography-colorPrimary": {

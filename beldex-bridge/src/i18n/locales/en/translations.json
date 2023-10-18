@@ -34,5 +34,14 @@
   "connectYourWallet": "wallet not connected. Please connect your wallet.",
   "walletConnected": "Wallet Connected",
   "beldexBridgeInfo": " The Beldex bridge connects the Beldex network with the BNB Smart Chain network. Here you can swap BDX to wBDX and vice versa.Explore trading and DeFi opportunities in the BNB Smart Chain with wrapped BDX.",
-  "depositTransactionHash":"Deposit Transaction Hash"
+  "depositTransactionHash":"Deposit Transaction Hash",
+  "transactionSuccess.":"Transaction success.",
+  "exceedingBalanceWarning":"Entered WBDX amount is exceeding the balance",
+  "greaterThanZeroError":"Amount should be greater than 0.",
+  "transactionSignatureError":"User denied transaction signature.",
+  "newSwapSuccess":"Added {{count}} new swap",
+  "InsufficientGasFeeError":"Insufficient gas fee in your wallet.",
+  "connectAvailableWalletError":"Please connect the available wallet.",
+  "addressCopiedSuccess":"Address Copied to clipboard"
+
 }

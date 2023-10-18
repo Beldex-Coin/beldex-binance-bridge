@@ -11,7 +11,6 @@ const styles = (theme) => ({
     ...common.section,
   },
   instructionContainer: {
-    // ...common.flexCenter,
     flexDirection: "column",
     wordBreak: "break-word",
   },
@@ -31,12 +30,10 @@ const styles = (theme) => ({
     
   },
   instructionBold: {
-    // color: '#fff',
     fontFamily: "Poppins",
     color: "#AFAFBE",
     fontSize: "1.1rem",
     fontWeight: "600",
-    // textAlign: 'left',
     marginBottom: "5px",
     overflowWrap: "break-word",
     [theme.breakpoints.down("sm")]: {
@@ -104,7 +101,6 @@ const styles = (theme) => ({
     alignItems: "center",
     background: "#1C1C26",
     borderRadius: "16px",
-    // width: '271px',
     padding: "20px",
     margin: "auto",
     marginBottom: theme.spacing(1),
@@ -122,10 +118,7 @@ const styles = (theme) => ({
   },
   greenBorder: {
     width: "77%",
-    // borderRadius: '4px',
     border: "none",
-    // background: '#4a4a63',
-    // padding: "10px",
     color: "#EBEBEB",
     fontFamily: "Poppins",
     fontSize: "14px",
@@ -145,16 +138,6 @@ const styles = (theme) => ({
     fontWeight: 300,
     wordBreak: "break-all",
   },
-  // wbdxAddress: {
-  //   wordBreak: "break-all",
-  //   wbdxAddressTitle,
-  //   color: "#EBEBEB",
-  //   textAlign: "center",
-  //   fontFamily: "Poppins",
-  //   fontSize: "16px",
-  //   fontStyle: "normal",
-  //   fontWeight: 300,
-  // },
   walletConWrapper: {
     borderRadius: "12px",
     background: "#282837",
@@ -169,9 +152,6 @@ const styles = (theme) => ({
     },
   },
   walletConnSucc: {
-    // color: "#35af3b !important",
-    // textAlign: "center",
-    // marginBottom: "10px",
     color: "#3EC745 !important",
     textAlign: "center",
     fontFamily: "Poppins",

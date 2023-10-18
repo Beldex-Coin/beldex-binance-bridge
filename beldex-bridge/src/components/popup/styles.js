@@ -1,7 +1,6 @@
 const styles = (theme) => ({
   root: {
     maxWidth: "700px",
-    // borderRadius: '16px',
     background: "#1F1F2E",
   },
 

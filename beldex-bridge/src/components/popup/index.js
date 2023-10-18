@@ -13,7 +13,7 @@ import metamask from "./metamask.png";
 import styles from "./styles";
 import CloseIcon from "@material-ui/icons/Close";
 import { useTranslation } from 'react-i18next';
-// let wallets = [{text:'Binance', img: binance}, {text:'Metamask', img: metamask}];
+
 
 function Popup(props) {
   const { onClose, selectedValue, open, classes } = props;
