@@ -250,6 +250,20 @@ class Swap extends Component {
         }
       });
   };
+  mobileCheck = () => {
+    let check = false;
+
+    if (
+      typeof navigator !== "undefined" &&
+      /Mobile|Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+        navigator.userAgent
+      )
+    ) {
+      check = true;
+    }
+
+    return check;
+  };
   onTokenSwapFinalized = (transactions) => {
     this.setState({ loading: false });
     const message =
@@ -453,10 +467,16 @@ class Swap extends Component {
           });
           if (account) this.connectToBinance();
         } else if (this.state.selectedWallet === "Metamask") {
-          const account = await window.ethereum.request({
-            method: "eth_requestAccounts",
-          });
-          if (account) this.connectToMetaMask();
+          // const account = await window.ethereum.request({
+          //   method: "eth_requestAccounts",
+          // });
+          if(this.mobileCheck)
+          {
+            const dappUrl = window.location.href.split("//")[1].split("/")[0];
+            const metamaskAppDeepLink = "https://metamask.app.link/dapp/" + dappUrl;
+            window.open(metamaskAppDeepLink, "_self");
+          }
+          // if (account) this.connectToMetaMask();
         }
       }
     );
