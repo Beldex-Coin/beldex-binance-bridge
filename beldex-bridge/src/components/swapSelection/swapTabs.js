@@ -5,6 +5,7 @@ import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import { useTranslation } from "react-i18next";
 
+import {Snackbar} from '@components'
 const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
@@ -54,9 +55,44 @@ export default function SwapTabs(props) {
   const { t } = useTranslation();
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
+  const [snackbar,setSnackbar]=React.useState({
+    message: null,
+    variant: "success",
+    open: false,
+    balance: "",
+  })
+
+ const showMessage = (message, variant) => {
+    const snackbar = {
+      message,
+      variant: variant || "error",
+      open: true,
+    };
+    setSnackbar({ snackbar });
+  };
+
+  const closeMessage = (event, reason) => {
+    if (reason === "clickaway") return;
+    const snackbar = {
+      ...snackbar,
+      open: false,
+    };
+    setSnackbar({ snackbar });
+  };
+
+  const SnackbarRender= () => {
+    return (
+      <Snackbar
+        message={snackbar.message}
+        open={snackbar.open}
+        onClose={closeMessage}
+        variant={snackbar.variant}
+      />
+    );
+  };
 
   async function handleChange(e, newValue) {
-    mobileCheck();
+    // mobileCheck();
     setValue(newValue);
     let value = "";
     if (newValue === 0) {
@@ -66,21 +102,25 @@ export default function SwapTabs(props) {
     if (newValue === 1) {
       value = "bbdx_to_bdx";
       props.handleChange(value);
-      if (mobileCheck) {
-        if (
-          typeof navigator !== "undefined" &&
-          /MetaMaskMobile/i.test(navigator.userAgent)
-        ) {
-          const account = await window.ethereum.request({
-            method: "eth_requestAccounts",
-          });
-          if (account) props.connectToMetaMask();
-        } else {
-          const dappUrl = window.location.href.split("//")[1].split("/")[0];
-          const metamaskAppDeepLink =
-            "https://metamask.app.link/dapp/" + dappUrl;
-          window.open(metamaskAppDeepLink, "_self");
-        }
+     
+      if (mobileCheck()) {
+        console.log("mobileCheck ::")
+          if (
+            typeof navigator !== "undefined" &&
+            /MetaMaskMobile/i.test(navigator.userAgent)
+          ) {
+            const account = await window.ethereum.request({
+              method: "eth_requestAccounts",
+            });
+            if (account) props.connectToMetaMask();
+          } else {
+            const dappUrl = window.location.href.split("//")[1].split("/")[0];
+            const metamaskAppDeepLink =
+              "https://metamask.app.link/dapp/" + dappUrl;
+            window.open(metamaskAppDeepLink, "_self");
+          }
+        
+        
       }
       // if (window.innerWidth < 720) {
       //   const account = await window.ethereum.request({
@@ -91,18 +131,20 @@ export default function SwapTabs(props) {
       // }
     }
   }
-  const mobileCheck = () => {
+  function mobileCheck() {
     let check = false;
-
+    
     if (
       typeof navigator !== "undefined" &&
       /Mobile|Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
         navigator.userAgent
       )
     ) {
-      alert(navigator.userAgent);
+     
       check = true;
+     
     }
+  //  console.log('check ::',check)
     return check;
   };
 
@@ -138,6 +180,7 @@ export default function SwapTabs(props) {
           />
         </Tabs>
       </AppBar>
+      <SnackbarRender />
     </div>
   );
 }

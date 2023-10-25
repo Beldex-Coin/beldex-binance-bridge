@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import Web3 from "web3";
 import { withStyles } from "@material-ui/core/styles";
-import { Grid, Typography, Box,  } from "@material-ui/core";
+import { Grid, Typography, Box } from "@material-ui/core";
 import { Warning } from "@utils/error";
 import { store, dispatcher, Actions, Events } from "@store";
 import { SWAP_TYPE, TYPE } from "@constants";
@@ -97,7 +97,10 @@ class Swap extends Component {
           } else if (parseFloat(amount) > 0) {
             this.makeTransaction();
           } else {
-            this.props.showMessage(this.props.t('greaterThanZeroError'), "error");
+            this.props.showMessage(
+              this.props.t("greaterThanZeroError"),
+              "error"
+            );
           }
         } else {
           this.props.showMessage(
@@ -111,32 +114,43 @@ class Swap extends Component {
     setImmediate(() => this.getSwaps());
   };
   connectToMetaMask = async () => {
+    console.log("connectToMetaMask ::0");
     const provider = window.ethereum;
-    const binanceTestChainId = "0x38";
+    const binanceChainId = "0x38";
     this.web3Obj = new Web3(window.ethereum);
     try {
+      console.log("connectToMetaMask ::1");
       window.ethereum.enable();
       if (this.web3Obj) {
         const chainId = await window.ethereum.request({
           method: "eth_chainId",
         });
-        if (chainId === binanceTestChainId) {
+        if (chainId === binanceChainId) {
           console.log("Bravo!, you are on the correct network");
         } else {
           try {
             await provider.request({
               method: "wallet_switchEthereumChain",
-              params: [{ chainId: binanceTestChainId }],
+              params: [{ chainId: binanceChainId }],
             });
           } catch (switchError) {
+            console.log('switchError ::',switchError)
+
             // This error code indicates that the chain has not been added to MetaMask.
-            if (switchError.code === -32602) {
+            if (switchError.code === 4902) {
+                if(this.mobileCheck())
+                {
+                  this.props.showMessage(
+                    `Please add the Binance smart chain to your wallet.`,
+                    "error"
+                  );
+                }
               try {
                 await provider.request({
                   method: "wallet_addEthereumChain",
                   params: [
                     {
-                      chainId: "56",
+                      chainId: binanceChainId,
                       chainName: "Smart Chain",
                       rpcUrls: [" https://bsc-dataseed.binance.org/"],
                       blockExplorerUrls: ["https://bscscan.com"],
@@ -244,13 +258,16 @@ class Swap extends Component {
           },
         });
         if (error?.code === 4001) {
-          this.props.showMessage(this.props.t("transactionSignatureError"), "error");
+          this.props.showMessage(
+            this.props.t("transactionSignatureError"),
+            "error"
+          );
         } else {
           this.props.showMessage(error, "error");
         }
       });
   };
-  mobileCheck = () => {
+  mobileCheck() {
     let check = false;
 
     if (
@@ -263,13 +280,13 @@ class Swap extends Component {
     }
 
     return check;
-  };
+  }
   onTokenSwapFinalized = (transactions) => {
     this.setState({ loading: false });
     const message =
       transactions.length === 1
-        ? this.props.t('newSwapSuccess',{count:1})
-        :this.props.t('newSwapSuccess',{count:transactions.length});
+        ? this.props.t("newSwapSuccess", { count: 1 })
+        : this.props.t("newSwapSuccess", { count: transactions.length });
     this.props.showMessage(message, "success");
     setImmediate(() => this.getUnconfirmedTransactions());
     setImmediate(() => this.getSwaps());
@@ -279,6 +296,7 @@ class Swap extends Component {
   };
   onNext = async () => {
     const { page, walletAddress, swapType } = this.state;
+    // alert (walletAddress)
     if (this.web3Obj && walletAddress && swapType !== "bdx_to_bbdx") {
       let gasPri = await this.web3Obj.eth.getGasPrice();
       let estimate = await this.web3Obj.eth.estimateGas({
@@ -301,14 +319,17 @@ class Swap extends Component {
             default:
           }
         } else {
-          const errMsg =this.props.t('InsufficientGasFeeError');
+          const errMsg = this.props.t("InsufficientGasFeeError");
           this.props.showMessage(errMsg, "error");
         }
       });
     } else {
       const { swapType } = this.state;
       if (swapType !== SWAP_TYPE.BDX_TO_BBDX) {
-        this.props.showMessage(this.props.t('connectAvailableWalletError'), "error");
+        this.props.showMessage(
+          this.props.t("connectAvailableWalletError"),
+          "error"
+        );
         this.setState({ showPopup: !this.state.showPopup });
       } else {
         this.swapToken();
@@ -467,16 +488,20 @@ class Swap extends Component {
           });
           if (account) this.connectToBinance();
         } else if (this.state.selectedWallet === "Metamask") {
-          // const account = await window.ethereum.request({
-          //   method: "eth_requestAccounts",
-          // });
-          if(this.mobileCheck)
-          {
+          let isMetamaskMobileBrowser =
+            typeof navigator !== "undefined" &&
+            /MetaMaskMobile/i.test(navigator.userAgent);
+          if (this.mobileCheck() && !isMetamaskMobileBrowser) {
             const dappUrl = window.location.href.split("//")[1].split("/")[0];
-            const metamaskAppDeepLink = "https://metamask.app.link/dapp/" + dappUrl;
+            const metamaskAppDeepLink =
+              "https://metamask.app.link/dapp/" + dappUrl;
             window.open(metamaskAppDeepLink, "_self");
+          } else {
+            const account = await window.ethereum.request({
+              method: "eth_requestAccounts",
+            });
+            if (account) this.connectToMetaMask();
           }
-          // if (account) this.connectToMetaMask();
         }
       }
     );
@@ -551,10 +576,7 @@ class Swap extends Component {
               viewBox="0 0 24 24"
               xmlns="http://www.w3.org/2000/svg"
             >
-              <path
-                d="M12 0.333344C5.55641 0.333344 0.333374 5.55638 0.333374 12C0.333374 18.4436 5.55641 23.6667 12 23.6667C18.4437 23.6667 23.6667 18.4436 23.6667 12C23.6667 5.55638 18.4437 0.333344 12 0.333344ZM16.6667 13.1667H10.1498L12 15.0169C12.455 15.4719 12.455 16.2117 12 16.6667C11.5451 17.1216 10.8053 17.1216 10.3503 16.6667L6.5085 12.8249C6.05239 12.3688 6.05239 11.6301 6.5085 11.1751L10.3503 7.33334C10.8053 6.87837 11.5451 6.87837 12 7.33334C12.455 7.78831 12.455 8.52811 12 8.98308L10.1498 10.8333H16.6667C17.3108 10.8333 17.8334 11.3559 17.8334 12C17.8334 12.6441 17.3108 13.1667 16.6667 13.1667Z"
-
-              />
+              <path d="M12 0.333344C5.55641 0.333344 0.333374 5.55638 0.333374 12C0.333374 18.4436 5.55641 23.6667 12 23.6667C18.4437 23.6667 23.6667 18.4436 23.6667 12C23.6667 5.55638 18.4437 0.333344 12 0.333344ZM16.6667 13.1667H10.1498L12 15.0169C12.455 15.4719 12.455 16.2117 12 16.6667C11.5451 17.1216 10.8053 17.1216 10.3503 16.6667L6.5085 12.8249C6.05239 12.3688 6.05239 11.6301 6.5085 11.1751L10.3503 7.33334C10.8053 6.87837 11.5451 6.87837 12 7.33334C12.455 7.78831 12.455 8.52811 12 8.98308L10.1498 10.8333H16.6667C17.3108 10.8333 17.8334 11.3559 17.8334 12C17.8334 12.6441 17.3108 13.1667 16.6667 13.1667Z" />
             </svg>
 
             <Typography className={classes.backTxt}>Back</Typography>
@@ -574,17 +596,8 @@ class Swap extends Component {
               </p>
             </div>
           </Grid>
-          <Grid
-            container
-            spacing={2}
-            className={classes.dFlexSpacebw}
-          >
-            <Grid
-              item
-              xs={12}
-              md={6}
-              className={classes.item}
-            >
+          <Grid container spacing={2} className={classes.dFlexSpacebw}>
+            <Grid item xs={12} md={6} className={classes.item}>
               <SwapInfo
                 swapType={swapType}
                 swapInfo={swapInfo}
