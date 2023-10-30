@@ -134,17 +134,16 @@ class Swap extends Component {
               params: [{ chainId: binanceChainId }],
             });
           } catch (switchError) {
-            console.log('switchError ::',switchError)
-
+            console.log("switchError ::", switchError);
+            //  alert(JSON.stringify(switchError.code))
             // This error code indicates that the chain has not been added to MetaMask.
-            if (switchError.code === 4902) {
-                if(this.mobileCheck())
-                {
-                  this.props.showMessage(
-                    `Please add the Binance smart chain to your wallet.`,
-                    "error"
-                  );
-                }
+            if (switchError.code === 4902 || switchError.code === -32603) {
+              if (this.mobileCheck()) {
+                this.props.showMessage(
+                  `Please add the Binance smart chain to your wallet.`,
+                  "error"
+                );
+              }
               try {
                 await provider.request({
                   method: "wallet_addEthereumChain",
@@ -192,6 +191,27 @@ class Swap extends Component {
       return false;
     }
   };
+
+  connectToMetamaskMobile = async () => {
+    if (this.mobileCheck()) {
+      console.log("mobileCheck ::");
+      if (
+        typeof navigator !== "undefined" &&
+        /MetaMaskMobile/i.test(navigator.userAgent)
+      ) {
+        const account = await window.ethereum.request({
+          method: "eth_requestAccounts",
+        });
+        if (account) this.connectToMetaMask();
+      } else {
+        const dappUrl = window.location.href.split("//")[1].split("/")[0];
+        const metamaskAppDeepLink = "https://metamask.app.link/dapp/" + dappUrl;
+        window.open(metamaskAppDeepLink, "_self");
+
+        
+      }
+    }
+  };
   connectToBinance = async () => {
     this.web3Obj = new Web3(window.BinanceChain);
     try {
@@ -218,6 +238,21 @@ class Swap extends Component {
       return false;
     }
   };
+  async connectToTrustWallet() {
+    if (this.mobileCheck()) {
+      console.log("mobileCheck ::");
+      if (navigator.userAgent.includes("TrustWallet") || navigator.userAgent.includes("Trust")) {
+        // alert('hi')
+        this.connectToBinance();
+      } else {
+
+        const trustWalletLink =
+          "https://link.trustwallet.com/open_url?coin_id=60&url=" +
+          window.location.href;
+        window.open(trustWalletLink, "_blank");
+      }
+    }
+  }
   makeTransaction = () => {
     const { amount, walletAddress, swapInfo } = this.state;
     let amountToWei = amount * 1e9;
@@ -472,7 +507,8 @@ class Swap extends Component {
     const { walletAddress } = this.state;
     this.setState({ swapType }, async () => {
       if (swapType === SWAP_TYPE.BBDX_TO_BDX) {
-        if (walletAddress === "" && window.innerWidth > 720) {
+        // if (walletAddress === "" && window.innerWidth > 720) {
+        if (walletAddress === "") {
           this.setState({ showPopup: !this.state.showPopup });
         }
       }
@@ -483,24 +519,37 @@ class Swap extends Component {
       { showPopup: !this.state.showPopup, selectedWallet: value },
       async () => {
         if (this.state.selectedWallet === "Binance") {
-          const account = await window.BinanceChain.request({
-            method: "eth_requestAccounts",
-          });
-          if (account) this.connectToBinance();
-        } else if (this.state.selectedWallet === "Metamask") {
-          let isMetamaskMobileBrowser =
-            typeof navigator !== "undefined" &&
-            /MetaMaskMobile/i.test(navigator.userAgent);
-          if (this.mobileCheck() && !isMetamaskMobileBrowser) {
-            const dappUrl = window.location.href.split("//")[1].split("/")[0];
-            const metamaskAppDeepLink =
-              "https://metamask.app.link/dapp/" + dappUrl;
-            window.open(metamaskAppDeepLink, "_self");
-          } else {
-            const account = await window.ethereum.request({
+          
+          if (this.mobileCheck()) {
+          
+            this.connectToTrustWallet()
+          }else{
+            const account = await window.BinanceChain.request({
               method: "eth_requestAccounts",
             });
-            if (account) this.connectToMetaMask();
+            if (account) this.connectToBinance();
+          }
+        
+
+        } else if (this.state.selectedWallet === "Metamask") {
+          // let isMetamaskMobileBrowser =
+          //   typeof navigator !== "undefined" &&
+          //   /MetaMaskMobile/i.test(navigator.userAgent);
+          // if (this.mobileCheck() && !isMetamaskMobileBrowser) {
+          //   const dappUrl = window.location.href.split("//")[1].split("/")[0];
+          //   const metamaskAppDeepLink =
+          //     "https://metamask.app.link/dapp/" + dappUrl;
+          //   window.open(metamaskAppDeepLink, "_self");
+          // } else {
+          //   const account = await window.ethereum.request({
+          //     method: "eth_requestAccounts",
+          //   });
+          //   if (account) this.connectToMetaMask();
+          // }
+          if (this.mobileCheck()) {
+            this.connectToMetamaskMobile();
+          } else {
+            this.connectToMetaMask();
           }
         }
       }
