@@ -118,6 +118,7 @@ class Swap extends Component {
     const provider = window.ethereum;
     const binanceChainId = "0x38";
     this.web3Obj = new Web3(window.ethereum);
+    // alert(this.web3Obj)
     try {
       console.log("connectToMetaMask ::1");
       window.ethereum.enable();
@@ -207,8 +208,6 @@ class Swap extends Component {
         const dappUrl = window.location.href.split("//")[1].split("/")[0];
         const metamaskAppDeepLink = "https://metamask.app.link/dapp/" + dappUrl;
         window.open(metamaskAppDeepLink, "_self");
-
-        
       }
     }
   };
@@ -241,15 +240,24 @@ class Swap extends Component {
   async connectToTrustWallet() {
     if (this.mobileCheck()) {
       console.log("mobileCheck ::");
-      if (navigator.userAgent.includes("TrustWallet") || navigator.userAgent.includes("Trust")) {
-        // alert('hi')
-        this.connectToBinance();
-      } else {
+      // alert(window.ethereum.isTrust)
+      if (window?.ethereum?.isTrust) {
+        // if (window.ethereum) {
 
+        // alert('hi')
+        const account = await window.ethereum.request({
+          method: "eth_requestAccounts",
+        });
+        if (account) this.connectToMetaMask();
+      } else {
         const trustWalletLink =
           "https://link.trustwallet.com/open_url?coin_id=60&url=" +
           window.location.href;
-        window.open(trustWalletLink, "_blank");
+        // const TRUST_URL =
+        //   "https://links.trustwalletapp.com/a/key_live_lfvIpVeI9TFWxPCqwU8rZnogFqhnzs4D?&event=openURL&url=";
+        // const currentURI = window.location.href;
+        // const deepLink = `${TRUST_URL}${encodeURIComponent(currentURI)}`;
+        window.open(trustWalletLink, "_self");
       }
     }
   }
@@ -338,6 +346,7 @@ class Swap extends Component {
         from: walletAddress,
       });
       this.web3Obj.eth.getBalance(walletAddress).then((data) => {
+        alert(data);
         const walletBalance = data / 1e18;
         if (
           walletBalance >
@@ -519,18 +528,14 @@ class Swap extends Component {
       { showPopup: !this.state.showPopup, selectedWallet: value },
       async () => {
         if (this.state.selectedWallet === "Binance") {
-          
           if (this.mobileCheck()) {
-          
-            this.connectToTrustWallet()
-          }else{
+            this.connectToTrustWallet();
+          } else {
             const account = await window.BinanceChain.request({
               method: "eth_requestAccounts",
             });
             if (account) this.connectToBinance();
           }
-        
-
         } else if (this.state.selectedWallet === "Metamask") {
           // let isMetamaskMobileBrowser =
           //   typeof navigator !== "undefined" &&
