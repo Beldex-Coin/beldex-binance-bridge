@@ -10,6 +10,7 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 import Dialog from "@material-ui/core/Dialog";
 import binance from "./binance.png";
 import metamask from "./metamask.png";
+import trustWallet from "./trustWallet.png"
 import styles from "./styles";
 import CloseIcon from "@material-ui/icons/Close";
 import { useTranslation } from 'react-i18next';
@@ -31,10 +32,23 @@ function Popup(props) {
   const handleListItemClick = (value) => {
     onClose(value);
   };
+  function mobileCheck() {
+    let check = false;
+    if (
+      typeof navigator !== "undefined" &&
+      /Mobile|Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+        navigator.userAgent
+      )
+    ) {
+      check = true;
+    }
+    //  console.log('check ::',check)
+    return check;
+  }
   const handleResize = () => {
-    if (window.innerWidth < 720) {
+    if (mobileCheck() || window.innerWidth<400) {
       setWallet([
-        { text: "Trust Wallet", img: binance },
+        { text: "Trust Wallet", img:trustWallet },
         { text: "Metamask", img: metamask },
       ]);
     } else {
@@ -46,7 +60,8 @@ function Popup(props) {
   };
   // create an event listener
   useEffect(() => {
-    window.addEventListener("resize", handleResize);
+    handleResize();
+    // window.addEventListener("resize", handleResize);
   }, []);
 
   return (
@@ -72,7 +87,7 @@ function Popup(props) {
           >
             <div className={classes.wallet}>
               <ListItemAvatar>
-                <Avatar src={wallet.img} />
+                <Avatar src={wallet.img}  />
               </ListItemAvatar>
               <ListItemText disableTypography primary={wallet.text} />
             </div>

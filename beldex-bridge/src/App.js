@@ -53,7 +53,9 @@ export default class App extends PureComponent {
     return (
       <Snackbar
         message={snackbar.message}
+        // message={'Please add the Binance smart chain to your wallet.'}
         open={snackbar.open}
+        // open={true}
         onClose={this.closeMessage}
         variant={snackbar.variant}
       />

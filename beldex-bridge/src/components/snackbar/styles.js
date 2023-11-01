@@ -30,10 +30,16 @@ const styles = (theme) => ({
     marginRight: theme.spacing(1),
     marginTop: "0px",
   },
+  contentWrapper:{
+    '& .MuiSnackbarContent-message':{
+      width:'90%'
+    }
+   
+  },
   closeIcon: {
-    position: "relative",
-    top: "-22px",
-    right: "-31px",
+    position: "absolute",
+    top: '-46px',
+    right: '-22px',
     backgroundColor: "#13131B",
     borderRadius: "20px",
     width: "26px",
@@ -46,7 +52,9 @@ const styles = (theme) => ({
   message: {
     display: "flex",
     alignItems: "center",
+    // width:'90%'
   },
+
   primaryText: {
     color: theme.palette.text.primary,
   },

@@ -22,6 +22,7 @@ const styles = (theme) => ({
       },
     },
   },
+ 
   closeBtn:{
     padding: 0,
     minWidth: 0,

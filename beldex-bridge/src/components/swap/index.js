@@ -194,8 +194,8 @@ class Swap extends Component {
   };
 
   connectToMetamaskMobile = async () => {
-    if (this.mobileCheck()) {
-      console.log("mobileCheck ::");
+    // if (this.mobileCheck()) {
+    //   console.log("mobileCheck ::");
       if (
         typeof navigator !== "undefined" &&
         /MetaMaskMobile/i.test(navigator.userAgent)
@@ -209,7 +209,7 @@ class Swap extends Component {
         const metamaskAppDeepLink = "https://metamask.app.link/dapp/" + dappUrl;
         window.open(metamaskAppDeepLink, "_self");
       }
-    }
+    // }
   };
   connectToBinance = async () => {
     this.web3Obj = new Web3(window.BinanceChain);
@@ -238,8 +238,9 @@ class Swap extends Component {
     }
   };
   async connectToTrustWallet() {
-    if (this.mobileCheck()) {
-      console.log("mobileCheck ::");
+    // alert("trust")
+    // if (this.mobileCheck()) {
+    //   console.log("mobileCheck ::");
       // alert(window.ethereum.isTrust)
       if (window?.ethereum?.isTrust) {
         // if (window.ethereum) {
@@ -259,7 +260,7 @@ class Swap extends Component {
         // const deepLink = `${TRUST_URL}${encodeURIComponent(currentURI)}`;
         window.open(trustWalletLink, "_self");
       }
-    }
+    // }
   }
   makeTransaction = () => {
     const { amount, walletAddress, swapInfo } = this.state;
@@ -517,17 +518,34 @@ class Swap extends Component {
     this.setState({ swapType }, async () => {
       if (swapType === SWAP_TYPE.BBDX_TO_BDX) {
         // if (walletAddress === "" && window.innerWidth > 720) {
-        if (walletAddress === "") {
+        if (this.mobileCheck()) {
+          this.detectAndConnectMobileWallet();
+        } else if (walletAddress === "") {
+          // if (walletAddress === "")
           this.setState({ showPopup: !this.state.showPopup });
         }
       }
     });
   };
+  detectAndConnectMobileWallet = async () => {
+    const isMetaMaskMobile =
+      typeof navigator !== "undefined" &&
+      /MetaMaskMobile/i.test(navigator.userAgent);
+    const isTrustWallet = window?.ethereum?.isTrust;
+    const { walletAddress } = this.state;
+    if (isMetaMaskMobile) {
+      this.connectToMetamaskMobile();
+    } else if (isTrustWallet) {
+      this.connectToTrustWallet();
+    } else if (walletAddress === "") {
+      this.setState({ showPopup: !this.state.showPopup });
+    }
+  };
   handlePopupClose = (value) => {
     this.setState(
       { showPopup: !this.state.showPopup, selectedWallet: value },
       async () => {
-        if (this.state.selectedWallet === "Binance") {
+        if (this.state.selectedWallet === "Binance" || this.state.selectedWallet==='Trust Wallet') {
           if (this.mobileCheck()) {
             this.connectToTrustWallet();
           } else {

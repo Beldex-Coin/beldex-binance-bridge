@@ -5,7 +5,7 @@ import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import { useTranslation } from "react-i18next";
 
-import { Snackbar } from "@components";
+// import { Snackbar } from "@components";
 const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
@@ -55,41 +55,41 @@ export default function SwapTabs(props) {
   const { t } = useTranslation();
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
-  const [snackbar, setSnackbar] = React.useState({
-    message: null,
-    variant: "success",
-    open: false,
-    balance: "",
-  });
+  // const [snackbar, setSnackbar] = React.useState({
+  //   message: null,
+  //   variant: "success",
+  //   open: false,
+  //   balance: "",
+  // });
 
-  const showMessage = (message, variant) => {
-    const snackbar = {
-      message,
-      variant: variant || "error",
-      open: true,
-    };
-    setSnackbar({ snackbar });
-  };
+  // const showMessage = (message, variant) => {
+  //   const snackbar = {
+  //     message,
+  //     variant: variant || "error",
+  //     open: true,
+  //   };
+  //   setSnackbar({ snackbar });
+  // };
 
-  const closeMessage = (event, reason) => {
-    if (reason === "clickaway") return;
-    const snackbar = {
-      ...snackbar,
-      open: false,
-    };
-    setSnackbar({ snackbar });
-  };
+  // const closeMessage = (event, reason) => {
+  //   if (reason === "clickaway") return;
+  //   const snackbar = {
+  //     ...snackbar,
+  //     open: false,
+  //   };
+  //   setSnackbar({ snackbar });
+  // };
 
-  const SnackbarRender = () => {
-    return (
-      <Snackbar
-        message={snackbar.message}
-        open={snackbar.open}
-        onClose={closeMessage}
-        variant={snackbar.variant}
-      />
-    );
-  };
+  // const SnackbarRender = () => {
+  //   return (
+  //     <Snackbar
+  //       message={snackbar.message}
+  //       open={snackbar.open}
+  //       onClose={closeMessage}
+  //       variant={snackbar.variant}
+  //     />
+  //   );
+  // };
 
   async function handleChange(e, newValue) {
     // mobileCheck();
@@ -135,20 +135,7 @@ export default function SwapTabs(props) {
       // }
     }
   }
-  function mobileCheck() {
-    let check = false;
-
-    if (
-      typeof navigator !== "undefined" &&
-      /Mobile|Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
-        navigator.userAgent
-      )
-    ) {
-      check = true;
-    }
-    //  console.log('check ::',check)
-    return check;
-  }
+ 
 
   return (
     <div className={classes.root}>
@@ -182,7 +169,7 @@ export default function SwapTabs(props) {
           />
         </Tabs>
       </AppBar>
-      <SnackbarRender />
+      {/* <SnackbarRender /> */}
     </div>
   );
 }

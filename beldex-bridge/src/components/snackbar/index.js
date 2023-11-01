@@ -50,7 +50,7 @@ function StyledSnackbar(props) {
       onClose={onClose}
       ContentProps={{
         'aria-describedby': 'message-id',
-        className: clsx(classes[variant], className)
+        className: clsx(classes[variant], className,classes.contentWrapper)
       }}
       message={
         <span id="message-id" className={clsx(classes.message, classes[text])}>
@@ -59,9 +59,10 @@ function StyledSnackbar(props) {
         </span>
       }
       action={[
+        <div style={{position:'relative',backgroundColor:"green"}}>
         <IconButton className={ clsx(classes[variant], classes.closeIcon)} key="close" aria-label="Close" color="inherit" onClick={onClose}>
           <CloseIcon className={clsx(classes.icon, classes[text])} />
-        </IconButton>,
+        </IconButton></div>,
       ]}
     />
   );
