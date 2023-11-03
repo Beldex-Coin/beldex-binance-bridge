@@ -2,9 +2,9 @@ import React, { PureComponent } from "react";
 import LazyLoad from "react-lazy-load";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import { createMuiTheme, MuiThemeProvider } from "@material-ui/core/styles";
-import {  Box,} from "@material-ui/core";
+import {  Box,Button} from "@material-ui/core";
 import { store, dispatcher, Actions, Events } from "@store";
-import { Snackbar, Swap, ImageLoader } from "@components";
+import { Snackbar, Swap, ImageLoader, } from "@components";
 import theme from "@theme";
 export default class App extends PureComponent {
   state = {
@@ -93,6 +93,7 @@ export default class App extends PureComponent {
             alt="Logo"
           />
         </LazyLoad>
+        {/* <Button>ConnectWallet</Button> */}
       </Box>
     );
   };

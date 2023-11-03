@@ -32,6 +32,9 @@ class Swap extends Component {
     walletConnBin: false,
     walletConnMeta: false,
     SwapSelection: "",
+    connectedWalletAddress:'',
+    connectedWalletBalance:'',
+
   };
   componentWillMount() {
     this.onInfoUpdated();
@@ -180,8 +183,11 @@ class Swap extends Component {
               );
               clearInterval(address);
               this.setState({ walletAddress: res });
+              console.log('walletAddress',res)
+               this.getBalance(res) 
               window.ethereum.on("accountsChanged", async (accounts) => {
                 const address = accounts[0] || null;
+               
                 this.setState({ walletAddress: address });
               });
             }
@@ -223,6 +229,7 @@ class Swap extends Component {
           method: "eth_accounts",
         });
         const address = accounts[0] || null;
+        this.getBalance(address)
         this.contract = new this.web3Obj.eth.Contract(
           matrixAbi,
           process.env.REACT_APP_CONTRACT_ADDR
@@ -541,6 +548,42 @@ class Swap extends Component {
       this.setState({ showPopup: !this.state.showPopup });
     }
   };
+  connectWalletPopup=()=>{
+    this.setState({ showPopup: !this.state.showPopup });
+  }
+
+  // connectToBinanceWallet  = async () => {
+  //   let web3Obj = new Web3(window.BinanceChain);
+  //   try {
+  //     await window.BinanceChain.enable();
+  //     if (web3Obj) {
+  //       const accounts = await window.BinanceChain.request({ method: 'eth_accounts' });
+  //       const address = accounts[0] || null;
+  //       await this.getBalance(address)
+  //       console.log('addressaddress ::',address)
+  //       // await getBalance(address);
+  //     }
+  //   } catch (error) {
+  //     return false;
+  //   }
+  // }
+  getBalance = async (address) => {
+    let web3Obj = new Web3(window.BinanceChain);
+    const balance = await web3Obj.eth.getBalance(address, (err, wei) => { });
+    const currentBal = Math.floor((balance / 1e18) * 10000) / 10000;
+     this.setState({connectedWalletAddress:address,connectedWalletBalance:currentBal})
+    console.log('getBalance ::',currentBal)
+  }
+  disconnetWallet=async()=>{
+    await window.ethereum.request({
+      method: "wallet_requestPermissions",
+      params: [
+        {
+          eth_accounts: {}
+        }
+      ]
+    })
+  }
   handlePopupClose = (value) => {
     this.setState(
       { showPopup: !this.state.showPopup, selectedWallet: value },
@@ -554,6 +597,7 @@ class Swap extends Component {
             });
             if (account) this.connectToBinance();
           }
+          // this.connectToBinanceWallet();
         } else if (this.state.selectedWallet === "Metamask") {
           // let isMetamaskMobileBrowser =
           //   typeof navigator !== "undefined" &&
@@ -606,6 +650,13 @@ class Swap extends Component {
               }}
               loading={loading}
               connectToMetaMask={() => this.connectToMetaMask()}
+              connectWalletPopup={()=>this.connectWalletPopup()}
+              connectedWalletAddress={this.state.connectedWalletAddress}
+              connectedWalletBalance={this.state.connectedWalletBalance}
+              selectedWallet={this.state.selectedWallet }
+              disconnet={()=>this.setState({connectedWalletAddress:'',connectedWalletBalance:''})}
+              // disconnet={()=> disconnetWallet()}
+
             />
           </div>
           <Popup
