@@ -41,6 +41,7 @@ class Swap extends Component {
     store.on(Events.ERROR, this.onError);
     store.on(Events.FETCHED_INFO, this.onInfoUpdated);
     store.on(Events.FETCHED_SWAPS, this.onSwapsFetched);
+    
     store.on(
       Events.FETCHED_UNCONFIRMED_BELDEX_TXS,
       this.onUnconfirmedTransactionsFetched
@@ -48,6 +49,10 @@ class Swap extends Component {
     store.on(Events.TOKEN_SWAPPED, this.onTokenSwapped);
     store.on(Events.TOKEN_SWAP_FINALIZED, this.onTokenSwapFinalized);
     store.on(Events.TRANSACTION_INFO, this.transactionsInfo);
+
+    // store.on(Events.WALLET_ADDRESS,this.getAddress);
+
+    
   }
   componentDidMount() {
     dispatcher.dispatch({ type: Actions.GET_INFO });
@@ -66,6 +71,8 @@ class Swap extends Component {
       this.onTokenSwapFinalized
     );
     store.removeListener(Events.TRANSACTION_INFO, this.transactionsInfo);
+
+    // store.removeListener(Events.WALLET_ADDRESS,this.getAddress);
   }
   onError = (error) => {
     const isWarning = error instanceof Warning;
@@ -74,6 +81,9 @@ class Swap extends Component {
     this.props.showMessage(message, variant);
     this.setState({ loading: false });
   };
+  getAddress=(address)=>{
+    console.log("addressaddressaddress",address)
+  }
   transactionsInfo = (transaction) => {
     this.props.showMessage(this.props.t("transactionSuccess"), "success");
   };
@@ -204,6 +214,7 @@ class Swap extends Component {
     //   console.log("mobileCheck ::");
       if (
         typeof navigator !== "undefined" &&
+
         /MetaMaskMobile/i.test(navigator.userAgent)
       ) {
         const account = await window.ethereum.request({
@@ -343,6 +354,8 @@ class Swap extends Component {
     setImmediate(() => this.getSwaps());
   };
   onInfoUpdated = () => {
+    let data=store.getStore("info")
+    console.log("info data",data)
     this.setState({ info: store.getStore("info") || {} });
   };
   onNext = async () => {
@@ -354,7 +367,7 @@ class Swap extends Component {
         from: walletAddress,
       });
       this.web3Obj.eth.getBalance(walletAddress).then((data) => {
-        alert(data);
+        // alert(data);
         const walletBalance = data / 1e18;
         if (
           walletBalance >
@@ -575,14 +588,17 @@ class Swap extends Component {
     console.log('getBalance ::',currentBal)
   }
   disconnetWallet=async()=>{
-    await window.ethereum.request({
-      method: "wallet_requestPermissions",
-      params: [
-        {
-          eth_accounts: {}
+    if (window.ethereum) {
+      window.ethereum.on('disconnect', (error) => {
+        // Handle the disconnection event here
+        if (error) {
+          console.error(`Disconnected: ${error.reason}`);
+        } else {
+          console.log('User disconnected.');
         }
-      ]
-    })
+      });
+    }
+    
   }
   handlePopupClose = (value) => {
     this.setState(
@@ -654,8 +670,8 @@ class Swap extends Component {
               connectedWalletAddress={this.state.connectedWalletAddress}
               connectedWalletBalance={this.state.connectedWalletBalance}
               selectedWallet={this.state.selectedWallet }
-              disconnet={()=>this.setState({connectedWalletAddress:'',connectedWalletBalance:''})}
-              // disconnet={()=> disconnetWallet()}
+              disconnet={()=>this.setState({connectedWalletAddress:'',connectedWalletBalance:'',walletAddress:"",selectedWallet:''})}
+              // disconnet={()=> this.disconnetWallet()}
 
             />
           </div>

@@ -140,7 +140,7 @@ Handle on hover ::-webkit-scrollbar-thumb:hover {
 
 .title {
   /* margin: 20px; */
-  width: 65%;
+  width: 95%;
   margin: 20px 20px 0px;
   height: 60px;
   /* position: relative; */
@@ -207,11 +207,18 @@ Handle on hover ::-webkit-scrollbar-thumb:hover {
   /* margin-bottom: 20px; */
 }
 .connectButton{
-color: #fff;
+color: #3EC744;
 width: 100%;
 margin-top: 20px;
 font-weight: 600;
 cursor: pointer;
+background-color: #404057;
+}
+.header{
+  width:16%;
+}
+.header .connectButton{
+  margin-top: 0;
 }
 .movedBal .bal-title {
   /* color: #eee;

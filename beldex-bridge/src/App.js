@@ -2,10 +2,12 @@ import React, { PureComponent } from "react";
 import LazyLoad from "react-lazy-load";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import { createMuiTheme, MuiThemeProvider } from "@material-ui/core/styles";
-import {  Box,Button} from "@material-ui/core";
+import {  Box,Button,Popover,Typography,Avatar,Button as MuiButton} from "@material-ui/core";
 import { store, dispatcher, Actions, Events } from "@store";
 import { Snackbar, Swap, ImageLoader, } from "@components";
 import theme from "@theme";
+import binance from "./components/popup/binance.png"
+import metamask from "./components/popup/metamask.png" 
 export default class App extends PureComponent {
   state = {
     snackbar: {
@@ -13,6 +15,7 @@ export default class App extends PureComponent {
       variant: "success",
       open: false,
       balance: "",
+      anchorEl:null
     },
   };
   
@@ -23,6 +26,10 @@ export default class App extends PureComponent {
   componentWillMount() {
     dispatcher.dispatch({
       type: Actions.GET_BALANCE,
+    });
+    dispatcher.dispatch({
+      type: Actions.WALLET_ADDRESS,
+      content: 'welcome',
     });
   }
 
@@ -47,7 +54,20 @@ export default class App extends PureComponent {
     };
     this.setState({ snackbar });
   };
+  handleClick = (event) => {
+    this.setState({anchorEl:event.currentTarget});
+  };
 
+  handleClose = () => {
+    this.setState({anchorEl:null});
+  };
+
+  addressTruncateFn = (str) => {
+    if (str && str.length > 30) {
+      return str.substr(0, 7) + '...' + str.substr(str.length - 5, str.length);
+    }
+    return str;
+  }
   renderSnackbar = () => {
     const { snackbar } = this.state;
     return (
@@ -82,8 +102,9 @@ export default class App extends PureComponent {
       <Box 
         display="flex"
         className="title"
-        justifyContent="flexStart"
-        alignSelf="baseline"      
+        justifyContent="space-between"
+        alignSelf="baseline"   
+        style={{height:'300px'}}   
       >
         <LazyLoad className="titleContainer" >
           <ImageLoader
@@ -93,7 +114,50 @@ export default class App extends PureComponent {
             alt="Logo"
           />
         </LazyLoad>
-        {/* <Button>ConnectWallet</Button> */}
+        <div className="header">
+        <button className="connectButton" onClick={this.handleClick}>Connect Wallet</button>
+        <Popover
+              id="menu-appbar"
+              open={Boolean(this.state.anchorEl)}
+              anchorEl={this.state.anchorElWallet}
+              onClose={this.handleClose}
+              // style={{ borderRadius: '10px',
+              // width: '100%',marginTop:'20px',marginRight:'20px',    top: '80px',
+              // left: '1209px'}}
+              anchorOrigin={{
+                vertical: 'bottom',
+                horizontal: 'right',
+              }}
+              transformOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+              }}
+
+            >
+              <Box style={{ padding: '20px', background: 'rgb(41,41,57)', alignItems: 'center' }}>
+                <Box style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                  <Box style={{ display: 'flex', gap: '10px' }}>
+                    <Avatar style={{ width: 24, height: 24 }} src={this.props.selectedWallet==='Binance'? binance:metamask} />
+                    <Typography style={{
+                      fontWeight: 600,
+                      fontSize: 14,
+                      overflow: 'hidden', whiteSpace: 'nowrap', color: '#fff'
+                    }} textAlign="center">{this.addressTruncateFn(this.props.connectedWalletAddress)}</Typography>
+                  </Box>
+                  <MuiButton variant="outlined" style={{
+                    color: 'rgb(152, 152, 177)', border: 'solid 1px rgb(58,58,80)', background: 'rgb(41,41,57)', borderRadius: '10px', '&:hover': {
+                      border: 'solid 1px #fff', background: 'rgb(41,41,57)', color: '#fff'
+                    }
+                  }} onClick={()=>this.props.disconnet()}>Disconnect</MuiButton>
+                </Box>
+                <Box>
+                  <Typography color="primary" style={{ fontWeight: 600, fontSize: '15px' }}>Balance</Typography>
+                  <Typography component="div" color="text.light" style={{ fontWeight: 900, fontSize: '28px', lineHeight: '1', paddingTop: '5px' }}>{this.props.connectedWalletBalance}</Typography>
+                </Box>
+              </Box>
+
+            </Popover>
+        </div>
       </Box>
     );
   };
