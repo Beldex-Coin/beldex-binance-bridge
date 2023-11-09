@@ -32,8 +32,7 @@ class Swap extends Component {
     walletConnBin: false,
     walletConnMeta: false,
     SwapSelection: "",
-    connectedWalletAddress:'',
-    connectedWalletBalance:'',
+  
 
   };
   componentWillMount() {
@@ -50,7 +49,8 @@ class Swap extends Component {
     store.on(Events.TOKEN_SWAP_FINALIZED, this.onTokenSwapFinalized);
     store.on(Events.TRANSACTION_INFO, this.transactionsInfo);
 
-    // store.on(Events.WALLET_ADDRESS,this.getAddress);
+    store.on(Events.CONNECTED_WALLET_INFO,this.getWalletInfo);
+    store.on(Events.POPUP_OPEN,this.getPopupOpen);
 
     
   }
@@ -72,7 +72,8 @@ class Swap extends Component {
     );
     store.removeListener(Events.TRANSACTION_INFO, this.transactionsInfo);
 
-    // store.removeListener(Events.WALLET_ADDRESS,this.getAddress);
+    store.removeListener(Events.CONNECTED_WALLET_INFO,this.getWalletInfo);
+    store.removeListener(Events.POPUP_OPEN,this.getPopupOpen);
   }
   onError = (error) => {
     const isWarning = error instanceof Warning;
@@ -81,8 +82,13 @@ class Swap extends Component {
     this.props.showMessage(message, variant);
     this.setState({ loading: false });
   };
-  getAddress=(address)=>{
-    console.log("addressaddressaddress",address)
+  getPopupOpen=()=>{
+
+    this.setState({ showPopup: store.getStore("popupOpen") || false });
+  }
+  getWalletInfo=()=>{
+    let walletInfo=store.getStore("connectedWalletInfo")
+    this.setState({walletAddress:walletInfo.address || '',selectedWallet:walletInfo.name || '' });
   }
   transactionsInfo = (transaction) => {
     this.props.showMessage(this.props.t("transactionSuccess"), "success");
@@ -91,6 +97,7 @@ class Swap extends Component {
     this.setState({ unconfirmed: transactions });
   };
   onSwapsFetched = (swaps) => {
+    console.log('swaps ::',swaps)
     this.setState({ swaps, loading: false });
   };
   onTokenSwapped = (swapInfo) => {
@@ -395,7 +402,8 @@ class Swap extends Component {
           this.props.t("connectAvailableWalletError"),
           "error"
         );
-        this.setState({ showPopup: !this.state.showPopup });
+        // this.setState({ showPopup: !this.state.showPopup });
+        this.connectWalletPopup()
       } else {
         this.swapToken();
       }
@@ -542,7 +550,8 @@ class Swap extends Component {
           this.detectAndConnectMobileWallet();
         } else if (walletAddress === "") {
           // if (walletAddress === "")
-          this.setState({ showPopup: !this.state.showPopup });
+          // this.setState({ showPopup: !this.state.showPopup });
+          this.connectWalletPopup()
         }
       }
     });
@@ -558,11 +567,17 @@ class Swap extends Component {
     } else if (isTrustWallet) {
       this.connectToTrustWallet();
     } else if (walletAddress === "") {
-      this.setState({ showPopup: !this.state.showPopup });
+      this.connectWalletPopup()
+      // this.setState({ showPopup: !this.state.showPopup });
     }
   };
   connectWalletPopup=()=>{
-    this.setState({ showPopup: !this.state.showPopup });
+    dispatcher.dispatch({
+      type: Actions.POPUP_OPEN,
+      content:!this.state.showPopup ,
+    });
+    // this.setState({ showPopup: !this.state.showPopup });
+
   }
 
   // connectToBinanceWallet  = async () => {
@@ -584,7 +599,11 @@ class Swap extends Component {
     let web3Obj = new Web3(window.BinanceChain);
     const balance = await web3Obj.eth.getBalance(address, (err, wei) => { });
     const currentBal = Math.floor((balance / 1e18) * 10000) / 10000;
-     this.setState({connectedWalletAddress:address,connectedWalletBalance:currentBal})
+    
+    dispatcher.dispatch({
+      type: Actions.CONNECTED_WALLET_INFO,
+      content:{name:this.state.selectedWallet,address,balance:currentBal,} ,
+    });
     console.log('getBalance ::',currentBal)
   }
   disconnetWallet=async()=>{
@@ -667,10 +686,9 @@ class Swap extends Component {
               loading={loading}
               connectToMetaMask={() => this.connectToMetaMask()}
               connectWalletPopup={()=>this.connectWalletPopup()}
-              connectedWalletAddress={this.state.connectedWalletAddress}
-              connectedWalletBalance={this.state.connectedWalletBalance}
+              
               selectedWallet={this.state.selectedWallet }
-              disconnet={()=>this.setState({connectedWalletAddress:'',connectedWalletBalance:'',walletAddress:"",selectedWallet:''})}
+              // disconnet={()=>this.setState({connectedWalletAddress:'',connectedWalletBalance:'',walletAddress:"",selectedWallet:''})}
               // disconnet={()=> this.disconnetWallet()}
 
             />

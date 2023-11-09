@@ -168,49 +168,7 @@ class SwapSelection extends Component {
             <span className="availBal">/ {this.state.totalSupply}</span>
           </p>
         </div>
-        {!this.props.connectedWalletAddress?
-        <button className="connectButton" onClick={()=>this.props.connectWalletPopup()} >Connect Wallet </button>:
-        <div
-              id="menu-appbar"
-              open={true}
-              // anchorEl={anchorElWallet}
-              // onClose={handleCloseWalletMenu}
-              style={{ borderRadius: '10px',
-              width: '100%',marginTop:'20px'}}
-              // anchorOrigin={{
-              //   vertical: 'bottom',
-              //   horizontal: 'right',
-              // }}
-              // transformOrigin={{
-              //   vertical: 'top',
-              //   horizontal: 'right',
-              // }}
-
-            >
-              <Box style={{ padding: '20px', background: 'rgb(41,41,57)', alignItems: 'center' }}>
-                <Box style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                  <Box style={{ display: 'flex', gap: '10px' }}>
-                    <Avatar style={{ width: 24, height: 24 }} src={this.props.selectedWallet==='Binance'? binance:metamask} />
-                    <Typography style={{
-                      fontWeight: 600,
-                      fontSize: 14,
-                      overflow: 'hidden', whiteSpace: 'nowrap', color: '#fff'
-                    }} textAlign="center">{this.addressTruncateFn(this.props.connectedWalletAddress)}</Typography>
-                  </Box>
-                  <MuiButton variant="outlined" style={{
-                    color: 'rgb(152, 152, 177)', border: 'solid 1px rgb(58,58,80)', background: 'rgb(41,41,57)', borderRadius: '10px', '&:hover': {
-                      border: 'solid 1px #fff', background: 'rgb(41,41,57)', color: '#fff'
-                    }
-                  }} onClick={()=>this.props.disconnet()}>Disconnect</MuiButton>
-                </Box>
-                <Box>
-                  <Typography color="primary" style={{ fontWeight: 600, fontSize: '15px' }}>Balance</Typography>
-                  <Typography component="div" color="text.light" style={{ fontWeight: 900, fontSize: '28px', lineHeight: '1', paddingTop: '5px' }}>{this.props.connectedWalletBalance}</Typography>
-                </Box>
-              </Box>
-
-            </div>
-            }
+        
         <Grid item xs={12} className={classes.swapTabs}>
           <Swaptabs
             handleChange={(val) => this.onSwapTypeChanged(val)}

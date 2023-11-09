@@ -29,7 +29,7 @@ class Store extends EventEmitter {
     this.store = {};
 
     dispatcher.register(async (payload) => {
-      console.log('wallet Address::1',payload.type)
+      console.log("wallet Address::1", payload.type);
       switch (payload.type) {
         case Actions.GET_INFO:
           this.getInfo();
@@ -55,16 +55,21 @@ class Store extends EventEmitter {
         case Actions.SEND_TRANSACTION_ERROR_LOG:
           this.sendTransactionErrLog(payload);
           break;
-        case Actions.WALLET_ADDRESS:
-          console.log('wallet Address::3',payload.type)
+        case Actions.CONNECTED_WALLET_INFO:
+          console.log("wallet Address::3", payload.type);
 
           this.setWalletAddress(payload);
+          break;
+        case Actions.POPUP_OPEN:
+          // console.log("wallet Address::3", payload.type);
+
+          this.setPopupOpen(payload);
           break;
         default:
           break;
       }
     });
-    console.log("this.store ",this.store )
+    console.log("this.store ", this.store);
   }
 
   getStore(key) {
@@ -108,7 +113,6 @@ class Store extends EventEmitter {
       this.emit(Events.ERROR, e);
     }
   }
- 
 
   async getUnconfirmedBeldexTransactions(payload) {
     try {
@@ -197,14 +201,31 @@ class Store extends EventEmitter {
     }
   }
 
+  
   async setWalletAddress(payload) {
-    console.log('wallet Address::3',payload.type)
+    console.log("wallet Address::3", payload.type);
 
     try {
       // const data = await this.fetch(endpoints.getSwaps, "GET", payload.content);
-      this.emit(Events.WALLET_ADDRESS,payload.content);
+      this.store.connectedWalletInfo = payload.content;
+      this.emit(Events.CONNECTED_WALLET_INFO, payload.content);
+      console.log("get balance ::", payload.content);
     } catch (e) {
       this.emit(Events.ERROR, e);
+      console.log("get balance error::", e);
+    }
+  }
+  async setPopupOpen(payload) {
+    console.log("wallet Address::3", payload.type);
+
+    try {
+      // const data = await this.fetch(endpoints.getSwaps, "GET", payload.content);
+      this.store.popupOpen = payload.content;
+      this.emit(Events.POPUP_OPEN, payload.content);
+      // console.log("get balance ::", payload.content);
+    } catch (e) {
+      this.emit(Events.ERROR, e);
+      // console.log("get balance error::", e);
     }
   }
 }

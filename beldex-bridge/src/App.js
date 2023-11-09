@@ -2,12 +2,19 @@ import React, { PureComponent } from "react";
 import LazyLoad from "react-lazy-load";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import { createMuiTheme, MuiThemeProvider } from "@material-ui/core/styles";
-import {  Box,Button,Popover,Typography,Avatar,Button as MuiButton} from "@material-ui/core";
+import {
+  Box,
+  Button,
+  Popover,
+  Typography,
+  Avatar,
+  Button as MuiButton,
+} from "@material-ui/core";
 import { store, dispatcher, Actions, Events } from "@store";
-import { Snackbar, Swap, ImageLoader, } from "@components";
+import { Snackbar, Swap, ImageLoader } from "@components";
 import theme from "@theme";
-import binance from "./components/popup/binance.png"
-import metamask from "./components/popup/metamask.png" 
+import binance from "./components/popup/binance.png";
+import metamask from "./components/popup/metamask.png";
 export default class App extends PureComponent {
   state = {
     snackbar: {
@@ -15,26 +22,38 @@ export default class App extends PureComponent {
       variant: "success",
       open: false,
       balance: "",
-      anchorEl:null
+      anchorEl: null,
     },
+    connectedWalletInfo: {},
   };
-  
+
   componentDidMount = () => {
     store.on(Events.FETCHED_BALANCE, this.onBalUpdated);
+    store.on(Events.CONNECTED_WALLET_INFO, this.onConnectedWalletInfoUpdated);
   };
 
   componentWillMount() {
     dispatcher.dispatch({
       type: Actions.GET_BALANCE,
     });
-    dispatcher.dispatch({
-      type: Actions.WALLET_ADDRESS,
-      content: 'welcome',
-    });
   }
 
   onBalUpdated = () => {
+    console.log("walletAddress data1", store);
+
     this.setState({ balance: store.getStore("balance") || {} });
+  };
+  onConnectedWalletInfoUpdated = () => {
+    this.setState({
+      connectedWalletInfo: store.getStore("connectedWalletInfo") || {},
+    });
+  };
+
+  connectWallet = () => {
+    dispatcher.dispatch({
+      type: Actions.POPUP_OPEN,
+      content: true,
+    });
   };
 
   showMessage = (message, variant) => {
@@ -55,19 +74,28 @@ export default class App extends PureComponent {
     this.setState({ snackbar });
   };
   handleClick = (event) => {
-    this.setState({anchorEl:event.currentTarget});
+    
+    this.setState({ anchorEl: event.currentTarget });
   };
 
   handleClose = () => {
-    this.setState({anchorEl:null});
+    this.setState({ anchorEl: null });
+  };
+
+  disconnectWallet = () => {
+    dispatcher.dispatch({
+      type: Actions.CONNECTED_WALLET_INFO,
+      content: { name: "", address: "", balance: "" },
+    });
+    this.handleClose();
   };
 
   addressTruncateFn = (str) => {
     if (str && str.length > 30) {
-      return str.substr(0, 7) + '...' + str.substr(str.length - 5, str.length);
+      return str.substr(0, 7) + "..." + str.substr(str.length - 5, str.length);
     }
     return str;
-  }
+  };
   renderSnackbar = () => {
     const { snackbar } = this.state;
     return (
@@ -98,15 +126,17 @@ export default class App extends PureComponent {
   };
 
   renderTitleImage = () => {
+    const { connectedWalletInfo } = this.state;
+    const id = Boolean(this.state.anchorEl) ? 'menu-appbar' : undefined;
     return (
-      <Box 
+      <Box
         display="flex"
         className="title"
         justifyContent="space-between"
-        alignSelf="baseline"   
-        style={{height:'300px'}}   
+        alignSelf="baseline"
+        // style={{height:'300px'}}
       >
-        <LazyLoad className="titleContainer" >
+        <LazyLoad className="titleContainer">
           <ImageLoader
             className="titleImage"
             loadedClassName="titleImageLoaded"
@@ -114,49 +144,112 @@ export default class App extends PureComponent {
             alt="Logo"
           />
         </LazyLoad>
-        <div className="header">
-        <button className="connectButton" onClick={this.handleClick}>Connect Wallet</button>
-        <Popover
-              id="menu-appbar"
-              open={Boolean(this.state.anchorEl)}
-              anchorEl={this.state.anchorElWallet}
-              onClose={this.handleClose}
-              // style={{ borderRadius: '10px',
-              // width: '100%',marginTop:'20px',marginRight:'20px',    top: '80px',
-              // left: '1209px'}}
-              anchorOrigin={{
-                vertical: 'bottom',
-                horizontal: 'right',
+        <div className="header" >
+          {connectedWalletInfo.address ? (
+            <button className="connectButton " style={{color:'white'}} onClick={this.handleClick}>
+              {this.addressTruncateFn(connectedWalletInfo.address)}
+            </button>
+          ) : (
+            <button className="connectButton" onClick={this.connectWallet}>
+              Connect Wallet
+            </button>
+          )}
+          <Popover
+            id={id}
+            open={Boolean(this.state.anchorEl)}
+            anchorEl={this.state.anchorElWallet}
+            onClose={this.handleClose}
+            
+            anchorOrigin={{
+              vertical: "top",
+              horizontal: "right",
+            }}
+            transformOrigin={{
+              vertical: 'top',
+              horizontal: 'right',
+            }}
+            style={{
+              "& .MuiPopover-paper":{
+                top:'20px !important'
+              }
+            }}
+          >
+            <Box
+              style={{
+                padding: "20px",
+                background: "rgb(41,41,57)",
+                alignItems: "center",
               }}
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-
             >
-              <Box style={{ padding: '20px', background: 'rgb(41,41,57)', alignItems: 'center' }}>
-                <Box style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                  <Box style={{ display: 'flex', gap: '10px' }}>
-                    <Avatar style={{ width: 24, height: 24 }} src={this.props.selectedWallet==='Binance'? binance:metamask} />
-                    <Typography style={{
+              <Box
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                }}
+              >
+                <Box style={{ display: "flex", gap: "10px" }}>
+                  <Avatar
+                    style={{ width: 24, height: 24 }}
+                    src={
+                      connectedWalletInfo.name === "Binance"
+                        ? binance
+                        : metamask
+                    }
+                  />
+                  <Typography
+                    style={{
                       fontWeight: 600,
                       fontSize: 14,
-                      overflow: 'hidden', whiteSpace: 'nowrap', color: '#fff'
-                    }} textAlign="center">{this.addressTruncateFn(this.props.connectedWalletAddress)}</Typography>
-                  </Box>
-                  <MuiButton variant="outlined" style={{
-                    color: 'rgb(152, 152, 177)', border: 'solid 1px rgb(58,58,80)', background: 'rgb(41,41,57)', borderRadius: '10px', '&:hover': {
-                      border: 'solid 1px #fff', background: 'rgb(41,41,57)', color: '#fff'
-                    }
-                  }} onClick={()=>this.props.disconnet()}>Disconnect</MuiButton>
+                      overflow: "hidden",
+                      whiteSpace: "nowrap",
+                      color: "#fff",
+                    }}
+                    textAlign="center"
+                  >
+                    {this.addressTruncateFn(connectedWalletInfo.address)}
+                  </Typography>
                 </Box>
-                <Box>
-                  <Typography color="primary" style={{ fontWeight: 600, fontSize: '15px' }}>Balance</Typography>
-                  <Typography component="div" color="text.light" style={{ fontWeight: 900, fontSize: '28px', lineHeight: '1', paddingTop: '5px' }}>{this.props.connectedWalletBalance}</Typography>
-                </Box>
+                <MuiButton
+                  variant="outlined"
+                  style={{
+                    color: "rgb(152, 152, 177)",
+                    border: "solid 1px rgb(58,58,80)",
+                    background: "rgb(41,41,57)",
+                    borderRadius: "10px",
+                    "&:hover": {
+                      border: "solid 1px #fff",
+                      background: "rgb(41,41,57)",
+                      color: "#fff",
+                    },
+                  }}
+                  onClick={() => this.disconnectWallet()}
+                >
+                  Disconnect
+                </MuiButton>
               </Box>
-
-            </Popover>
+              <Box>
+                <Typography
+                  color="primary"
+                  style={{ fontWeight: 600, fontSize: "15px" }}
+                >
+                  Balance
+                </Typography>
+                <Typography
+                  component="div"
+                  color="text.light"
+                  style={{
+                    fontWeight: 900,
+                    fontSize: "28px",
+                    lineHeight: "1",
+                    paddingTop: "5px",
+                  }}
+                >
+                  {connectedWalletInfo.balance}
+                </Typography>
+              </Box>
+            </Box>
+          </Popover>
         </div>
       </Box>
     );
@@ -184,12 +277,12 @@ export default class App extends PureComponent {
         <div id="content">
           {this.renderTitleImage()}
           <div className="d-flex-center">
-                <Swap
-                  showMessage={this.showMessage}
-                  movedBalance={bal}
-                  totalSupply={total}
-                />
-                {this.renderSnackbar()}
+            <Swap
+              showMessage={this.showMessage}
+              movedBalance={bal}
+              totalSupply={total}
+            />
+            {this.renderSnackbar()}
           </div>
         </div>
       </MuiThemeProvider>
