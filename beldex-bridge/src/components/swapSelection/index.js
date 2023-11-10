@@ -1,6 +1,14 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { Grid, Typography, Link,Popover,Box,Avatar,Button as MuiButton } from "@material-ui/core";
+import {
+  Grid,
+  Typography,
+  Link,
+  Popover,
+  Box,
+  Avatar,
+  Button as MuiButton,
+} from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
 import { Input, Button } from "@components";
 import { SWAP_TYPE, TYPE } from "@constants";
@@ -9,8 +17,8 @@ import styles from "./styles";
 import { store, dispatcher, Actions, Events } from "@store";
 import Swaptabs from "./swapTabs";
 import { withTranslation } from "react-i18next";
-import binance from "../popup/binance.png"
-import metamask from "../popup/metamask.png" 
+import binance from "../popup/binance.png";
+import metamask from "../popup/metamask.png";
 
 const walletCreationUrl = {
   [TYPE.BDX]: config.beldex.walletCreationUrl,
@@ -39,11 +47,13 @@ class SwapSelection extends Component {
       swapType: "bdx_to_bbdx",
       loginOpen: false,
       amountError: false,
+      conwalletInfo: {},
     };
   }
 
   componentDidMount = () => {
     store.on(Events.FETCHED_BALANCE, this.onBalUpdated);
+    store.on(Events.CONNECTED_WALLET_INFO, this.getConWalletInfo);
   };
 
   onBalUpdated = () => {
@@ -71,6 +81,14 @@ class SwapSelection extends Component {
         movedBalance: bal,
       });
     }
+  };
+  getConWalletInfo = () => {
+    const walletInfo = store.getStore("connectedWalletInfo") || {};
+
+    this.setState({
+      address: walletInfo.address || "",
+      conwalletInfo: walletInfo,
+    });
   };
 
   onNext = async () => {
@@ -139,10 +157,10 @@ class SwapSelection extends Component {
   };
   addressTruncateFn = (str) => {
     if (str && str.length > 30) {
-      return str.substr(0, 7) + '...' + str.substr(str.length - 5, str.length);
+      return str.substr(0, 7) + "..." + str.substr(str.length - 5, str.length);
     }
     return str;
-  }
+  };
   render() {
     const { t } = this.props;
     const { loading, classes } = this.props;
@@ -168,7 +186,7 @@ class SwapSelection extends Component {
             <span className="availBal">/ {this.state.totalSupply}</span>
           </p>
         </div>
-        
+
         <Grid item xs={12} className={classes.swapTabs}>
           <Swaptabs
             handleChange={(val) => this.onSwapTypeChanged(val)}
@@ -210,6 +228,14 @@ class SwapSelection extends Component {
             })}
           </Typography>
         </Grid>
+        {this.state.swapType === "bdx_to_bbdx" &&
+          this.state.conwalletInfo.address && (
+            <Typography className={classes.addressFetch}>
+              <i style={{ color: "red", marginRight: "5px" }}>Note : </i> Your
+              wallet address was automatically fetched. To send to a different
+              BNB address, update the same in the address field.
+            </Typography>
+          )}
         <Grid item xs={12} align="right" className={classes.button}>
           <Button
             fullWidth

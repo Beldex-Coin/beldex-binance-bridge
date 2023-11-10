@@ -61,6 +61,16 @@ const styles = (theme) => ({
     fontStyle: "normal",
     fontWeight: 400,
   },
+  addressFetch:{
+    marginTop: "5px",
+    fontSize: "14px",
+   
+    color: "#AFAFBE",
+    fontFamily: "Poppins",
+    fontStyle: "normal",
+    fontWeight: 400,
+    marginTop:'15px'
+  },
   amountError: {
     color: "red",
     fontSize: "12px",

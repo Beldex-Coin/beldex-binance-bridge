@@ -189,7 +189,8 @@ Handle on hover ::-webkit-scrollbar-thumb:hover {
   box-shadow: 0px 6px 94px 0px rgba(0, 0, 0, 0.2);
 } */
 
-.movedBal,.connectButton {
+.movedBal,
+.connectButton {
   /* width: 66%; */
   font-size: 15px;
   color: #585757;
@@ -206,18 +207,20 @@ Handle on hover ::-webkit-scrollbar-thumb:hover {
   /* margin-top: 20px; */
   /* margin-bottom: 20px; */
 }
-.connectButton{
-color: #3EC744;
-width: 100%;
-margin-top: 20px;
-font-weight: 600;
-cursor: pointer;
-background-color: #404057;
+.connectButton {
+  color: #3ec744;
+  width: 100%;
+  margin-top: 20px;
+  font-weight: 600;
+  cursor: pointer;
+  background-color: #404057;
+  padding: 15px;
+  font-size: 1rem;
 }
-.header{
-  width:16%;
+.header {
+  width: 16%;
 }
-.header .connectButton{
+.header .connectButton {
   margin-top: 0;
 }
 .movedBal .bal-title {
@@ -268,6 +271,18 @@ font-size: 1.8rem;
 font-style: normal;
 font-weight: 700;
 line-height: normal; */
+}
+
+/* popover design */
+.MuiPopover-paper {
+  width: 365px;
+  top: 81px !important;
+  left: unset !important;
+  right: 53px;
+  border-radius: 22px !important;
+}
+.MuiPaper-root {
+  background-color: unset !important;
 }
 
 #grid {
@@ -368,10 +383,7 @@ line-height: normal; */
   #grid {
     padding: 16px 1.5em;
   }
-  
 }
-
-
 
 @media (min-width: 1280px) {
   .title {

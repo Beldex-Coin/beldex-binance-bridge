@@ -15,6 +15,7 @@ import { Snackbar, Swap, ImageLoader } from "@components";
 import theme from "@theme";
 import binance from "./components/popup/binance.png";
 import metamask from "./components/popup/metamask.png";
+import ClearRoundedIcon from "@material-ui/icons/ClearRounded";
 export default class App extends PureComponent {
   state = {
     snackbar: {
@@ -39,7 +40,7 @@ export default class App extends PureComponent {
   }
 
   onBalUpdated = () => {
-    console.log("walletAddress data1", store);
+    // console.log("walletAddress data1", store);
 
     this.setState({ balance: store.getStore("balance") || {} });
   };
@@ -56,6 +57,20 @@ export default class App extends PureComponent {
     });
   };
 
+  mobileCheck() {
+    let check = false;
+
+    if (
+      typeof navigator !== "undefined" &&
+      /Mobile|Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+        navigator.userAgent
+      )
+    ) {
+      check = true;
+    }
+
+    return check;
+  }
   showMessage = (message, variant) => {
     const snackbar = {
       message,
@@ -74,7 +89,6 @@ export default class App extends PureComponent {
     this.setState({ snackbar });
   };
   handleClick = (event) => {
-    
     this.setState({ anchorEl: event.currentTarget });
   };
 
@@ -127,7 +141,7 @@ export default class App extends PureComponent {
 
   renderTitleImage = () => {
     const { connectedWalletInfo } = this.state;
-    const id = Boolean(this.state.anchorEl) ? 'menu-appbar' : undefined;
+    const id = Boolean(this.state.anchorEl) ? "menu-appbar" : undefined;
     return (
       <Box
         display="flex"
@@ -144,10 +158,22 @@ export default class App extends PureComponent {
             alt="Logo"
           />
         </LazyLoad>
-        <div className="header" >
-          {connectedWalletInfo.address ? (
-            <button className="connectButton " style={{color:'white'}} onClick={this.handleClick}>
-              {this.addressTruncateFn(connectedWalletInfo.address)}
+        <div className="header">
+          {connectedWalletInfo.addressc&& !this.mobileCheck ? (
+            <button
+              className="connectButton "
+              style={{ color: "white", display: "flex", alignItems: "center" }}
+              onClick={this.handleClick}
+            >
+              <Avatar
+                style={{ width: 24, height: 24, marginLeft: "10px" }}
+                src={
+                  connectedWalletInfo.name === "Binance" ? binance : metamask
+                }
+              />
+              <i style={{ marginLeft: "5px" }}>
+                {this.addressTruncateFn(connectedWalletInfo.address)}
+              </i>
             </button>
           ) : (
             <button className="connectButton" onClick={this.connectWallet}>
@@ -159,19 +185,13 @@ export default class App extends PureComponent {
             open={Boolean(this.state.anchorEl)}
             anchorEl={this.state.anchorElWallet}
             onClose={this.handleClose}
-            
             anchorOrigin={{
               vertical: "top",
               horizontal: "right",
             }}
             transformOrigin={{
-              vertical: 'top',
-              horizontal: 'right',
-            }}
-            style={{
-              "& .MuiPopover-paper":{
-                top:'20px !important'
-              }
+              vertical: "top",
+              horizontal: "right",
             }}
           >
             <Box
@@ -181,6 +201,24 @@ export default class App extends PureComponent {
                 alignItems: "center",
               }}
             >
+              <Box display="flex" justifyContent="end" alignSelf="baseline">
+                <i
+                  onClick={this.handleClose}
+                  style={{
+                    width: "25px",
+                    height: "25px",
+                    backgroundColor: "#404057",
+                    borderRadius: "20px",
+                    marginBottom: "10px",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    cursor: "pointer",
+                  }}
+                >
+                  <ClearRoundedIcon style={{ fontSize: 16 }} />
+                </i>
+              </Box>
               <Box
                 style={{
                   display: "flex",
@@ -200,7 +238,7 @@ export default class App extends PureComponent {
                   <Typography
                     style={{
                       fontWeight: 600,
-                      fontSize: 14,
+                      fontSize: "1rem",
                       overflow: "hidden",
                       whiteSpace: "nowrap",
                       color: "#fff",
@@ -213,10 +251,11 @@ export default class App extends PureComponent {
                 <MuiButton
                   variant="outlined"
                   style={{
-                    color: "rgb(152, 152, 177)",
-                    border: "solid 1px rgb(58,58,80)",
+                    border: " 1.724px solid #404057",
                     background: "rgb(41,41,57)",
                     borderRadius: "10px",
+                    color: "#9898B1",
+                    fontWeight: 600,
                     "&:hover": {
                       border: "solid 1px #fff",
                       background: "rgb(41,41,57)",
@@ -225,13 +264,63 @@ export default class App extends PureComponent {
                   }}
                   onClick={() => this.disconnectWallet()}
                 >
-                  Disconnect
+                  Disconnect{" "}
+                  <i
+                    style={{
+                      marginLeft: "5px",
+                      marginTop: "7px",
+                    }}
+                  >
+                    <svg
+                      width="16"
+                      height="16"
+                      viewBox="0 0 16 16"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <g id="disconnect">
+                        <g id="surface2380">
+                          <path
+                            id="Vector"
+                            d="M6.17383 8.0473H12.9637"
+                            stroke="#CB492D"
+                            stroke-width="1.72441"
+                            stroke-miterlimit="10"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                          />
+                          <path
+                            id="Vector_2"
+                            d="M11.6705 6.10736L13.6105 8.04732L11.6705 9.98728"
+                            stroke="#CB492D"
+                            stroke-width="1.72441"
+                            stroke-miterlimit="10"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                          />
+                          <path
+                            id="Vector_3"
+                            d="M11.8339 3.84405C10.7864 2.83197 9.36343 2.22742 7.79058 2.22742C4.57584 2.22742 1.9707 4.83255 1.9707 8.0473C1.9707 11.262 4.57584 13.8672 7.79058 13.8672C9.35165 13.8672 10.7864 13.2508 11.8322 12.2505"
+                            stroke="#CB492D"
+                            stroke-width="1.72441"
+                            stroke-miterlimit="10"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                          />
+                        </g>
+                      </g>
+                    </svg>
+                  </i>
                 </MuiButton>
               </Box>
               <Box>
                 <Typography
-                  color="primary"
-                  style={{ fontWeight: 600, fontSize: "15px" }}
+                  // color="primary"
+                  style={{
+                    fontWeight: 600,
+                    fontSize: "1.1rem",
+                    color: "#3EC744",
+                  }}
                 >
                   Balance
                 </Typography>
@@ -240,12 +329,13 @@ export default class App extends PureComponent {
                   color="text.light"
                   style={{
                     fontWeight: 900,
-                    fontSize: "28px",
+                    fontSize: "1.3rem",
                     lineHeight: "1",
                     paddingTop: "5px",
                   }}
                 >
-                  {connectedWalletInfo.balance}
+                  {connectedWalletInfo.balance}{" "}
+                  <span style={{ fontSize: "1rem" }}>WBDX</span>
                 </Typography>
               </Box>
             </Box>
